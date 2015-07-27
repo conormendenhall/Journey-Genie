@@ -44,6 +44,8 @@ toothpaste
 
 deodorant
 
-shampoo & conditioner
+shampoo
+
+conditioner
 
 spinbrush
