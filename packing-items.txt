@@ -34,6 +34,8 @@ umbrella
 
 lip balm
 
+shoes
+
 Items unaffected by weather:
 
 toothbrush
