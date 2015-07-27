@@ -1,0 +1,45 @@
+Clothing items affected by weather:
+
+rain jacket
+
+heavy coat
+
+knit hat
+
+scarf
+
+gloves / mittens
+
+wool socks
+
+long underwear
+
+winter boots
+
+sleeveless shirt
+
+summer dress
+
+t-shirt
+
+tank top
+
+Other items affected by weather:
+
+sunblock
+
+sunglasses
+
+umbrella
+
+lip balm
+
+Items unaffected by weather:
+
+toothbrush
+
+toothpaste
+
+deodorant
+
+shampoo & conditioner
