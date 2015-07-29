@@ -8,12 +8,14 @@ import java.net.*;
 public class APIcall {
 	public static String callAPI() throws IOException
 	{
-		return callAPI("4990729");
+		return callAPI("48170", "US");
 	}	
 	
-	public static String callAPI(String cityID) throws IOException
+	public static String callAPI(String cityID, String countryID) throws IOException
 	{
-		String urlStr = "http://api.openweathermap.org/data/2.5/forecast/city?id=" + cityID + "&APPID=1d81c54ec3911d8b9afa4fbae1d7ec37";
+		String urlStr = "http://api.openweathermap.org/data/2.5/forecast/daily?zip=" + cityID + "&mode=json&units=metric&cnt=16";
+		//String urlStr = "http://api.openweathermap.org/data/2.5/forecast/city?id=" + cityID + "&APPID=1d81c54ec3911d8b9afa4fbae1d7ec37";
+
 		 URL url = new URL(urlStr);
 		  HttpURLConnection conn =
 		      (HttpURLConnection) url.openConnection();

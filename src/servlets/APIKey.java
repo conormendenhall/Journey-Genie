@@ -13,6 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
+import jSONConverterProject.WeatherInfoObject;
+import jSONConverterProject.WeatherObject;
+import jSONConverterProject.WeatherObjectConverter;
+
 /**
  * Servlet implementation class APIKey
  */
@@ -41,10 +45,13 @@ public class APIKey extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//String key = "1d81c54ec3911d8b9afa4fbae1d7ec37";
-		String s = APIcall.callAPI(request.getParameter("cityID"));
+		String s = APIcall.callAPI(request.getParameter("cityID"), request.getParameter("countryID"));
+		WeatherInfoObject w = WeatherObjectConverter.convert(s);
+		System.out.println(w.cod);
+		System.out.println(w.list[1].temp.day);
 		PrintWriter out = response.getWriter();
 		JSONObject obj = (JSONObject) JSONValue.parse(s);
-		out.print(obj);
+		out.print(s);
 	}
 	
 
