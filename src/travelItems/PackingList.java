@@ -78,11 +78,10 @@ public class PackingList {
 				System.out.println(packingList.get(i).name);
 				//remove unnecessary items
 				//packingList.remove(packingList.get(i));
-			}
 	
 		}
 	
 	}
 	
-
+	}
 }
