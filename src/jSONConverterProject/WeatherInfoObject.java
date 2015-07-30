@@ -17,13 +17,13 @@ public class WeatherInfoObject {
 	
 	@Override
 	public boolean equals(Object obj) {
-		WeatherInfoObject w = (WeatherInfoObject)obj;
+		WeatherInfoObject weatherInfoObject = (WeatherInfoObject)obj;
 		return
-		this.cod == w.cod &&
-		this.message == w.message &&
-		this.city == w.city && 
-		this.cnt == w.cnt &&
-		this.list == w.list;
+		this.cod == weatherInfoObject.cod &&
+		this.message == weatherInfoObject.message &&
+		this.city == weatherInfoObject.city && 
+		this.cnt == weatherInfoObject.cnt &&
+		this.list == weatherInfoObject.list;
 	}
 
 }

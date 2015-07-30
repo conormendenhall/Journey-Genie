@@ -48,9 +48,9 @@ public class APIKey extends HttpServlet {
 		//String key = "1d81c54ec3911d8b9afa4fbae1d7ec37";
 		String s = APIcall.callAPI(request.getParameter("cityID"), request.getParameter("countryID"));
 		Trip thisTrip = new Trip();
-		thisTrip.setW(WeatherObjectConverter.convert(s));
-		System.out.println(thisTrip.getW().cod);
-		System.out.println(thisTrip.getW().list[1].temp.day);
+		thisTrip.setWeatherInfoObject(WeatherObjectConverter.convert(s));
+		System.out.println(thisTrip.getWeatherInfoObject().cod);
+		System.out.println(thisTrip.getWeatherInfoObject().list[1].temp.day);
 		PrintWriter out = response.getWriter();
 		JSONObject obj = (JSONObject) JSONValue.parse(s);
 		out.print(s);
