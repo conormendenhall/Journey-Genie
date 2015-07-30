@@ -11,7 +11,7 @@ public class Trip implements Serializable{
 	 */
 	private static final long serialVersionUID = 618353573734930660L;
 	private WeatherInfoObject w;
-	private ArrayList<Item> items;
+	private ArrayList<Item> items = new ArrayList<Item>();
 	private PackingList packing = new PackingList();
 	private ArrayList<String> dates;
 	
@@ -19,9 +19,20 @@ public class Trip implements Serializable{
 	{
 		items.add(packing.getConditioner());
 		items.add(packing.getDeodorant());
+		items.add(packing.getToothbrush());
+		items.add(packing.getToothpaste());
 		items.add(packing.getShampoo());
 		items.add(packing.getShaver());
 		items.add(packing.getSoap());
+		
+		//quantity specific items
+		items.add(packing.getShoes());
+		items.add(packing.getSocks());
+		items.add(packing.getUnderwear());
+		
+		
+		
+		
 	}
 	
 	

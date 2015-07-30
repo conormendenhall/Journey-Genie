@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import travelItems.Item;
 import travelItems.PackingList;
+import travelItems.Trip;
 import travelItems.WeatherMap;
 
 
@@ -39,6 +40,21 @@ public class ProjPracTest {
 		p.getScarf().includes(802, 20, 40);
 		assertEquals(true, p.getScarf().include);
 	}	
+	
+	@Test
+	public void testIfNewTripHasConditioner()
+	{
+		Trip t = new Trip();
+		assertEquals("conditioner", t.getItems().get(0).getName());
+	}
+	
+	@Test
+	public void testIfStagingListHasSnowBoots()
+	{
+		PackingList p = new PackingList();
+		p.fillStagingList();
+		assertEquals("snow boots", p.getStagingList().get(0).getName());
+	}
 //	
 //	@Test
 //	public void shouldReturnTrueForNonEssentialItemNeededForHotTemperatureIsTrue () {

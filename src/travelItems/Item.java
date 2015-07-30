@@ -2,7 +2,7 @@ package travelItems;
 
 public class Item {
 
-	String name;
+	private String name;
 	int maxTemp;
 	int minTemp;
 	int itemWeatherCode;
@@ -10,10 +10,50 @@ public class Item {
 
 	public Item(String name, int minTemp, int maxTemp, int itemWeatherCode, boolean include) {
 		super();
-		this.name = name;
+		this.setName(name);
 		this.maxTemp = maxTemp;
 		this.minTemp = minTemp;
 		this.itemWeatherCode = itemWeatherCode;
+		this.include = include;
+	}
+
+
+	public int getMaxTemp() {
+		return maxTemp;
+	}
+
+
+	public void setMaxTemp(int maxTemp) {
+		this.maxTemp = maxTemp;
+	}
+
+
+	public int getMinTemp() {
+		return minTemp;
+	}
+
+
+	public void setMinTemp(int minTemp) {
+		this.minTemp = minTemp;
+	}
+
+
+	public int getItemWeatherCode() {
+		return itemWeatherCode;
+	}
+
+
+	public void setItemWeatherCode(int itemWeatherCode) {
+		this.itemWeatherCode = itemWeatherCode;
+	}
+
+
+	public boolean isInclude() {
+		return include;
+	}
+
+
+	public void setInclude(boolean include) {
 		this.include = include;
 	}
 
@@ -61,6 +101,16 @@ public class Item {
 		//this will account for items needed for extreme cold days
 		//else if (WeatherMap.getExtreme() == 903){
 			//include = true;}
+	}
+
+
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	
