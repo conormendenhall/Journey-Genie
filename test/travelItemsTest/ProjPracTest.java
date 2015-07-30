@@ -12,7 +12,7 @@ public class ProjPracTest {
 
 	@Test
 	public void shouldReturnTrueforEssentialItemIsTrue() {
-		Item toothbrush = new Item("tooth brush", 0, 0, 0, 0, 0, true, false, null);
+		Item toothbrush = new Item("tooth brush", 0, 0, 0, true);
 		toothbrush.includes();
 		assertEquals(true, toothbrush.include);
 
@@ -20,8 +20,8 @@ public class ProjPracTest {
 	
 	@Test
 	public void shouldReturnTrueForNonEssentialItemNeededForRainCodes () {
-		Item raincoat = new Item("rain coat", 0, 0, 0, 202, 0, false, false, null);
-		Item rainShoes = new Item("rain shoes", 0, 0, 0, 513, 0, false, false, null);
+		Item raincoat = new Item("rain coat", 0, 0, 202, false);
+		Item rainShoes = new Item("rain shoes", 0, 0, 513, false);
 		WeatherMap.setWeatherCode(212);
 		raincoat.includes();
 		rainShoes.includes();
@@ -32,7 +32,7 @@ public class ProjPracTest {
 
 	@Test
 	public void shouldReturnTrueForNonEssentialItemNeededForSunAndNoCloudsIsTrue() {
-		Item hat = new Item("hat", 0, 0, 0, 802, 0, false, false, null);
+		Item hat = new Item("hat", 0, 0, 802, false);
 		WeatherMap.setWeatherCode(801);
 		hat.includes();		
 		assertEquals(true, hat.include);
@@ -40,7 +40,7 @@ public class ProjPracTest {
 	
 	@Test
 	public void shouldReturnTrueForNonEssentialItemNeededForColdTemperatureIsTrue () {
-		Item scarf = new Item("scarf", 0, 40, 0, 0, 0, false, false, null);
+		Item scarf = new Item("scarf", 0, 40, 0, false);
 		WeatherMap.setTemp(25);
 		scarf.includes();
 		assertEquals(true, scarf.include);
@@ -48,7 +48,7 @@ public class ProjPracTest {
 	
 	@Test
 	public void shouldReturnTrueForNonEssentialItemNeededForHotTemperatureIsTrue () {
-		Item sunGlasses = new Item("sun Glasses", 80, 0, 0, 0, 0, false, false, null);
+		Item sunGlasses = new Item("sun Glasses", 80, 0, 0, false);
 		WeatherMap.setTemp(85);
 		sunGlasses.includes();
 		assertEquals(true, sunGlasses.include);
@@ -56,7 +56,7 @@ public class ProjPracTest {
 	
 	@Test
 	public void shouldReturnTrueForNonEssentialItemNeededForSnowCodes () {
-		Item snowBoots = new Item("snow boots", 0, 0, 0, 601, 0, false, false, null);
+		Item snowBoots = new Item("snow boots", 0, 0, 601, false);
 		WeatherMap.setWeatherCode(602);
 		snowBoots.includes();
 		assertEquals(true, snowBoots.include);
@@ -65,7 +65,7 @@ public class ProjPracTest {
 	
 	@Test
 	public void shouldReturnTrueForNonEssentialItemNeededForExtremeHotTemperatureIsTrue () {
-		Item sunGlasses = new Item("sunGlasses", 0, 0, 0, 0, 904, false, false, null);
+		Item sunGlasses = new Item("sunGlasses", 0, 0, 904, false);
 		WeatherMap.setExtreme(904);
 		sunGlasses.includes();
 		assertEquals(true, sunGlasses.include);
@@ -73,7 +73,7 @@ public class ProjPracTest {
 	
 	@Test
 	public void shouldReturnTrueForNonEssentialItemNeededForExtremeColdTemperatureIsTrue () {
-		Item longUndies = new Item("longUndies", 0, 0, 0, 0, 903, false, false, null);
+		Item longUndies = new Item("longUndies", 0, 0, 903, false);
 		WeatherMap.setExtreme(903);
 		longUndies.includes();
 		assertEquals(true, longUndies.include);

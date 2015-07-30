@@ -8,32 +8,32 @@ public class PackingList {
 		
 		//These are the default items on our packList
 		// (name, minTemp, maxTamp, cloud, weatherCode, extreme, essential item, included, warning/message)
-		Item snowBoots = new Item("snow boots", 0, 0, 0, 606, 0, false, false, null);
-		Item summerDress = new Item("summer dress", 80, 0, 0, 0, 0, false, false, null);
-		Item tShirt = new Item("tshirt", 70, 0, 0, 0, 0, false, false, null);
-		Item sunBlock = new Item("sunblock", 75, 0, 0, 802, 904, false, false, null);
-		Item sunGlasses = new Item("sunglasses", 70, 0, 0, 802, 904, false, false, null);
-		Item umbrella = new Item("umbrella", 0, 0, 0, 406, 0, false, false, null);
-		Item lipBalm = new Item("lipbalm", 0, 0, 0, 0, 905, false, false, null);
-		Item rainJacket = new Item("rain jacket", 0, 0, 0, 406, 0, false, false, null);
-		Item heavyCoat = new Item("heavy coat", 0, 40, 0, 0, 0, false, false, null);
-		Item knitHat = new Item("knit hat", 0, 40, 0, 0, 0, false, false, null);
-		Item scarf = new Item("scarf", 0, 40, 0, 0, 0, false, false, null);
-		Item gloves = new Item("gloves", 0, 40, 0, 0, 0, false, false, null);
-		Item woolSocks = new Item("wool socks", 0, 40, 0, 0, 0, false, false, null);
-		Item longUndies = new Item("long undies", 0, 30, 0, 0, 0, false, false, null);
-		Item winterBoots = new Item("winter boots", 0, 40, 0, 706, 0, false, false, null);
-		Item SleevelessShirt = new Item("sleeveless shirt", 80, 0, 0, 0, 0, false, false, null);
-		Item toothbrush = new Item("toothbrush", 0, 0, 0, 0, 0, true, false, null);
-		Item shoes = new Item("shoes", 0, 0, 0, 0, 0, true, false, null);
-		Item toothpaste = new Item("toothpaste", 0, 0, 0, 0, 0, true, false, null);
-		Item deodorant = new Item("deoderant", 0, 0, 0, 0, 0, true, false, null);
-		Item shampoo = new Item("shampoo", 0, 0, 0, 0, 0, true, false, null);
-		Item conditioner = new Item("conditioner", 0, 0, 0, 0, 0, true, false, null);
-		Item soap = new Item("soap", 0, 0, 0, 0, 0, true, false, null);
-		Item shaver = new Item("shaver", 0, 0, 0, 0, 0, true, false, null);
-		Item socks = new Item("socks", 0, 0, 0, 0, 0, true, false, null);
-		Item underwear = new Item("underwear", 0, 0, 0, 0, 0, true, false, null);
+		Item snowBoots = new Item("snow boots", 0, 0, 606, false);
+		Item summerDress = new Item("summer dress", 80, 0, 0, false);
+		Item tShirt = new Item("tshirt", 70, 0, 0, false);
+		Item sunBlock = new Item("sunblock", 75, 0, 802, false);
+		Item sunGlasses = new Item("sunglasses", 70, 0, 802, false);
+		Item umbrella = new Item("umbrella", 0, 0, 406, false);
+		Item lipBalm = new Item("lipbalm", 0, 0, 0, false);
+		Item rainJacket = new Item("rain jacket", 0, 0, 406, false);
+		Item heavyCoat = new Item("heavy coat", 0, 40, 0, false);
+		Item knitHat = new Item("knit hat", 0, 40, 0, false);
+		Item scarf = new Item("scarf", 0, 40, 0, false);
+		Item gloves = new Item("gloves", 0, 40, 0, false);
+		Item woolSocks = new Item("wool socks", 0, 40, 0, false);
+		Item longUndies = new Item("long undies", 0, 30, 0, false);
+		Item winterBoots = new Item("winter boots", 0, 40, 706, false);
+		Item SleevelessShirt = new Item("sleeveless shirt", 80, 0, 0, false);
+		Item toothbrush = new Item("toothbrush", 0, 0, 0, true);
+		Item shoes = new Item("shoes", 0, 0, 0, true);
+		Item toothpaste = new Item("toothpaste", 0, 0, 0, true);
+		Item deodorant = new Item("deoderant", 0, 0, 0, true);
+		Item shampoo = new Item("shampoo", 0, 0, 0, true);
+		Item conditioner = new Item("conditioner", 0, 0, 0, true);
+		Item soap = new Item("soap", 0, 0, 0, true);
+		Item shaver = new Item("shaver", 0, 0, 0, true);
+		Item socks = new Item("socks", 0, 0, 0, true);
+		Item underwear = new Item("underwear", 0, 0, 0,true);
 
 		//populates arrayList
 		packingList.add(snowBoots);

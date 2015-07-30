@@ -5,7 +5,6 @@ public class WeatherMap {
 	static int temp;
 	static int weatherCode;
 	static int extreme;
-	boolean essentialItem;
 	boolean include;
 	
 	public static int getWeatherCode() {
