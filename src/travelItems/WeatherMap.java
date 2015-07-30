@@ -7,7 +7,7 @@ public class WeatherMap {
 	static int extreme;
 	boolean include;
 	
-	public static int getWeatherCode() {
+	public static int apiWeatherCode() {
 		return weatherCode;
 	}
 	
