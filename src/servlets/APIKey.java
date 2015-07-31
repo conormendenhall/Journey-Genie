@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
+import com.google.gson.Gson;
+
 import jSONConverterProject.WeatherInfoObject;
 import jSONConverterProject.WeatherObject;
 import jSONConverterProject.WeatherObjectConverter;
@@ -51,9 +53,13 @@ public class APIKey extends HttpServlet {
 		thisTrip.setWeatherInfoObject(WeatherObjectConverter.convert(s));
 		System.out.println(thisTrip.getWeatherInfoObject().cod);
 		System.out.println(thisTrip.getWeatherInfoObject().list[1].temp.day);
+		System.out.println(thisTrip.getWeatherInfoObject().list[1].temp.min);
+		System.out.println(thisTrip.getWeatherInfoObject().list[1].temp.max);
+		thisTrip.setApiWeatherCode(thisTrip.getWeatherInfoObject().list[0].weather[0].id);
+		thisTrip.setApiMinTemp(thisTrip.getWeatherInfoObject().list[0].temp.min);
+		thisTrip.setApiMaxTemp(thisTrip.getWeatherInfoObject().list[0].temp.max);
 		PrintWriter out = response.getWriter();
-		JSONObject obj = (JSONObject) JSONValue.parse(s);
-		out.print(s);
+		out.print(new Gson().toJson(thisTrip));
 	}
 	
 

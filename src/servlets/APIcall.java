@@ -13,7 +13,7 @@ public class APIcall {
 	
 	public static String callAPI(String cityID, String countryID) throws IOException
 	{
-		String urlStr = "http://api.openweathermap.org/data/2.5/forecast/daily?zip=" + cityID + "&mode=json&units=metric&cnt=16";
+		String urlStr = "http://api.openweathermap.org/data/2.5/forecast/daily?zip=" + cityID + "&units=imperial&mode=json&cnt=16";
 		//String urlStr = "http://api.openweathermap.org/data/2.5/forecast/city?id=" + cityID + "&APPID=1d81c54ec3911d8b9afa4fbae1d7ec37";
 
 		 URL url = new URL(urlStr);

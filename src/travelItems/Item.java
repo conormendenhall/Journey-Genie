@@ -80,7 +80,7 @@ public class Item {
 			include = true;
 		}
 		// this will account for items needed for cold days
-		else if (maxTemp > 0 && apiMaxTemp <= maxTemp) {
+		if (maxTemp > 0 && apiMaxTemp <= maxTemp) {
 			include = true;
 		}
 

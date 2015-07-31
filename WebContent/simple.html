@@ -45,17 +45,22 @@ function findAddress() {
 				       	type: "POST",
 				        url: "APIKey",
 				        data: {"cityID": city, "countryID": country/*matches[0].id*/},
+				        dataType: "json",
 				                //beforeSend: function() {
 				                      //if(s === "")
 				                         //return false;
 				                   // },
 				        success: function(data){
-				       	$('#map-canvas').append(data);
-				                 }
-				                 });
+				        	//var jsonResult = JSON.stringify(data);
+				        	$('#itemList').empty();
+				        	$.each(data.items, function(i, value) {
+				        		$('#itemList').append("<li>" + this.name + "</li>");
+				            });
+
 				//}
 	 // });
-	 
+                                        }
+});
 }
  </script>
   </head>
@@ -66,6 +71,9 @@ function findAddress() {
       </select>
       <input type="button" value="Get Packing!" onclick="findAddress()">
     </div>
-    <div id="map-canvas"></div>
+    <div id="map-canvas">
+    <ul id="itemList">
+    </ul>
+    </div>
   </body>
 </html>
