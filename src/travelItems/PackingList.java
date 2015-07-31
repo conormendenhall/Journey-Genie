@@ -13,7 +13,7 @@ public class PackingList {
 	private Item summerDress = new Item("summer dress", 70, 1000, 0, false);
 	private Item tShirt = new Item("tshirt", 50, 1000, 0, false);
 	private Item sunBlock = new Item("sunblock", -1000, -1000, 802, false);
-	private Item sunGlasses = new Item("sunglasses", -1000, 1000, 802, false);
+	private Item sunGlasses = new Item("sunglasses", -1000, -1000, 802, false);
 	private Item umbrella = new Item("umbrella", -1000, -1000, 406, false);
 	private Item lipBalm = new Item("lipbalm", -1000, 1000, 0, false);
 	private Item rainJacket = new Item("rain jacket", -1000, -1000, 406, false);
@@ -25,6 +25,8 @@ public class PackingList {
 	private Item longUndies = new Item("long undies", -1000, 30, 0, false);
 	private Item winterBoots = new Item("winter boots", -1000, 40, 706, false);
 	private Item sleevelessShirt = new Item("sleeveless shirt", 80, 1000, 0, false);
+	
+	// To do: split non-essential items into two ArrayLists: temperature-based and weather code-based
 
 	// Essential Items
 	private Item toothbrush = new Item("toothbrush", 0, 0, 0, true);
