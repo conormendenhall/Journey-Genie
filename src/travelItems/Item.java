@@ -70,7 +70,7 @@ public class Item {
 		if (apiWeatherCode < 600 && apiWeatherCode > 0 && itemWeatherCode < 600 && itemWeatherCode > 0) {
 			include = true;
 		}
-		// this will account for items needed for sunny days
+		 //this will account for items needed for sunny days
 		else if (itemWeatherCode >= 800 && itemWeatherCode < 900 && apiWeatherCode / 100 == itemWeatherCode / 100
 				&& apiWeatherCode % 10 <= itemWeatherCode % 10) {
 			include = true;
@@ -80,12 +80,18 @@ public class Item {
 			include = true;
 		}
 		// this will account for items needed for cold days
-		if (maxTemp > 0 && apiMaxTemp <= maxTemp) {
+//		if (maxTemp > 0 && apiMaxTemp <= maxTemp) {
+//			include = true;
+//		}
+		else if (apiMinTemp <= maxTemp){
 			include = true;
 		}
 
 		// this will account for items need for hot days
-		else if (minTemp > 0 && apiMinTemp >= minTemp) {
+//		else if (minTemp > 0 && apiMinTemp >= minTemp) {
+//			include = true;
+//		}
+		else if (apiMaxTemp <= minTemp){
 			include = true;
 		}
 

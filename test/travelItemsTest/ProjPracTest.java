@@ -56,14 +56,30 @@ public class ProjPracTest {
 
 	@Test
 	public void itemsArrayListShouldBePopulatedWithItemsFromStagingList() throws Exception {
-		String s = "{\"cod\":\"200\",\"message\":0.0032,\"city\":{\"id\":1851632,\"name\":\"Shuzenji\",\"coord\":{\"lon\":138.933334,\"lat\":34.966671},\"country\":\"JP\"},\"cnt\":10,\"list\":[{\"dt\":1406080800,\"temp\":{\"day\":297.77,\"min\":293.52,\"max\":297.77,\"night\":293.52,\"eve\":297.77,\"morn\":297.77},\"pressure\":925.04,\"humidity\":76,\"weather\":[{\"id\":602,\"main\":\"Clouds\",\"description\":\"broken clouds\",\"icon\":\"04d\"}]}]}";
+		String s = "{\"cod\":\"200\",\"message\":0.0032,\"city\":{\"id\":1851632,\"name\":\"Shuzenji\",\"coord\":{\"lon\":138.933334,\"lat\":34.966671},\"country\":\"JP\"},\"cnt\":10,\"list\":[{\"dt\":1406080800,\"temp\":{\"day\":297.77,\"min\":0,\"max\":30,\"night\":293.52,\"eve\":297.77,\"morn\":297.77},\"pressure\":925.04,\"humidity\":76,\"weather\":[{\"id\":602,\"main\":\"Clouds\",\"description\":\"broken clouds\",\"icon\":\"04d\"}]}]}";
 		PackingList p = new PackingList();
 		p.fillStagingList();
 		Trip t = new Trip();
-		t.setApiWeatherCode(WeatherObjectConverter.convert(s).list[0].weather[0].id);
-		t.setApiMinTemp(0);
-		t.setApiMaxTemp(300);
+		t.setWeatherInfoObject(WeatherObjectConverter.convert(s));
+//		t.setApiWeatherCode(WeatherObjectConverter.convert(s).list[0].weather[0].id);
+//		t.setApiMinTemp(0);
+//		t.setApiMaxTemp(300);
 		assertEquals("snow boots", t.getItems().get(10).getName());
+	}
+	
+	@Test
+	public void itemArrayListIndex10ShouldBeSummerDressNotSnowBootsForHotDay() throws Exception {
+		String s = "{\"cod\":\"200\",\"message\":0.0032,\"city\":{\"id\":1851632,\"name\":\"Shuzenji\",\"coord\":{\"lon\":138.933334,\"lat\":34.966671},\"country\":\"JP\"},\"cnt\":10,\"list\":[{\"dt\":1406080800,\"temp\":{\"day\":297.77,\"min\":80,\"max\":100,\"night\":293.52,\"eve\":297.77,\"morn\":297.77},\"pressure\":925.04,\"humidity\":76,\"weather\":[{\"id\":602,\"main\":\"Clouds\",\"description\":\"broken clouds\",\"icon\":\"04d\"}]}]}";
+		PackingList p = new PackingList();
+		p.fillStagingList();
+		Trip t = new Trip();
+		t.setWeatherInfoObject(WeatherObjectConverter.convert(s));
+//		t.setApiWeatherCode(WeatherObjectConverter.convert(s).list[0].weather[0].id);
+//		t.setApiMinTemp(80);
+//		t.setApiMaxTemp(100);
+		System.out.println("Min temp: " + t.getApiMinTemp());
+		System.out.println("Max temp: " + t.getApiMaxTemp());
+		assertEquals("summer dress", t.getItems().get(10).getName());
 	}
 	//
 	// @Test

@@ -9,28 +9,28 @@ public class PackingList {
 
 	// These are the default items on our packList
 	// (name, minTemp, maxTamp, cloud, weatherCode, extreme, essential item, included, warning/message)
-	private Item snowBoots = new Item("snow boots", 0, 40, 606, false);
-	private Item summerDress = new Item("summer dress", 80, 0, 0, false);
-	private Item tShirt = new Item("tshirt", 70, 0, 0, false);
-	private Item sunBlock = new Item("sunblock", 75, 0, 802, false);
-	private Item sunGlasses = new Item("sunglasses", 70, 0, 802, false);
-	private Item umbrella = new Item("umbrella", 0, 0, 406, false);
-	private Item lipBalm = new Item("lipbalm", 0, 0, 0, false);
-	private Item rainJacket = new Item("rain jacket", 0, 0, 406, false);
-	private Item heavyCoat = new Item("heavy coat", 0, 40, 0, false);
-	private Item knitHat = new Item("knit hat", 0, 40, 0, false);
-	private Item scarf = new Item("scarf", 0, 40, 0, false);
-	private Item gloves = new Item("gloves", 0, 40, 0, false);
-	private Item woolSocks = new Item("wool socks", 0, 40, 0, false);
-	private Item longUndies = new Item("long undies", 0, 30, 0, false);
-	private Item winterBoots = new Item("winter boots", 0, 40, 706, false);
-	private Item sleevelessShirt = new Item("sleeveless shirt", 80, 0, 0, false);
+	private Item snowBoots = new Item("snow boots", -1000, -1000, 606, false);
+	private Item summerDress = new Item("summer dress", 70, 1000, 0, false);
+	private Item tShirt = new Item("tshirt", 50, 1000, 0, false);
+	private Item sunBlock = new Item("sunblock", -1000, -1000, 802, false);
+	private Item sunGlasses = new Item("sunglasses", -1000, 1000, 802, false);
+	private Item umbrella = new Item("umbrella", -1000, -1000, 406, false);
+	private Item lipBalm = new Item("lipbalm", -1000, 1000, 0, false);
+	private Item rainJacket = new Item("rain jacket", -1000, -1000, 406, false);
+	private Item heavyCoat = new Item("heavy coat", -1000, 40, 0, false);
+	private Item knitHat = new Item("knit hat", -1000, 40, 0, false);
+	private Item scarf = new Item("scarf", -1000, 40, 0, false);
+	private Item gloves = new Item("gloves", -1000, 40, 0, false);
+	private Item woolSocks = new Item("wool socks", -1000, 40, 0, false);
+	private Item longUndies = new Item("long undies", -1000, 30, 0, false);
+	private Item winterBoots = new Item("winter boots", -1000, 40, 706, false);
+	private Item sleevelessShirt = new Item("sleeveless shirt", 80, 1000, 0, false);
 
 	// Essential Items
 	private Item toothbrush = new Item("toothbrush", 0, 0, 0, true);
 	private Item shoes = new Item("shoes", 0, 0, 0, true);
 	private Item toothpaste = new Item("toothpaste", 0, 0, 0, true);
-	private Item deodorant = new Item("deoderant", 0, 0, 0, true);
+	private Item deodorant = new Item("deodorant", 0, 0, 0, true);
 	private Item shampoo = new Item("shampoo", 0, 0, 0, true);
 	private Item conditioner = new Item("conditioner", 0, 0, 0, true);
 	private Item soap = new Item("soap", 0, 0, 0, true);

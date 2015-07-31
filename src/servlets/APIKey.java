@@ -51,13 +51,17 @@ public class APIKey extends HttpServlet {
 		String s = APIcall.callAPI(request.getParameter("cityID"), request.getParameter("countryID"));
 		Trip thisTrip = new Trip();
 		thisTrip.setWeatherInfoObject(WeatherObjectConverter.convert(s));
-		System.out.println(thisTrip.getWeatherInfoObject().cod);
-		System.out.println(thisTrip.getWeatherInfoObject().list[1].temp.day);
-		System.out.println(thisTrip.getWeatherInfoObject().list[1].temp.min);
-		System.out.println(thisTrip.getWeatherInfoObject().list[1].temp.max);
-		thisTrip.setApiWeatherCode(thisTrip.getWeatherInfoObject().list[0].weather[0].id);
-		thisTrip.setApiMinTemp(thisTrip.getWeatherInfoObject().list[0].temp.min);
-		thisTrip.setApiMaxTemp(thisTrip.getWeatherInfoObject().list[0].temp.max);
+//		System.out.println(thisTrip.getWeatherInfoObject().cod);
+//		System.out.println(thisTrip.getWeatherInfoObject().list[1].temp.day);
+		
+		System.out.println(thisTrip.getWeatherInfoObject().list[0].temp.min);
+		System.out.println(thisTrip.getWeatherInfoObject().list[0].temp.max);
+		System.out.println(thisTrip.getWeatherInfoObject().list[0].weather[0].id);
+		
+//		thisTrip.setApiWeatherCode(thisTrip.getWeatherInfoObject().list[0].weather[0].id);
+//		thisTrip.setApiMinTemp(thisTrip.getWeatherInfoObject().list[0].temp.min);
+//		thisTrip.setApiMaxTemp(thisTrip.getWeatherInfoObject().list[0].temp.max);
+		
 		PrintWriter out = response.getWriter();
 		out.print(new Gson().toJson(thisTrip));
 	}
