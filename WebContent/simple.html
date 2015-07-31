@@ -4,6 +4,7 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <title>Journey Genie</title>
+    <link rel="stylesheet" href="styles/styles.css">
 <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
     <script type="text/javascript">
  function getCountries(){ 
@@ -25,7 +26,7 @@
 
 function findAddress() {
 	var city = document.getElementById('city').value;
-	var country = document.getElementById('countries').value;
+	
 	/*
 	var matches = new Array();
 	 $.getJSON("city_list.json", function(json){
@@ -44,7 +45,7 @@ function findAddress() {
 				  $.ajax({
 				       	type: "POST",
 				        url: "APIKey",
-				        data: {"cityID": city, "countryID": country/*matches[0].id*/},
+				        data: {"cityID": city},
 				        dataType: "json",
 				                //beforeSend: function() {
 				                      //if(s === "")
@@ -63,17 +64,22 @@ function findAddress() {
 });
 }
  </script>
+ <script type="text/javascript"
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
   </head>
-  <body onload="getCountries()">
-    <div id="panel">
-      <input id ="city" type="text" placeholder="Enter Zip Code" value = "">
-      <select id = "countries">
-      </select>
-      <input type="button" value="Get Packing!" onclick="findAddress()">
-    </div>
-    <div id="map-canvas">
-    <ul id="itemList">
+  <body>
+   <a href=#><img src="http://i.imgur.com/BrggJwL.png"
+		title="source: imgur.com" /></a>
+	<div id='container'>
+		<div class='cell'>
+			<input id="city" type="search"
+				placeholder="[City],[State],[Country]" value=""> <input
+				type="button" value="Get Packing!" onclick="findAddress()">
+				</div>
+	</div>
+	 <ul id="itemList">
     </ul>
-    </div>
   </body>
 </html>
