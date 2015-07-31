@@ -1,85 +1,51 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
-    <title>Journey Genie</title>
-    <link rel="stylesheet" href="styles/styles.css">
+<head>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+<title>Journey Genie</title>
+<link rel="stylesheet" href="styles/styles.css">
 <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
-    <script type="text/javascript">
- function getCountries(){ 
-	$.getJSON("countries.json", function(json){
-  	var length = Object.keys(json).length;
-  	var counter = 0;
-	$.each(json, function(){
-		if(this.iso === "US")
-			{
-			$('#countries').append("<option selected='selected' value=" + this.iso + ">" + this.name + "</option>");
-			}
-		else
-			{
-			$('#countries').append("<option value=" + this.iso + ">" + this.name + "</option>");
-			}
-});
-});
-}
+<script type="text/javascript">
+	function findAddress() {
+		var location = document.getElementById('location').value;
 
-function findAddress() {
-	var city = document.getElementById('city').value;
-	
-	/*
-	var matches = new Array();
-	 $.getJSON("city_list.json", function(json){
-		  	var length = Object.keys(json).length;
-		  	var counter = 0;
-			$.each(json, function(){
-				if(city.toLowerCase() === this.nm.toLowerCase() && country.toLowerCase() === this.countryCode.toLowerCase()){
-					console.log(this.id)
-					matches.push(this);
-				}
-			counter++;
-      });
-	console.log(matches);
-			if(/*matches.length === 1 && *///counter === length)
-				//{
-				  $.ajax({
-				       	type: "POST",
-				        url: "APIKey",
-				        data: {"cityID": city},
-				        dataType: "json",
-				                //beforeSend: function() {
-				                      //if(s === "")
-				                         //return false;
-				                   // },
-				        success: function(data){
-				        	//var jsonResult = JSON.stringify(data);
-				        	$('#itemList').empty();
-				        	$.each(data.items, function(i, value) {
-				        		$('#itemList').append("<li>" + this.name + "</li>");
-				            });
+		$.ajax({
+			type : "POST",
+			url : "APIKey",
+			data : {
+				"locationRequest" : location.replace(/ /g, '')
+			},
+			dataType : "json",
 
-				//}
-	 // });
-                                        }
-});
-}
- </script>
- <script type="text/javascript"
+			success : function(data) {
+				$('#itemList').empty();
+				$.each(data.items, function(i, value) {
+					$('#itemList').append("<li>" + this.name + "</li>");
+				});
+
+			}
+		});
+	}
+</script>
+<script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
-  </head>
-  <body>
-   <a href=#><img src="http://i.imgur.com/BrggJwL.png"
+</head>
+<body>
+	<a href=#><img src="http://i.imgur.com/BrggJwL.png"
 		title="source: imgur.com" /></a>
 	<div id='container'>
 		<div class='cell'>
-			<input id="city" type="search"
-				placeholder="[City],[State],[Country]" value=""> <input
-				type="button" value="Get Packing!" onclick="findAddress()">
-				</div>
+			<input id="location" type="search" placeholder="[City],[State],[Country]"
+				value=""> <input type="button" value="Get Packing!"
+				onclick="findAddress()">
+		</div>
 	</div>
-	 <ul id="itemList">
-    </ul>
-  </body>
+	
+	<div class = "list"><ul id="itemList">
+	</ul>
+	</div>
+</body>
 </html>

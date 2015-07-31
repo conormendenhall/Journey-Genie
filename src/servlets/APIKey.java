@@ -48,7 +48,7 @@ public class APIKey extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//String key = "1d81c54ec3911d8b9afa4fbae1d7ec37";
-		String s = APIcall.callAPI(request.getParameter("cityID"), request.getParameter("countryID"));
+		String s = APIcall.callAPI(request.getParameter("locationRequest"));
 		Trip thisTrip = new Trip();
 		thisTrip.setWeatherInfoObject(WeatherObjectConverter.convert(s));
 //		System.out.println(thisTrip.getWeatherInfoObject().cod);
