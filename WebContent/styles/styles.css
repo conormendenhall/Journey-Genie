@@ -102,3 +102,40 @@ input[type="button"] {
 	padding: 10px 20px 10px 20px;
 	text-decoration: none;
 }
+
+#addAnItem {
+	display: none;
+	
+	
+}
+
+input[id=startdatepicker] {
+  
+	font-size:16px;
+  /* I want the whole search box
+     to be exactly this wide. */
+
+  margin: 10px auto 0;
+  padding: 10px;
+ width: 200px;
+  background-color: #f8f8f8;
+
+  border: 0;
+  border-radius: 5px;
+}
+
+input[id=enddatepicker] {
+ 
+	font-size:16px;
+  /* I want the whole search box
+     to be exactly this wide. */
+  width: 200px;
+  
+  padding: 10px;
+
+  background-color: #f8f8f8;
+
+  border: 0;
+  border-radius: 5px;
+  
+}
