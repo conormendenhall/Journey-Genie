@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
@@ -51,8 +50,8 @@ public class APIKey extends HttpServlet {
 		String s = APIcall.callAPI(request.getParameter("locationRequest"));
 		Trip thisTrip = new Trip();
 		thisTrip.setWeatherInfoObject(WeatherObjectConverter.convert(s));
-		thisTrip.setEndDate(request.getParameter("endDate"));
-		thisTrip.setStartDate(request.getParameter("startDate"));
+		thisTrip.setEndDate(Integer.parseInt(request.getParameter("endDate")));
+		thisTrip.setStartDate(Integer.parseInt(request.getParameter("startDate")));
 		
 		PrintWriter out = response.getWriter();
 		out.print(new Gson().toJson(thisTrip));
