@@ -25,11 +25,13 @@ function removeItem(thing)
 
 	function findAddress() {
 		var location = document.getElementById('location').value;
+		var startDate = document.getElementById('startdatepicker').value;
+		var endDate = document.getElementById('enddatepicker').value;
 		$.ajax({
 			type : "POST",
 			url : "APIKey",
 			data : {
-				"locationRequest" : location.replace(/ /g, '')
+				"locationRequest" : location.replace(/ /g, ''), "startDate" : startDate, "endDate" : endDate
 			},
 			dataType : "json",
 
@@ -51,7 +53,13 @@ function removeItem(thing)
 <script>
 
   $(document).ready(function() {
-    $("#startdatepicker").datepicker();
+    $("#startdatepicker").datepicker({ 
+    	minDate: 0,
+    	onSelect: function(selected) {
+    		$("#enddatepicker").datepicker("option", "minDate", selected);
+    	}
+    	
+    });
   });
   </script>
     <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
@@ -61,7 +69,12 @@ function removeItem(thing)
   <script>
 
   $(document).ready(function() {
-    $("#enddatepicker").datepicker();
+    $("#enddatepicker").datepicker({ 
+    	minDate: 0,
+    	onSelect: function(selected) {
+    		$("#startdatepicker").datepicker("option", "maxDate", selected);
+    	}
+    	});
   });
   </script>
 

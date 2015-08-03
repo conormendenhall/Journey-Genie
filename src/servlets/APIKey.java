@@ -2,6 +2,7 @@ package servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -53,7 +54,10 @@ public class APIKey extends HttpServlet {
 		thisTrip.setWeatherInfoObject(WeatherObjectConverter.convert(s));
 //		System.out.println(thisTrip.getWeatherInfoObject().cod);
 //		System.out.println(thisTrip.getWeatherInfoObject().list[1].temp.day);
-		
+		thisTrip.setEndDate(request.getParameter("endDate"));
+		thisTrip.setStartDate(request.getParameter("startDate"));
+		System.out.println(thisTrip.getStartDate());
+		System.out.println(thisTrip.getEndDate());
 		System.out.println(thisTrip.getWeatherInfoObject().list[0].temp.min);
 		System.out.println(thisTrip.getWeatherInfoObject().list[0].temp.max);
 		System.out.println(thisTrip.getWeatherInfoObject().list[0].weather[0].id);
