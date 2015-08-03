@@ -25,14 +25,16 @@ public class PackingList {
 	private Item rainJacket = new Item("rain jacket", "rainy", false);
 	// sunny weather items
 	private Item sunBlock = new Item("sunblock", "sunny", false);
+
 	private Item sunGlasses = new Item("sunglasses", "sunny", false);
+	private Item sunHat = new Item("sun hat", "sunny", false);
 	// windy weather items:
 	private Item windBreaker = new Item("wind breaker", "windy", false);
 	
 	// To do: split non-essential items into two ArrayLists: temperature-based and weather code-based
 
 	// Essential Items
-	private Item lipBalm = new Item("lipbalm", "", false);
+	private Item lipBalm = new Item("lipbalm", "", true);
 	private Item toothbrush = new Item("toothbrush","", true);
 	private Item toothpaste = new Item("toothpaste","", true);
 	private Item deodorant = new Item("deodorant","", true);
@@ -43,6 +45,7 @@ public class PackingList {
 	private Item shoes = new Item("shoes","", true);
 	private Item socks = new Item("socks","", true);
 	private Item underwear = new Item("underwear","", true);
+
 
 	// fill staging area with non-essential items
 	public void fillStagingList() {
@@ -61,6 +64,7 @@ public class PackingList {
 		stagingList.add(rainJacket);
 		stagingList.add(sunBlock);
 		stagingList.add(sunGlasses);
+		stagingList.add(sunHat );
 		stagingList.add(windBreaker);
 
 	}
@@ -138,6 +142,14 @@ public class PackingList {
 		this.sunGlasses = sunGlasses;
 	}
 
+	public Item getSunHat() {
+		return sunHat;
+	}
+	
+	public void setSunHat(Item sunHat) {
+		this.sunHat = sunHat;
+	}
+	
 	public Item getUmbrella() {
 		return umbrella;
 	}
