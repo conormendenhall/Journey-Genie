@@ -7,58 +7,61 @@ public class PackingList {
 
 	ArrayList<Item> packingList = new ArrayList<Item>();
 
-	// These are the default items on our packList
-	// (name, minTemp, maxTamp, cloud, weatherCode, extreme, essential item, included, warning/message)
-	private Item snowBoots = new Item("snow boots", -1000, -1000, 606, false);
-	private Item summerDress = new Item("summer dress", 70, 1000, 0, false);
-	private Item tShirt = new Item("tshirt", 50, 1000, 0, false);
-	private Item sunBlock = new Item("sunblock", -1000, -1000, 802, false);
-	private Item sunGlasses = new Item("sunglasses", -1000, -1000, 802, false);
-	private Item umbrella = new Item("umbrella", -1000, -1000, 406, false);
-	private Item lipBalm = new Item("lipbalm", -1000, 1000, 0, false);
-	private Item rainJacket = new Item("rain jacket", -1000, -1000, 406, false);
-	private Item heavyCoat = new Item("heavy coat", -1000, 40, 0, false);
-	private Item knitHat = new Item("knit hat", -1000, 40, 0, false);
-	private Item scarf = new Item("scarf", -1000, 40, 0, false);
-	private Item gloves = new Item("gloves", -1000, 40, 0, false);
-	private Item woolSocks = new Item("wool socks", -1000, 40, 0, false);
-	private Item longUndies = new Item("long undies", -1000, 30, 0, false);
-	private Item winterBoots = new Item("winter boots", -1000, 40, 706, false);
-	private Item sleevelessShirt = new Item("sleeveless shirt", 80, 1000, 0, false);
+	// args:(name, itemCategory, included)
+	// cold weather items:
+	private Item snowBoots = new Item("snow boots", "cold", false);
+	private Item heavyCoat = new Item("heavy coat", "cold", false);
+	private Item knitHat = new Item("knit hat", "cold", false);
+	private Item scarf = new Item("scarf", "cold", false);
+	private Item gloves = new Item("gloves", "cold", false);
+	private Item longUndies = new Item("long undies", "cold", false);
+	private Item woolSocks = new Item("wool socks", "cold", false);
+	// hot weather items:
+	private Item summerDress = new Item("summer dress", "hot", false);
+	private Item tShirt = new Item("tshirt", "hot", false);
+	private Item sleevelessShirt = new Item("sleeveless shirt", "hot", false);
+	// rainy weather items:
+	private Item umbrella = new Item("umbrella", "rainy", false);
+	private Item rainJacket = new Item("rain jacket", "rainy", false);
+	// sunny weather items
+	private Item sunBlock = new Item("sunblock", "sunny", false);
+	private Item sunGlasses = new Item("sunglasses", "sunny", false);
+	// windy weather items:
+	private Item windBreaker = new Item("wind breaker", "windy", false);
 	
 	// To do: split non-essential items into two ArrayLists: temperature-based and weather code-based
 
 	// Essential Items
-	private Item toothbrush = new Item("toothbrush", 0, 0, 0, true);
-	private Item shoes = new Item("shoes", 0, 0, 0, true);
-	private Item toothpaste = new Item("toothpaste", 0, 0, 0, true);
-	private Item deodorant = new Item("deodorant", 0, 0, 0, true);
-	private Item shampoo = new Item("shampoo", 0, 0, 0, true);
-	private Item conditioner = new Item("conditioner", 0, 0, 0, true);
-	private Item soap = new Item("soap", 0, 0, 0, true);
-	private Item shaver = new Item("shaver", 0, 0, 0, true);
-	private Item socks = new Item("socks", 0, 0, 0, true);
-	private Item underwear = new Item("underwear", 0, 0, 0, true);
+	private Item lipBalm = new Item("lipbalm", "", false);
+	private Item toothbrush = new Item("toothbrush","", true);
+	private Item toothpaste = new Item("toothpaste","", true);
+	private Item deodorant = new Item("deodorant","", true);
+	private Item shampoo = new Item("shampoo","", true);
+	private Item conditioner = new Item("conditioner","", true);
+	private Item soap = new Item("soap","", true);
+	private Item razor = new Item("razor","", true);
+	private Item shoes = new Item("shoes","", true);
+	private Item socks = new Item("socks","", true);
+	private Item underwear = new Item("underwear","", true);
 
 	// fill staging area with non-essential items
 	public void fillStagingList() {
 
 		stagingList.add(snowBoots);
-		stagingList.add(summerDress);
-		stagingList.add(tShirt);
-		stagingList.add(sunBlock);
-		stagingList.add(sunGlasses);
-		stagingList.add(umbrella);
-		stagingList.add(lipBalm);
-		stagingList.add(rainJacket);
 		stagingList.add(heavyCoat);
 		stagingList.add(knitHat);
 		stagingList.add(scarf);
 		stagingList.add(gloves);
-		stagingList.add(woolSocks);
 		stagingList.add(longUndies);
-		stagingList.add(winterBoots);
+		stagingList.add(woolSocks);
+		stagingList.add(summerDress);
+		stagingList.add(tShirt);
 		stagingList.add(sleevelessShirt);
+		stagingList.add(umbrella);
+		stagingList.add(rainJacket);
+		stagingList.add(sunBlock);
+		stagingList.add(sunGlasses);
+		stagingList.add(windBreaker);
 
 	}
 
@@ -79,6 +82,22 @@ public class PackingList {
 	}
 	
 	// getters and setters for all items
+	public Item getWindBreaker() {
+		return windBreaker;
+	}
+	
+	public void setWindBreaker(Item windBreaker) {
+		this.windBreaker = windBreaker;
+	}
+	
+	public Item getRazor() {
+		return razor;
+	}
+	
+	public void setRazor(Item razor) {
+		this.razor = razor;
+	}
+	
 	public Item getSnowBoots() {
 		return snowBoots;
 	}
@@ -183,14 +202,6 @@ public class PackingList {
 		this.longUndies = longUndies;
 	}
 
-	public Item getWinterBoots() {
-		return winterBoots;
-	}
-
-	public void setWinterBoots(Item winterBoots) {
-		this.winterBoots = winterBoots;
-	}
-
 	public Item getSleevelessShirt() {
 		return sleevelessShirt;
 	}
@@ -248,11 +259,11 @@ public class PackingList {
 	}
 
 	public Item getShaver() {
-		return shaver;
+		return razor;
 	}
 
 	public void setShaver(Item shaver) {
-		this.shaver = shaver;
+		this.razor = shaver;
 	}
 
 	public Item getSocks() {

@@ -51,13 +51,15 @@ public class APIKey extends HttpServlet {
 		String s = APIcall.callAPI(request.getParameter("locationRequest"));
 		Trip thisTrip = new Trip();
 		thisTrip.setWeatherInfoObject(WeatherObjectConverter.convert(s));
+
+		PrintWriter out = response.getWriter();
+		out.print(new Gson().toJson(thisTrip));
 		
+		// console printout
 		System.out.println("Min temp: " + thisTrip.getWeatherInfoObject().list[0].temp.min);
 		System.out.println("Max temp: " + thisTrip.getWeatherInfoObject().list[0].temp.max);
 		System.out.println("Weather code: " + thisTrip.getWeatherInfoObject().list[0].weather[0].id);
 		
-		PrintWriter out = response.getWriter();
-		out.print(new Gson().toJson(thisTrip));
 	}
 	
 

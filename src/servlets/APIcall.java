@@ -6,35 +6,31 @@ import java.io.InputStreamReader;
 import java.net.*;
 
 public class APIcall {
-	public static String callAPI() throws IOException
-	{
+	public static String callAPI() throws IOException {
 		return callAPI("Detroit");
-	}	
-	
-	public static String callAPI(String locationRequest) throws IOException
-	{
-		String urlStr = "http://api.openweathermap.org/data/2.5/forecast/daily?q=" + locationRequest + "&mode=json&units=imperial&cnt=16";
-		//String urlStr = "http://api.openweathermap.org/data/2.5/forecast/city?id=" + cityID + "&APPID=1d81c54ec3911d8b9afa4fbae1d7ec37";
+	}
 
-		 URL url = new URL(urlStr);
-		  HttpURLConnection conn =
-		      (HttpURLConnection) url.openConnection();
+	public static String callAPI(String locationRequest) throws IOException {
+		String apiCallURL = "http://api.openweathermap.org/data/2.5/forecast/daily?q=" + locationRequest
+				+ "&mode=json&units=imperial&cnt=16";
 
-		  if (conn.getResponseCode() != 200) {
-		    throw new IOException(conn.getResponseMessage());
-		  }
+		URL url = new URL(apiCallURL);
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-		  // Buffer the result into a string
-		  BufferedReader rd = new BufferedReader(
-		      new InputStreamReader(conn.getInputStream()));
-		  StringBuilder sb = new StringBuilder();
-		  String line;
-		  while ((line = rd.readLine()) != null) {
-		    sb.append(line);
-		  }
-		  rd.close();
+		if (conn.getResponseCode() != 200) {
+			throw new IOException(conn.getResponseMessage());
+		}
 
-		  conn.disconnect();
-		  return sb.toString();
-	}	
+		// Buffer the result into a string
+		BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		StringBuilder sb = new StringBuilder();
+		String line;
+		while ((line = br.readLine()) != null) {
+			sb.append(line);
+		}
+		br.close();
+
+		conn.disconnect();
+		return sb.toString();
+	}
 }
