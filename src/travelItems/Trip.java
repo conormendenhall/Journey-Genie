@@ -1,8 +1,9 @@
 package travelItems;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
+import java.util.Date;
 import jSONConverterProject.WeatherInfoObject;
 import jSONConverterProject.WeatherObjectConverter;
 
@@ -12,8 +13,8 @@ public class Trip implements Serializable {
 	private WeatherInfoObject weatherInfoObject;
 	private ArrayList<Item> items = new ArrayList<Item>();
 	private PackingList packingList = new PackingList();
-	private String startDate;
-	private String endDate;
+	private int startDate;
+	private int endDate;
 
 	double apiMinTemp; // = weatherInfoObject.list[0].temp.min;
 	double apiMaxTemp; // = weatherInfoObject.list[0].temp.max;
@@ -41,7 +42,8 @@ public class Trip implements Serializable {
 		packingList.fillStagingList();
 
 	}
-
+	
+	
 	private void addNonEssentialItemsToItemsArrayList() {
 		for (int i = 0; i < packingList.stagingList.size(); i++) {
 			packingList.stagingList.get(i).includes(apiWeatherCode, apiMinTemp, apiMaxTemp);
@@ -73,19 +75,19 @@ public class Trip implements Serializable {
 	}
 
 
-	public String getStartDate() {
+	public long getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(String startDate) {
+	public void setStartDate(int startDate) {
 		this.startDate = startDate;
 	}
 
-	public String getEndDate() {
+	public long getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(String endDate) {
+	public void setEndDate(int endDate) {
 		this.endDate = endDate;
 	}
 

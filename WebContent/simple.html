@@ -25,8 +25,28 @@ function removeItem(thing)
 
 	function findAddress() {
 		var location = document.getElementById('location').value;
-		var startDate = document.getElementById('startdatepicker').value;
-		var endDate = document.getElementById('enddatepicker').value;
+		console.log(document.getElementById('startdatepicker').value);
+		//var startDate = new Date(document.getElementById('startdatepicker').value).getTime() / 86400000;
+		//var endDate = new Date(document.getElementById('enddatepicker').value).getTime() / 86400000;
+		var seconds = new Date().getTime() / 86400000;
+		var today = new Date();
+		var startDate = new Date(document.getElementById('startdatepicker').value);
+		var endDate = new Date(document.getElementById('enddatepicker').value);
+		today.setHours(0);
+		today.setMinutes(0);
+		today.setSeconds(0);
+		console.log(startDate);
+		console.log(today);
+		startDate = startDate.getTime() - today.getTime();
+		startDate = Math.ceil(startDate / 86400000);
+		console.log(startDate);
+		endDate = endDate.getTime() - today.getTime();
+		endDate = Math.ceil(endDate / 86400000);
+		console.log(endDate);
+		//today.set
+		//console.log(startDate - seconds);
+		//console.log(endDate);
+		
 		$.ajax({
 			type : "POST",
 			url : "APIKey",
