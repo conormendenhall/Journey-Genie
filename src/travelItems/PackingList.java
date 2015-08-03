@@ -18,7 +18,7 @@ public class PackingList {
 	private Item woolSocks = new Item("wool socks", "cold", false);
 	// hot weather items:
 	private Item summerDress = new Item("summer dress", "hot", false);
-	private Item tShirt = new Item("tshirt", "hot", false);
+	
 	private Item sleevelessShirt = new Item("sleeveless shirt", "hot", false);
 	// rainy weather items:
 	private Item umbrella = new Item("umbrella", "rainy", false);
@@ -45,6 +45,7 @@ public class PackingList {
 	private Item shoes = new Item("shoes","", true);
 	private Item socks = new Item("socks","", true);
 	private Item underwear = new Item("underwear","", true);
+	private Item tShirt = new Item("tshirt", "", true);
 
 
 	// fill staging area with non-essential items

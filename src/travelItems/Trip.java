@@ -33,16 +33,27 @@ public class Trip implements Serializable {
 		items.add(packingList.getShoes());
 		items.add(packingList.getSocks());
 		items.add(packingList.getUnderwear());
+		items.add(packingList.gettShirt());
 
 		// fills staging list with non-essential items
 		packingList.fillStagingList();
-
 	}
 
+	public void countEssentialQuantitySpecificItems()  {
+		int newQuantity = 0;
+		for(int j = startDate; j < endDate; j++) {		
+			for(int i = 8; i<= 11; i++ ) {
+				newQuantity = items.get(i).getQuantity();
+				items.get(i).setQuantity(++newQuantity);
+			}
+		}
+	}
+	
+	
 	private void addNonEssentialItemsToPackingList() {
 		for (int i = 0; i < packingList.stagingList.size(); i++) {
 			packingList.stagingList.get(i).checkWeatherConditions(apiWeatherCode, apiMinTemp, apiMaxTemp);
-			if (packingList.stagingList.get(i).included == true) {
+			if (packingList.stagingList.get(i).isIncluded() == true) {
 				items.add(packingList.stagingList.get(i));
 			}
 		}

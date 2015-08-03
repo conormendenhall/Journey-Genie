@@ -41,21 +41,21 @@ public class JourneyGenieTests {
 	public void includedShouldReturnTrueforEssentialItem() {
 		PackingList p = new PackingList();
 		p.getToothpaste().checkWeatherConditions(0, 0, 0);
-		assertEquals(true, p.getToothpaste().included);
+		assertEquals(true, p.getToothpaste().isIncluded());
 	}
 	
 	@Test
 	public void includedShouldReturnTrueForColdItemOnColdDay() {
 		PackingList p = new PackingList();
 		p.getScarf().checkWeatherConditions(0, 10, 40);
-		assertEquals(true, p.getScarf().included);
+		assertEquals(true, p.getScarf().isIncluded());
 	}
 	
 	@Test
 	public void includedShouldReturnTrueForHotItemOnHotDay() {
 		PackingList p = new PackingList();
 		p.getSleevelessShirt().checkWeatherConditions(0, 80, 90);
-		assertEquals(true, p.getSleevelessShirt().included);
+		assertEquals(true, p.getSleevelessShirt().isIncluded());
 	}
 
 	@Test
@@ -64,9 +64,9 @@ public class JourneyGenieTests {
 		p.getSunGlasses().checkWeatherConditions(800, 0, 0);
 		p.getSunBlock().checkWeatherConditions(801, 0, 0);
 		p.getSunHat().checkWeatherConditions(802, 0, 0);
-		assertEquals(true, p.getSunGlasses().included);
-		assertEquals(true, p.getSunBlock().included);
-		assertEquals(true, p.getSunHat().included);
+		assertEquals(true, p.getSunGlasses().isIncluded());
+		assertEquals(true, p.getSunBlock().isIncluded());
+		assertEquals(true, p.getSunHat().isIncluded());
 	}
 	
 	@Test
@@ -74,8 +74,8 @@ public class JourneyGenieTests {
 		PackingList p = new PackingList();
 		p.getRainJacket().checkWeatherConditions(300, 0, 0);
 		p.getUmbrella().checkWeatherConditions(300, 0, 0);
-		assertEquals(true, p.getRainJacket().included);
-		assertEquals(true, p.getUmbrella().included);
+		assertEquals(true, p.getRainJacket().isIncluded());
+		assertEquals(true, p.getUmbrella().isIncluded());
 	}
 	
 	// @Test
@@ -99,19 +99,29 @@ public class JourneyGenieTests {
 		p.fillStagingList();
 		Trip t = new Trip();
 		t.setWeatherInfoObject(WeatherObjectConverter.convert(s));
-		assertEquals("snow boots", t.getItems().get(11).getName());
+		assertEquals("snow boots", t.getItems().get(12).getName());
 	}
 
 	@Test
-	public void itemArrayListIndex11ShouldBeSummerDressNotSnowBootsForHotDay() throws Exception {
+	public void itemArrayListIndex12ShouldBeSummerDressNotSnowBootsForHotDay() throws Exception {
 		String s = "{\"cod\":\"200\",\"message\":0.0032,\"city\":{\"id\":1851632,\"name\":\"Shuzenji\",\"coord\":{\"lon\":138.933334,\"lat\":34.966671},\"country\":\"JP\"},\"cnt\":10,\"list\":[{\"dt\":1406080800,\"temp\":{\"day\":297.77,\"min\":80,\"max\":100,\"night\":293.52,\"eve\":297.77,\"morn\":297.77},\"pressure\":925.04,\"humidity\":76,\"weather\":[{\"id\":602,\"main\":\"Clouds\",\"description\":\"broken clouds\",\"icon\":\"04d\"}]}]}";
 		PackingList p = new PackingList();
 		p.fillStagingList();
 		Trip t = new Trip();
 		t.setWeatherInfoObject(WeatherObjectConverter.convert(s));
-		assertEquals("summer dress", t.getItems().get(11).getName());
+		assertEquals("summer dress", t.getItems().get(12).getName());
 	}
 
+	@Test
+	public void quantityOfUnderwearShouldBe2For2DayTrip() {
+		String s = "{\"cod\":\"200\",\"message\":0.0032,\"city\":{\"id\":1851632,\"name\":\"Shuzenji\",\"coord\":{\"lon\":138.933334,\"lat\":34.966671},\"country\":\"JP\"},\"cnt\":10,\"list\":[{\"dt\":1406080800,\"temp\":{\"day\":297.77,\"min\":80,\"max\":100,\"night\":293.52,\"eve\":297.77,\"morn\":297.77},\"pressure\":925.04,\"humidity\":76,\"weather\":[{\"id\":602,\"main\":\"Clouds\",\"description\":\"broken clouds\",\"icon\":\"04d\"}]}]}";
+		Trip thisTrip = new Trip();
+		thisTrip.setWeatherInfoObject(WeatherObjectConverter.convert(s));
+		thisTrip.setStartDate(4);
+		thisTrip.setEndDate(5);		
+		thisTrip.countEssentialQuantitySpecificItems();
+		assertEquals(2, thisTrip.getItems().get(10).getQuantity());
+	}
 	// @Test
 	// public void shouldReturnTrueForNonEssentialItemNeededForSnowCodes () {
 	// Item snowBoots = new Item("snow boots", 0, 0, 601, false);
