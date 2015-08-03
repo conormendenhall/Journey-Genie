@@ -47,6 +47,24 @@ function removeItem(thing)
 
 
 </script>
+
+<script>
+
+  $(document).ready(function() {
+    $("#startdatepicker").datepicker();
+  });
+  </script>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+  
+  <script>
+
+  $(document).ready(function() {
+    $("#enddatepicker").datepicker();
+  });
+  </script>
+
 <script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 <script
@@ -58,7 +76,12 @@ function removeItem(thing)
 	<div id='container'>
 		<div class='cell'>
 			<input id="location" type="search" placeholder="[City],[State],[Country]"
-				value=""> <input type="button" value="Get Packing!"
+				value="">
+                <form>
+    <input id="startdatepicker" placeholder='Enter Start Date'/>
+     <input id="enddatepicker" placeholder='Enter End Date'/>
+</form>
+                 <input type="button" value="Get Packing!"
 				onclick="findAddress()">
 		</div>
 	</div>
@@ -71,5 +94,6 @@ function removeItem(thing)
 	<li><input type='text' id='currentValue' value='' placeholder='Enter a new item (ex. medication)'></li><button type='button' onclick='addItem()'>Add Item</button>
 	</ul>
 	</div>
+	
 </body>
 </html>
