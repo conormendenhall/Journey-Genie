@@ -3,105 +3,60 @@ package travelItems;
 public class Item {
 
 	private String name;
-	int maxTemp;
-	int minTemp;
-	int itemWeatherCode;
-	public boolean include;
+	String itemCategory;
+	public boolean included;
+	
+	public void checkWeatherConditions(int apiWeatherCode, double apiMinTemp, double apiMaxTemp) {
+		// this will account for items needed for rainy days
+		if ((apiWeatherCode >= 200 && apiWeatherCode < 600) && (itemCategory.contains("rainy"))) {
+			included = true;	
+		}
+		//this will account for items needed for sunny days
+		else if ((apiWeatherCode >= 800 && apiWeatherCode <=802) && (itemCategory.equalsIgnoreCase("sunny"))) {
+			included = true;
+		}
+		// this will account for items needed for snow days
+		else if ((apiWeatherCode >= 600 && apiWeatherCode < 700) && (itemCategory.equalsIgnoreCase("snow"))) {
+			included = true;
+		}
+		// this will account for items needed for cold days
+		else if ((apiMinTemp <= 40) && (itemCategory.equalsIgnoreCase("cold"))){
+			included = true;
+		}
+		
+		// this will account for items needed for hot days
+		else if ((apiMaxTemp >= 75) && (itemCategory.equalsIgnoreCase("hot"))){
+			included = true;
+		}
+		
+		// this will account for items needed for windy days
+		else if ((apiWeatherCode == 905 || (apiWeatherCode >= 953 && apiWeatherCode <= 957)) && (itemCategory.equalsIgnoreCase("windy"))){
+			included = true;
+		}
+		
+	}
 
-	public Item(String name, int minTemp, int maxTemp, int itemWeatherCode, boolean include) {
+	public Item(String name, String weatherCategory, boolean include) {
 		super();
 		this.setName(name);
-		this.maxTemp = maxTemp;
-		this.minTemp = minTemp;
-		this.itemWeatherCode = itemWeatherCode;
-		this.include = include;
+		this.itemCategory = weatherCategory;
+		this.included = include;
 	}
 
-	public int getMaxTemp() {
-		return maxTemp;
+	public String getItemCategory() {
+		return itemCategory;
 	}
 
-	public void setMaxTemp(int maxTemp) {
-		this.maxTemp = maxTemp;
-	}
-
-	public int getMinTemp() {
-		return minTemp;
-	}
-
-	public void setMinTemp(int minTemp) {
-		this.minTemp = minTemp;
-	}
-
-	public int getItemWeatherCode() {
-		return itemWeatherCode;
-	}
-
-	public void setItemWeatherCode(int itemWeatherCode) {
-		this.itemWeatherCode = itemWeatherCode;
+	public void setItemCategory(String itemCategory) {
+		this.itemCategory = itemCategory;
 	}
 
 	public boolean isInclude() {
-		return include;
+		return included;
 	}
 
 	public void setInclude(boolean include) {
-		this.include = include;
-	}
-
-//	public void includes(int apiWeatherCode) {
-//		// this will account for items needed when raining
-//		if (apiWeatherCode < 600 && apiWeatherCode > 0 && itemWeatherCode < 600 && itemWeatherCode > 0) {
-//			include = true;
-//		}
-//		// this will account for items needed for sunny days
-//		else if (itemWeatherCode >= 800 && itemWeatherCode < 900 && apiWeatherCode / 100 == itemWeatherCode / 100
-//				&& apiWeatherCode % 10 <= itemWeatherCode % 10) {
-//			include = true;
-//		}
-//		// this will account for items needed for snow days
-//		else if (apiWeatherCode >= 600 && apiWeatherCode < 700 && apiWeatherCode / 100 == itemWeatherCode / 100) {
-//			include = true;
-//		}
-//	}
-
-	public void includes(int apiWeatherCode, double apiMinTemp, double apiMaxTemp) {
-		// this will account for items needed when raining
-		if (apiWeatherCode < 600 && apiWeatherCode > 0 && itemWeatherCode < 600 && itemWeatherCode > 0) {
-			include = true;
-		}
-		 //this will account for items needed for sunny days
-		else if (itemWeatherCode >= 800 && itemWeatherCode < 900 && apiWeatherCode / 100 == itemWeatherCode / 100
-				&& apiWeatherCode % 10 <= itemWeatherCode % 10) {
-			include = true;
-		}
-		// this will account for items needed for snow days
-		else if (apiWeatherCode >= 600 && apiWeatherCode < 700 && apiWeatherCode / 100 == itemWeatherCode / 100) {
-			include = true;
-		}
-		// this will account for items needed for cold days
-//		if (maxTemp > 0 && apiMaxTemp <= maxTemp) {
-//			include = true;
-//		}
-		else if (apiMinTemp <= maxTemp){
-			include = true;
-		}
-
-		// this will account for items need for hot days
-//		else if (minTemp > 0 && apiMinTemp >= minTemp) {
-//			include = true;
-//		}
-		else if (apiMaxTemp <= minTemp){
-			include = true;
-		}
-
-		// this will account for items needed for extreme hot days
-		// else if (WeatherMap.getExtreme() == 904){
-		// include = true;}
-
-		// this will account for items needed for extreme cold days
-		// else if (WeatherMap.getExtreme() == 903){
-		// include = true;}
+		this.included = include;
 	}
 
 	public String getName() {

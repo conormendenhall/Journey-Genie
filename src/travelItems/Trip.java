@@ -1,11 +1,8 @@
 package travelItems;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import jSONConverterProject.WeatherInfoObject;
-import jSONConverterProject.WeatherObjectConverter;
 
 public class Trip implements Serializable {
 
@@ -16,16 +13,14 @@ public class Trip implements Serializable {
 	private int startDate;
 	private int endDate;
 
-	double apiMinTemp; // = weatherInfoObject.list[0].temp.min;
-	double apiMaxTemp; // = weatherInfoObject.list[0].temp.max;
-
-	int apiWeatherCode;// = weatherInfoObject.list[0].weather[0].id; // (this is old code)
+	double apiMinTemp;
+	double apiMaxTemp;
+	int apiWeatherCode;
 
 	public Trip() {
-//		apiMinTemp = apiMinTemp2;
-//		apiMaxTemp = apiMaxTemp2;
 		
 		// add essential items
+		items.add(packingList.getLipBalm());
 		items.add(packingList.getConditioner());
 		items.add(packingList.getDeodorant());
 		items.add(packingList.getToothbrush());
@@ -34,20 +29,20 @@ public class Trip implements Serializable {
 		items.add(packingList.getShaver());
 		items.add(packingList.getSoap());
 
-		// quantity specific items
+		// add quantity specific items
 		items.add(packingList.getShoes());
 		items.add(packingList.getSocks());
 		items.add(packingList.getUnderwear());
 
+		// fills staging list with non-essential items
 		packingList.fillStagingList();
 
 	}
-	
-	
-	private void addNonEssentialItemsToItemsArrayList() {
+
+	private void addNonEssentialItemsToPackingList() {
 		for (int i = 0; i < packingList.stagingList.size(); i++) {
-			packingList.stagingList.get(i).includes(apiWeatherCode, apiMinTemp, apiMaxTemp);
-			if (packingList.stagingList.get(i).include == true) {
+			packingList.stagingList.get(i).checkWeatherConditions(apiWeatherCode, apiMinTemp, apiMaxTemp);
+			if (packingList.stagingList.get(i).included == true) {
 				items.add(packingList.stagingList.get(i));
 			}
 		}
@@ -59,11 +54,12 @@ public class Trip implements Serializable {
 
 	public void setWeatherInfoObject(WeatherInfoObject weatherInfoObject) {
 		this.weatherInfoObject = weatherInfoObject;
+		
+//		could the following be extracted?
 		apiMinTemp = weatherInfoObject.list[0].temp.min;
 		apiMaxTemp = weatherInfoObject.list[0].temp.max;
 		apiWeatherCode = weatherInfoObject.list[0].weather[0].id;
-		// add non-essential items to "items" ArrayList
-		addNonEssentialItemsToItemsArrayList();
+		addNonEssentialItemsToPackingList();
 	}
 
 	public ArrayList<Item> getItems() {
@@ -75,7 +71,7 @@ public class Trip implements Serializable {
 	}
 
 
-	public long getStartDate() {
+	public int getStartDate() {
 		return startDate;
 	}
 
@@ -83,7 +79,7 @@ public class Trip implements Serializable {
 		this.startDate = startDate;
 	}
 
-	public long getEndDate() {
+	public int getEndDate() {
 		return endDate;
 	}
 

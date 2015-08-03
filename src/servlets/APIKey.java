@@ -2,14 +2,12 @@ package servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -52,22 +50,19 @@ public class APIKey extends HttpServlet {
 		String s = APIcall.callAPI(request.getParameter("locationRequest"));
 		Trip thisTrip = new Trip();
 		thisTrip.setWeatherInfoObject(WeatherObjectConverter.convert(s));
-//		System.out.println(thisTrip.getWeatherInfoObject().cod);
-//		System.out.println(thisTrip.getWeatherInfoObject().list[1].temp.day);
 		thisTrip.setEndDate(Integer.parseInt(request.getParameter("endDate")));
 		thisTrip.setStartDate(Integer.parseInt(request.getParameter("startDate")));
-		System.out.println(thisTrip.getStartDate());
-		System.out.println(thisTrip.getEndDate());
-		System.out.println(thisTrip.getWeatherInfoObject().list[0].temp.min);
-		System.out.println(thisTrip.getWeatherInfoObject().list[0].temp.max);
-		System.out.println(thisTrip.getWeatherInfoObject().list[0].weather[0].id);
-		//System.out.println(thisTrip.startDatePicker());
-//		thisTrip.setApiWeatherCode(thisTrip.getWeatherInfoObject().list[0].weather[0].id);
-//		thisTrip.setApiMinTemp(thisTrip.getWeatherInfoObject().list[0].temp.min);
-//		thisTrip.setApiMaxTemp(thisTrip.getWeatherInfoObject().list[0].temp.max);
 		
 		PrintWriter out = response.getWriter();
 		out.print(new Gson().toJson(thisTrip));
+		
+		// console printout
+		System.out.println("Start date: " + thisTrip.getStartDate());
+		System.out.println("End date: " + thisTrip.getEndDate());
+		System.out.println("Min temp: " + thisTrip.getWeatherInfoObject().list[0].temp.min);
+		System.out.println("Max temp: " + thisTrip.getWeatherInfoObject().list[0].temp.max);
+		System.out.println("Weather code: " + thisTrip.getWeatherInfoObject().list[0].weather[0].id);
+		
 	}
 	
 
