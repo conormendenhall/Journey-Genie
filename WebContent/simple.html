@@ -7,27 +7,77 @@
 <link rel="stylesheet" href="styles/styles.css">
 <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
 <script type="text/javascript">
+function addItem()
+{
+	
+	console.log("cheesecake");
+	$('#addedItems').append("<li>" + document.getElementById('currentValue').value +  "<button onclick='removeItem($(this))'>Remove</button>" + "<input type='checkbox'>" + "</li>");
+	document.getElementById('currentValue').value = '';
+}
+
+function removeItem(thing)
+{
+	console.log("spaghetti");
+	thing.parent().remove();
+	
+}
+
+
 	function findAddress() {
 		var location = document.getElementById('location').value;
-
+		var startDate = document.getElementById('startdatepicker').value;
+		var endDate = document.getElementById('enddatepicker').value;
 		$.ajax({
 			type : "POST",
 			url : "APIKey",
 			data : {
-				"locationRequest" : location.replace(/ /g, '')
+				"locationRequest" : location.replace(/ /g, ''), "startDate" : startDate, "endDate" : endDate
 			},
 			dataType : "json",
 
 			success : function(data) {
 				$('#itemList').empty();
 				$.each(data.items, function(i, value) {
-					$('#itemList').append("<li>" + this.name + "</li>");
+					$('#itemList').append("<li>" + this.name + "<button onclick='removeItem($(this))'>Remove</button>" + "<input type='checkbox'>" + "</li>");
 				});
-
+				$('#addAnItem').show();
 			}
 		});
+		
+		
 	}
+
+
 </script>
+
+<script>
+
+  $(document).ready(function() {
+    $("#startdatepicker").datepicker({ 
+    	minDate: 0,
+    	onSelect: function(selected) {
+    		$("#enddatepicker").datepicker("option", "minDate", selected);
+    	}
+    	
+    });
+  });
+  </script>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+  
+  <script>
+
+  $(document).ready(function() {
+    $("#enddatepicker").datepicker({ 
+    	minDate: 0,
+    	onSelect: function(selected) {
+    		$("#startdatepicker").datepicker("option", "maxDate", selected);
+    	}
+    	});
+  });
+  </script>
+
 <script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 <script
@@ -39,13 +89,24 @@
 	<div id='container'>
 		<div class='cell'>
 			<input id="location" type="search" placeholder="[City],[State],[Country]"
-				value=""> <input type="button" value="Get Packing!"
+				value="">
+                <form>
+    <input id="startdatepicker" placeholder='Enter Start Date'/>
+     <input id="enddatepicker" placeholder='Enter End Date'/>
+</form>
+                 <input type="button" value="Get Packing!"
 				onclick="findAddress()">
 		</div>
 	</div>
 	
-	<div class = "list"><ul id="itemList">
+	<div class = "list"><ul id="itemList"> 
+	</ul>
+	<ul id="addedItems">
+	</ul>
+	<ul id="addAnItem">
+	<li><input type='text' id='currentValue' value='' placeholder='Enter a new item (ex. medication)'></li><button type='button' onclick='addItem()'>Add Item</button>
 	</ul>
 	</div>
+	
 </body>
 </html>

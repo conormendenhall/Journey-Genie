@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import jSONConverterProject.WeatherInfoObject;
-import jSONConverterProject.WeatherObjectConverter;
 
 public class Trip implements Serializable {
 
@@ -12,7 +11,8 @@ public class Trip implements Serializable {
 	private WeatherInfoObject weatherInfoObject;
 	private ArrayList<Item> items = new ArrayList<Item>();
 	private PackingList packingList = new PackingList();
-	private ArrayList<String> dates;
+	private String startDate;
+	private String endDate;
 
 	double apiMinTemp;
 	double apiMaxTemp;
@@ -71,12 +71,21 @@ public class Trip implements Serializable {
 		this.items = items;
 	}
 
-	public ArrayList<String> getDates() {
-		return dates;
+
+	public String getStartDate() {
+		return startDate;
 	}
 
-	public void setDates(ArrayList<String> dates) {
-		this.dates = dates;
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
+	public String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
 	}
 
 	public void makePackingList() {
