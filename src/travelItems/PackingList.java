@@ -18,20 +18,18 @@ public class PackingList {
 	private Item woolSocks = new Item("wool socks", "cold", false);
 	// hot weather items:
 	private Item summerDress = new Item("summer dress", "hot", false);
-	
 	private Item sleevelessShirt = new Item("sleeveless shirt", "hot", false);
 	// rainy weather items:
 	private Item umbrella = new Item("umbrella", "rainy", false);
 	private Item rainJacket = new Item("rain jacket", "rainy", false);
 	// sunny weather items
 	private Item sunBlock = new Item("sunblock", "sunny", false);
-
 	private Item sunGlasses = new Item("sunglasses", "sunny", false);
 	private Item sunHat = new Item("sun hat", "sunny", false);
 	// windy weather items:
 	private Item windBreaker = new Item("wind breaker", "windy", false);
 	
-	// To do: split non-essential items into two ArrayLists: temperature-based and weather code-based
+	// To do: split non-essential items into two sub-categories: temperature-based and weather code-based
 
 	// Essential Items
 	private Item lipBalm = new Item("lipbalm", "", true);
@@ -45,8 +43,7 @@ public class PackingList {
 	private Item shoes = new Item("shoes","", true);
 	private Item socks = new Item("socks","", true);
 	private Item underwear = new Item("underwear","", true);
-	private Item tShirt = new Item("tshirt", "", true);
-
+	private Item tShirt = new Item("t-shirt", "", true);
 
 	// fill staging area with non-essential items
 	public void fillStagingList() {
