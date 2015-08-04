@@ -54,8 +54,8 @@ public class JourneyGenieTests {
 	@Test
 	public void includedShouldReturnTrueForHotItemOnHotDay() {
 		PackingList p = new PackingList();
-		p.getSleevelessShirt().checkWeatherConditions(0, 80, 90);
-		assertEquals(true, p.getSleevelessShirt().isIncluded());
+		p.getShorts().checkWeatherConditions(0, 80, 90);
+		assertEquals(true, p.getShorts().isIncluded());
 	}
 
 	@Test

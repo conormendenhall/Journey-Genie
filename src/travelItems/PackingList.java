@@ -9,6 +9,7 @@ public class PackingList {
 
 	// args:(name, itemCategory, included)
 	// cold weather items:
+	// not quantity specific
 	private Item snowBoots = new Item("snow boots", "cold", false);
 	private Item heavyCoat = new Item("heavy coat", "cold", false);
 	private Item knitHat = new Item("knit hat", "cold", false);
@@ -16,9 +17,12 @@ public class PackingList {
 	private Item gloves = new Item("gloves", "cold", false);
 	private Item longUndies = new Item("long undies", "cold", false);
 	private Item woolSocks = new Item("wool socks", "cold", false);
+	
+	
 	// hot weather items:
 	private Item summerDress = new Item("summer dress", "hot", false);
-	private Item sleevelessShirt = new Item("sleeveless shirt", "hot", false);
+	private Item swimSuit = new Item("swimsuit", "hot", false);
+	private Item shorts = new Item("shorts", "hot", false);
 	// rainy weather items:
 	private Item umbrella = new Item("umbrella", "rainy", false);
 	private Item rainJacket = new Item("rain jacket", "rainy", false);
@@ -43,7 +47,9 @@ public class PackingList {
 	private Item shoes = new Item("shoes","", true);
 	private Item socks = new Item("socks","", true);
 	private Item underwear = new Item("underwear","", true);
-	private Item tShirt = new Item("t-shirt", "", true);
+	private Item tShirt = new Item("tshirt", "", true);
+	private Item pants = new Item("pants", "", true);
+
 
 	// fill staging area with non-essential items
 	public void fillStagingList() {
@@ -56,15 +62,35 @@ public class PackingList {
 		stagingList.add(longUndies);
 		stagingList.add(woolSocks);
 		stagingList.add(summerDress);
-		stagingList.add(tShirt);
-		stagingList.add(sleevelessShirt);
+		stagingList.add(shorts);
 		stagingList.add(umbrella);
 		stagingList.add(rainJacket);
 		stagingList.add(sunBlock);
 		stagingList.add(sunGlasses);
-		stagingList.add(sunHat );
+		stagingList.add(sunHat);
+		stagingList.add(swimSuit);
 		stagingList.add(windBreaker);
 
+	}
+
+	public Item getSwimSuit() {
+		return swimSuit;
+	}
+
+	public void setSwimSuit(Item swimSuit) {
+		this.swimSuit = swimSuit;
+	}
+
+	public Item getPants() {
+		return pants;
+	}
+
+	public void setPants(Item pants) {
+		this.pants = pants;
+	}
+
+	public void setShorts(Item shorts) {
+		this.shorts = shorts;
 	}
 
 	public ArrayList<Item> getStagingList() {
@@ -212,12 +238,12 @@ public class PackingList {
 		this.longUndies = longUndies;
 	}
 
-	public Item getSleevelessShirt() {
-		return sleevelessShirt;
+	public Item getShorts() {
+		return shorts;
 	}
 
-	public void setSleevelessShirt(Item sleevelessShirt) {
-		this.sleevelessShirt = sleevelessShirt;
+	public void setSleevelessShirt(Item shorts) {
+		this.shorts = shorts;
 	}
 
 	public Item getToothbrush() {

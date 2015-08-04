@@ -4,12 +4,13 @@
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 <meta charset="utf-8">
 <title>Journey Genie</title>
-  <link rel="stylesheet" href="styles/styles.css">
-    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
-    <script type="text/javascript">
-      function addItem() {
-	    console.log("cheesecake");
-	    $('#addedItems').append("<li>" + document.getElementById('currentValue').value +  "<button onclick='removeItem($(this))'>Remove</button>" + "<input type='checkbox'>" + "</li>");
+<link rel="stylesheet" href="styles/styles.css">
+<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+<script type="text/javascript">
+function addItem()
+{	
+	console.log("cheesecake");
+	$('#addedItems').append("<li>" + document.getElementById('currentValue').value +  "<button onclick='removeItem($(this))'>Remove</button>" + "<input type='checkbox'>" + "</li>");
 	document.getElementById('currentValue').value = '';
 }
 
@@ -50,7 +51,7 @@ function removeItem(thing)
 			success : function(data) {
 				$('#itemList').empty();
 				$.each(data.items, function(i, value) {
-					$('#itemList').append("<li>" + this.name + "<button onclick='removeItem($(this))'>Remove</button>" + "<input type='checkbox'>" + "</li>");
+				$('#itemList').append("<li>" + this.name + "<input type='number' value='" + this.quantity + "'><button onclick='removeItem($(this))'>Remove</button>" + "<input type='checkbox'>" + "</li>");
 				});
 				$('#addAnItem').show();
 			}

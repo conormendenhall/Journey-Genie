@@ -52,6 +52,8 @@ public class APIKey extends HttpServlet {
 		thisTrip.setWeatherInfoObject(WeatherObjectConverter.convert(s));
 		thisTrip.setEndDate(Integer.parseInt(request.getParameter("endDate")));
 		thisTrip.setStartDate(Integer.parseInt(request.getParameter("startDate")));
+		thisTrip.countEssentialQuantitySpecificItems();
+		thisTrip.addNonEssentialItemsToPackingList();
 		
 		PrintWriter out = response.getWriter();
 		out.print(new Gson().toJson(thisTrip));

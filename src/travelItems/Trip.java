@@ -28,12 +28,13 @@ public class Trip implements Serializable {
 		items.add(packingList.getShampoo());
 		items.add(packingList.getShaver());
 		items.add(packingList.getSoap());
+		items.add(packingList.getShoes());
 
 		// add quantity specific items
-		items.add(packingList.getShoes());
 		items.add(packingList.getSocks());
 		items.add(packingList.getUnderwear());
 		items.add(packingList.gettShirt());
+		items.add(packingList.getPants());
 
 		// fills staging list with non-essential items
 		packingList.fillStagingList();
@@ -42,7 +43,7 @@ public class Trip implements Serializable {
 	public void countEssentialQuantitySpecificItems()  {
 		int newQuantity = 0;
 		for(int j = startDate; j < endDate; j++) {		
-			for(int i = 8; i<= 11; i++ ) {
+			for(int i = 9; i<= 12; i++ ) {
 				newQuantity = items.get(i).getQuantity();
 				items.get(i).setQuantity(++newQuantity);
 			}
@@ -50,14 +51,35 @@ public class Trip implements Serializable {
 	}
 	
 	
-	private void addNonEssentialItemsToPackingList() {
+	public void addNonEssentialItemsToPackingList() {
+		
+		for(int j = startDate; j <= endDate; j++) { 
+			if(j > 15)
+			{
+				break;
+			}
 		for (int i = 0; i < packingList.stagingList.size(); i++) {
-			packingList.stagingList.get(i).checkWeatherConditions(apiWeatherCode, apiMinTemp, apiMaxTemp);
+			packingList.stagingList.get(i).checkWeatherConditions(weatherInfoObject.list[j].weather[0].id, weatherInfoObject.list[j].temp.min, weatherInfoObject.list[j].temp.max);
 			if (packingList.stagingList.get(i).isIncluded() == true) {
-				items.add(packingList.stagingList.get(i));
+					if(!items.contains(packingList.stagingList.get(i)))
+					{
+						items.add(packingList.stagingList.get(i));
+					}
+					else if(packingList.stagingList.get(i).getName().equals("shorts"))
+					{
+						items.get(items.indexOf(packingList.stagingList.get(i))).setQuantity(items.get(items.indexOf(packingList.stagingList.get(i))).getQuantity() + 1);	
+					}
+					if(packingList.stagingList.get(i).getName().equals("shorts"))
+					{
+						items.get(12).setQuantity(items.get(12).getQuantity() - 1);
+					}
+					
+				}
+				
+			}
 			}
 		}
-	}
+
 
 	public WeatherInfoObject getWeatherInfoObject() {
 		return weatherInfoObject;
@@ -70,7 +92,6 @@ public class Trip implements Serializable {
 		apiMinTemp = weatherInfoObject.list[0].temp.min;
 		apiMaxTemp = weatherInfoObject.list[0].temp.max;
 		apiWeatherCode = weatherInfoObject.list[0].weather[0].id;
-		addNonEssentialItemsToPackingList();
 	}
 
 	public ArrayList<Item> getItems() {
