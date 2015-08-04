@@ -4,13 +4,13 @@
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 <meta charset="utf-8">
 <title>Journey Genie</title>
-<link rel="stylesheet" href="styles/styles.css">
-<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
-<script type="text/javascript">
-function addItem()
-{	
-	console.log("cheesecake");
-	$('#addedItems').append("<li>" + document.getElementById('currentValue').value +  "<button onclick='removeItem($(this))'>Remove</button>" + "<input type='checkbox'>" + "</li>");
+  <link rel="stylesheet" href="styles/styles.css">
+    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript">
+    
+      function addItem() {
+	    console.log("cheesecake");
+	    $('#addedItems').append("<li>" + document.getElementById('currentValue').value +  "<button onclick='removeItem($(this))'>Remove</button>" + "<input type='checkbox'>" + "</li>");
 	document.getElementById('currentValue').value = '';
 }
 
@@ -49,18 +49,62 @@ function removeItem(thing)
 			dataType : "json",
 
 			success : function(data) {
+				
 				$('#itemList').empty();
 				$.each(data.items, function(i, value) {
 				$('#itemList').append("<li>" + this.name + "<input type='number' value='" + this.quantity + "'><button onclick='removeItem($(this))'>Remove</button>" + "<input type='checkbox'>" + "</li>");
 				});
 				$('#addAnItem').show();
+				$('#forecast').show();
+				
+				$('#dt').empty();
+				$('#min').empty();
+				$('#max').empty();
+				$('#id').empty();
+				$('#desc').empty();
+				$('#icon').empty();
+				$('#city').empty();
+				
+				
+				$('#city').append("Location: " + data.weatherInfoObject.city.name + " , " + data.weatherInfoObject.city.country + "<br>");
+				
+				for (i = data.startDate; i <= data.endDate; i++) { 
+				//var month = data.weatherInfoObject.list[i].dt.getMonth();
+				$('#dt').append("<th>" + data.weatherInfoObject.list[i].dt + "</th>");
+				$('#min').append("<td>" + data.weatherInfoObject.list[i].temp.min + "°F" + "</td>");
+				$('#max').append("<td>" + data.weatherInfoObject.list[i].temp.max + "°F"+ "</td>");
+				$('#desc').append("<td>" + data.weatherInfoObject.list[i].weather[0].description + "</td>");
+				$('#icon').append("<td>" + data.weatherInfoObject.list[i].weather[0].icon + "</td>");
+
+// 				$('#eve').append("<td>"+"Evening Temp "+ data.weatherInfoObject.list[i].temp.eve + "</td>");
+// 				$('#morn').append("<td>" +"Morning Temp " +data.weatherInfoObject.list[i].temp.morn + "</td>");
+// 				$('#day').append("<td>" +"Daytime Temp " +data.weatherInfoObject.list[i].temp.day + "</td>");
+// 				$('#night').append("<td>" +"Nighttime Temp " +data.weatherInfoObject.list[i].temp.night + "</td>");
+// 				$('#id').append("<td>"+ "Weather Code " + data.weatherInfoObject.list[i].weather[0].id + "</td>");
+// 				$('#main').append("<td>"+ "Main " + data.weatherInfoObject.list[i].weather[0].main + "</td>");
+
+				//var dateString = moment.unix(data.weatherInfoObject.list[i].dt).format("MM/DD/YYYY");
+				//var dateString = moment.unix($('#dt').append("Date " + data.weatherInfoObject.list[i].dt + "<br>").format("MM/DD/YYYY");
+
+
+
+			
+
+
+
+				}
+				
+				
+				//  text += cars[i] + "<br>";
+				//$('#forecast').append(data.weatherInfoObject.cnt);
+				
 			}
 		});
+		
 		
 	}
 
 </script>
-
 <script>
 
   $(document).ready(function() {
@@ -103,6 +147,26 @@ function removeItem(thing)
             <input type="button" value="Get Packing!" onclick="findAddress()">
 	  </div>
 	</div>
+	
+	  <table id="forecast">
+	  <thead id = "city"/>
+	
+  <tbody>
+ 
+	<tr id = "dt"/>	    
+    <tr id="max"/>
+    <tr id="min"/>
+    <tr id="desc"/>
+    <tr id="icon"/>
+<!--     <tr id="id"/> -->
+<!--     <tr id="eve"/> -->
+<!--     <tr id="morn"/> -->
+<!--     <tr id="day"/> -->
+<!--     <tr id="night"/> -->
+<!--     <tr id="main"/> -->
+</tbody>
+</table>
+
 	<div class = "list">
 	  <ul id="itemList"></ul> 
 	  <ul id="addedItems"></ul>
@@ -112,6 +176,8 @@ function removeItem(thing)
 	    </li>
 	      <button type='button' onclick='addItem()'>Add Item</button>
 	    </ul>
+	 
+	  				
 	</div>
 	
 </body>
