@@ -1,4 +1,4 @@
-package servlets;
+package com.jg.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -9,27 +9,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
-
 import com.google.gson.Gson;
-
-import jSONConverterProject.WeatherInfoObject;
-import jSONConverterProject.WeatherObject;
-import jSONConverterProject.WeatherObjectConverter;
-import travelItems.Trip;
+import com.jg.api.APICall;
+import com.jg.obj.WeatherObjectConverter;
+import com.jg.trip.Trip;
 
 /**
  * Servlet implementation class APIKey
  */
 @WebServlet("/APIKey")
-public class APIKey extends HttpServlet {
+public class FrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public APIKey() {
+    public FrontController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -47,7 +42,7 @@ public class APIKey extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//String key = "1d81c54ec3911d8b9afa4fbae1d7ec37";
-		String s = APIcall.callAPI(request.getParameter("locationRequest"));
+		String s = APICall.callAPI(request.getParameter("locationRequest"));
 		Trip thisTrip = new Trip();
 		thisTrip.setWeatherInfoObject(WeatherObjectConverter.convert(s));
 		thisTrip.setEndDate(Integer.parseInt(request.getParameter("endDate")));

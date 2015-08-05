@@ -1,8 +1,9 @@
-package travelItems;
+package com.jg.trip;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import jSONConverterProject.WeatherInfoObject;
+
+import com.jg.obj.WeatherInfoObject;
 
 public class Trip implements Serializable {
 

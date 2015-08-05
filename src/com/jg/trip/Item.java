@@ -1,4 +1,4 @@
-package travelItems;
+package com.jg.trip;
 
 public class Item {
 

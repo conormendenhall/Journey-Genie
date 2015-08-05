@@ -1,4 +1,4 @@
-package jSONConverterProject;
+package com.jg.obj;
 
 public class ListObject {
 	public long dt;

@@ -1,12 +1,12 @@
-package travelItemsTest;
+package com.jg.test;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import jSONConverterProject.WeatherObjectConverter;
-import travelItems.PackingList;
-import travelItems.Trip;
+import com.jg.obj.WeatherObjectConverter;
+import com.jg.trip.PackingList;
+import com.jg.trip.Trip;
 
 public class JourneyGenieTests {
 
