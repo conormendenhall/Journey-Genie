@@ -4,6 +4,8 @@
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 <meta charset="utf-8">
 <title>Journey Genie</title>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<meta name="google-signin-client_id" content="212913276340-d5gs03s4qak6k67qdeekoeihpds6ttge.apps.googleusercontent.com">
   <link rel="stylesheet" href="styles/styles.css">
     <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
     <script type="text/javascript">
@@ -136,6 +138,8 @@ function removeItem(thing)
   <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 </head>
 <body>
+<div class="g-signin2" data-onsuccess="onSignIn"></div>
+
   <a href=#><img src="http://i.imgur.com/BrggJwL.png" title="source: imgur.com" /></a>
 	<div id='container'>
 	  <div class='cell'>
