@@ -1,4 +1,4 @@
-package travelItems;
+package com.jg.trip;
 
 import java.util.ArrayList;
 

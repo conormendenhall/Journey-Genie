@@ -1,11 +1,11 @@
-package servlets;
+package com.jg.api;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.*;
 
-public class APIcall {
+public class APICall {
 	public static String callAPI() throws IOException {
 		return callAPI("Detroit");
 	}

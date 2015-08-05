@@ -1,4 +1,4 @@
-package jSONConverterProject;
+package com.jg.obj;
 
 import java.lang.reflect.Array;
 

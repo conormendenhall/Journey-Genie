@@ -1,4 +1,4 @@
-package jSONConverterProject;
+package com.jg.obj;
 
 public class TempObject {
 	 public double day;
