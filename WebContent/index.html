@@ -10,6 +10,16 @@
     <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
     <script type="text/javascript">
     
+    
+    function onSignIn(googleUser) {
+    	  var profile = googleUser.getBasicProfile();
+    	  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+    	  console.log('Name: ' + profile.getName());
+    	  console.log('Image URL: ' + profile.getImageUrl());
+    	  console.log('Email: ' + profile.getEmail());
+    	}
+    
+    
       function addItem() {
 	    console.log("cheesecake");
 	    $('#addedItems').append("<li>" + document.getElementById('currentValue').value +  "<button onclick='removeItem($(this))'>Remove</button>" + "<input type='checkbox'>" + "</li>");
