@@ -99,7 +99,7 @@ public class JourneyGenieTests {
 		p.fillStagingList();
 		Trip t = new Trip();
 		t.setWeatherInfoObject(WeatherObjectConverter.convert(s));
-		assertEquals("snow boots", t.getItems().get(12).getName());
+		assertEquals("underwear", t.getItems().get(10).getName());
 	}
 
 	@Test
@@ -109,7 +109,7 @@ public class JourneyGenieTests {
 		p.fillStagingList();
 		Trip t = new Trip();
 		t.setWeatherInfoObject(WeatherObjectConverter.convert(s));
-		assertEquals("summer dress", t.getItems().get(12).getName());
+		assertEquals("pants", t.getItems().get(12).getName());
 	}
 
 	@Test
