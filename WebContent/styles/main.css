@@ -1,24 +1,16 @@
-body{
-	background:#E8E8E8 ;
+body {
+	background: #E8E8E8;
 }
-
 
 .container {
 	margin: auto;
 	font-size: 18px;
-	font-family: 'Nunito', sans-serif;	
+	font-family: 'Nunito', sans-serif;
 }
 
-
-
-
-.col-md-12{
-	text-align:center;
+.col-md-12 {
+	text-align: center;
 }
-
-
-
-
 
 img {
 	width: 30%; /* you can use % */
@@ -30,76 +22,73 @@ img {
 
 input {
 	margin: 5px;
-	text-align:center;
+	text-align: center;
 	background-color: #f8f8f8;
 	border: 0;
 	border-radius: 5px;
-	
 }
 
 input[type="button"] {
-	text-align:center;
-	background:#01CCCC;
+	text-align: center;
+	background: #01CCCC;
 	border-radius: 5px;
 	color: #ffffff;
 	font-size: 18px;
-
 	padding: 10px 20px 10px 20px;
-	width:315px;
+	width: 315px;
 }
 
 input[id=startdatepicker] {
-  
-   width: 150px;
-	
+	width: 150px;
 }
 
 input[id=enddatepicker] {
- 
-  width: 150px;
-  
-  
+	width: 150px;
 }
 
 input[type=search] {
-width: 315px;	
+	width: 315px;
 }
-
-
 
 table {
-  font-family: 'Arial';
-  margin: 25px auto;
-  border-collapse: collapse;
-  border: 1px solid #eee;
-  border-bottom: 2px solid #00cccc;
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1), 0px 10px 20px rgba(0, 0, 0, 0.05), 0px 20px 20px rgba(0, 0, 0, 0.05), 0px 30px 20px rgba(0, 0, 0, 0.05);
-}
-table td:hover {
-  background: #f4f4f4;
-}
-table td:hover td {
-  color: #555;
-}
-table th, table td {
-  color: #999;
-  border: 1px solid #eee;
-  padding: 12px 35px;
-  border-collapse: collapse;
-}
-table th {
-  background: #00cccc;
-  color: #fff;
-  text-transform: uppercase;
-  font-size: 12px;
-}
-table th.last {
-  border-right: none;
+	font-family: 'Arial';
+	margin: 25px auto;
+	border-collapse: collapse;
+	border: 1px solid #eee;
+	border-bottom: 2px solid #00cccc;
+	box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1), 0px 10px 20px
+		rgba(0, 0, 0, 0.05), 0px 20px 20px rgba(0, 0, 0, 0.05), 0px 30px 20px
+		rgba(0, 0, 0, 0.05);
 }
 
+table td:hover {
+	background: #f4f4f4;
+}
+
+table td:hover td {
+	color: #555;
+}
+
+table th, table td {
+	color: #999;
+	border: 1px solid #eee;
+	padding: 12px 35px;
+	border-collapse: collapse;
+}
+
+table th {
+	background: #00cccc;
+	color: #fff;
+	text-transform: uppercase;
+	font-size: 12px;
+}
+
+table th.last {
+	border-right: none;
+}
 
 #addAnItem {
-	display: none;	
+	display: none;
 }
 
 #forecast {

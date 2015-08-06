@@ -5,17 +5,16 @@ import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-
 
 public class DAOPostGres {
 
+	// JAYASHREE <<<<------>>>>  CAN WE MAKE THIS INTO A SINGLETON???
+	
 	private static Connection dbConnection;
 
 	public static void makeDBConnection() {
 
-		System.out.println("-------- PostgreSQL "
-				+ "JDBC Connection Testing ------------");
+		System.out.println("-------- PostgreSQL " + "JDBC Connection Testing ------------");
 
 		try {
 
@@ -23,8 +22,7 @@ public class DAOPostGres {
 
 		} catch (ClassNotFoundException e) {
 
-			System.out.println("Where is your PostgreSQL JDBC Driver? "
-					+ "Include in your library path!");
+			System.out.println("Where is your PostgreSQL JDBC Driver? " + "Include in your library path!");
 			e.printStackTrace();
 
 		}
@@ -35,8 +33,7 @@ public class DAOPostGres {
 
 		try {
 
-			connection = DriverManager.getConnection(
-					"jdbc:postgresql://127.0.0.1:5432/journeyGenie", "postgres",
+			connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/journeyGenie", "postgres",
 					"sesame");
 
 		} catch (SQLException e) {
@@ -53,90 +50,57 @@ public class DAOPostGres {
 		}
 		dbConnection = connection;
 	}
-	
-	public static int addUser(String userName)
-	{
-		try{
+
+	public static int addUser(String userName) {
+		try {
 			makeDBConnection();
 			int userId = findDuplicate(userName);
-			if(userId == 0)
-			{
-			Statement s = dbConnection.createStatement();
-			String sql = "INSERT INTO users(userName) values('" + userName + "')";
-			int rowCount = s.executeUpdate(sql);
-			String sql2 = "SELECT userid FROM users WHERE username='" + userName + "'";
-			Statement s2 = dbConnection.createStatement();
-			ResultSet r = s.executeQuery(sql2);
-			while(r.next())
-			{
-				return r.getInt(1);
-			}	
-			return 0;
-			}
-			else{
+			if (userId == 0) {
+				Statement s = dbConnection.createStatement();
+				String sql = "INSERT INTO users(userName) values('" + userName + "')";
+				int rowCount = s.executeUpdate(sql);
+				String sql2 = "SELECT userid FROM users WHERE username='" + userName + "'";
+				Statement s2 = dbConnection.createStatement();
+				ResultSet r = s.executeQuery(sql2);
+				while (r.next()) {
+					return r.getInt(1);
+				}
+				return 0;
+			} else {
 				deleteEntries(userId);
 				return userId;
 			}
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return 0;
-		
-		/*
-		 * try { Connection c = MySqlConnection.getConnection(); Statement s =
-		 * c.createStatement(); for(int i = 1; i <= 100; i++) { Movie m =
-		 * MovieIO.getMovie(i); String string =
-		 * "INSERT INTO movie (MovieTitle, Genre) VALUES ('" + m.getTitle() +
-		 * "', '" + m.getCategory() + "')"; int rowCount =
-		 * s.executeUpdate(string); }
-		 * 
-		 * } catch (Exception e) { e.printStackTrace(); }
-		 */
-		
-		
-		/*
-		ArrayList<String> genres = new ArrayList<String>();
-		Connection c = MySqlConnection.getConnection();
-		String sql = "SELECT DISTINCT Genre FROM movie";
-		Statement s = c.createStatement();
-		ResultSet r = s.executeQuery(sql);
-		while (r.next()) {
-			genres.add(r.getString(1));
-		}
-		System.out.println(genres);
-		request.setAttribute("genres", genres);
-		*/
 	}
-	
-	private static int findDuplicate(String userName) throws SQLException
-	{
+
+	private static int findDuplicate(String userName) throws SQLException {
 		String sql = "SELECT userid FROM users WHERE username='" + userName + "'";
 		Statement s = dbConnection.createStatement();
 		ResultSet r = s.executeQuery(sql);
-		if(r.next())
+		if (r.next())
 			return r.getInt(1);
 		else
 			return 0;
 	}
-	
+
 	public static void addItems(String item, int quantity, int userID) throws SQLException {
 		Statement s = dbConnection.createStatement();
-		String sql = "INSERT INTO \"itemsList\"(item, quantity, \"userID\") VALUES ('" + item + "'," + quantity + "," + userID + ")";
+		String sql = "INSERT INTO \"itemsList\"(item, quantity, \"userID\") VALUES ('" + item + "'," + quantity + ","
+				+ userID + ")";
 		int rowCount = s.executeUpdate(sql);
 	}
-	public static void closeConnection() throws SQLException
-	{
+
+	public static void closeConnection() throws SQLException {
 		dbConnection.close();
 	}
-	
 
 	public static void deleteEntries(int userID) throws SQLException {
 		Statement s = dbConnection.createStatement();
-		String sql = "DELETE FROM \"itemsList\" USING \"users\" WHERE userid ="  + userID;
+		String sql = "DELETE FROM \"itemsList\" USING \"users\" WHERE userid =" + userID;
 		int rowCount = s.executeUpdate(sql);
 	}
 }
-
-

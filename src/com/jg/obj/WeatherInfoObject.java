@@ -1,7 +1,5 @@
 package com.jg.obj;
 
-import java.lang.reflect.Array;
-
 public class WeatherInfoObject {
 	public int cod;
 	public double message;
@@ -16,12 +14,9 @@ public class WeatherInfoObject {
 	@Override
 	public boolean equals(Object obj) {
 		WeatherInfoObject weatherInfoObject = (WeatherInfoObject) obj;
-		return
-		this.cod == weatherInfoObject.cod && 
-		this.message == weatherInfoObject.message && 
-		this.city == weatherInfoObject.city && 
-		this.cnt == weatherInfoObject.cnt && 
-		this.list == weatherInfoObject.list;
+		return this.cod == weatherInfoObject.cod && this.message == weatherInfoObject.message
+				&& this.city == weatherInfoObject.city && this.cnt == weatherInfoObject.cnt
+				&& this.list == weatherInfoObject.list;
 	}
 
 }

@@ -3,206 +3,30 @@
 <head>
 <meta charset="utf-8">
 <title>Journey Genie</title>
+
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <meta name="google-signin-client_id" content="212913276340-d5gs03s4qak6k67qdeekoeihpds6ttge.apps.googleusercontent.com">
+<!--  ^Google Sign In^ -->
+
 <link rel="stylesheet" type="text/css" href="bootstrap.css">
 <link rel="stylesheet" type="text/css" href="styles/main.css">
+
 <link href='http://fonts.googleapis.com/css?family=Nunito' rel='stylesheet' type='text/css'>
-    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
-    <script type="text/javascript">
-    var j = 0;
-    var itemsArray = new Array();
-    var token = "";
-    function onSignIn(googleUser) {
-    	  var profile = googleUser.getBasicProfile();
-    	  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-    	  console.log('Name: ' + profile.getName());
-    	  console.log('Image URL: ' + profile.getImageUrl());
-    	  console.log('Email: ' + profile.getEmail());
-    	  token = profile.getEmail();
-    	}
-   
-    
-//     $( "li input" ).change(function() {
-//     	var indexes = $.map(itemsArray, function(obj, index) {
-//     	    if(obj.name == itemFound) {
-//     	        return index;
-//     	    }
-//     	})
-//     });
-    
-      function addItem() {
-	    console.log("cheesecake");
-	    //$('#addedItems').append("<li>" + document.getElementById('currentValue').value +  "<button onclick='removeItem($(this))'>Remove</button>" + "<input type='checkbox'>" + "</li>");
-	    $('#addedItems').append("<li id='" + j + "'><div id='" + j + "name'>" + document.getElementById('currentValue').value + "</div><input class='quantity' type='number' value='1'><button onclick='removeItem($(this), 'addedItems')'>Remove</button>" + "<input type='checkbox'>" + "</li>");
-	    j++;
-	    itemsArray.push({name: document.getElementById('currentValue').value, quantity: 1});
-	document.getElementById('currentValue').value = '';
-}
 
-function removeItem(thing, location)
-{
-	var attribute = thing.parent().attr("id");
- 	attribute += "name";
- 	attribute = "#" + attribute;
- 	var parentSelector = "#" + location; 
- 	var itemFound = $('parentSelector').find('attribute').text();
-	console.log(itemFound);
-	var indexes = $.map(itemsArray, function(obj, index) {
-	    if(obj.name == itemFound) {
-	        return index;
-	    }
-	})
-	console.log(indexes);
-	itemsArray.splice(indexes, 1);
-	console.log(itemsArray);
-	thing.parent().remove();
-	
-}
+<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
 
-	function findAddress() {
-		var location = document.getElementById('location').value;
-		console.log(document.getElementById('startdatepicker').value);
-		var seconds = new Date().getTime() / 86400000;
-		var today = new Date();
-		var startDate = new Date(document.getElementById('startdatepicker').value);
-		var endDate = new Date(document.getElementById('enddatepicker').value);
-		today.setHours(0);
-		today.setMinutes(0);
-		today.setSeconds(0);
-		console.log(startDate);
-		console.log(today);
-		startDate = startDate.getTime() - today.getTime();
-		startDate = Math.ceil(startDate / 86400000);
-		console.log(startDate);
-		endDate = endDate.getTime() - today.getTime();
-		endDate = Math.ceil(endDate / 86400000);
-		console.log(endDate);
-		
-		$.ajax({
-			type : "POST",
-			url : "APIKey",
-			data : {
-				"locationRequest" : location.replace(/ /g, ''), "startDate" : startDate, "endDate" : endDate, "token": token, "action" : "add"
-			},
-			dataType : "json",
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 
-			success : function(data) {
-				$('#itemList').empty();
-				$.each(data.items, function(i, value) {
-				$('#itemList').append("<li id='" + i + "'><div id='" + i + "name'>" + this.name + "</div><input class='quantity' type='number' value='" + this.quantity + "'><button onclick=\"removeItem($(this), 'itemList')\">Remove</button>" + "<input type='checkbox'>" + "</li>");
-				itemsArray.push({name: this.name, quantity: this.quantity});
-				});
-				$('#addAnItem').show();
-				$('#forecast').show();
-				
-				$('#dt').empty();
-				$('#min').empty();
-				$('#max').empty();
-				$('#id').empty();
-				$('#desc').empty();
-				$('#icon').empty();
-				$('#city').empty();
-			 	
-				console.log(itemsArray);
-				$('#city').append("Location: " + data.weatherInfoObject.city.name + " , " + data.weatherInfoObject.city.country + "<br>");
-				
-				for (i = data.startDate; i <= data.endDate; i++) { 
-				//var month = data.weatherInfoObject.list[i].dt.getMonth();
-				$('#dt').append("<th>" + data.weatherInfoObject.list[i].dt + "</th>");
-				$('#min').append("<td>" + data.weatherInfoObject.list[i].temp.min + "°F" + "</td>");
-				$('#max').append("<td>" + data.weatherInfoObject.list[i].temp.max + "°F"+ "</td>");
-				$('#desc').append("<td>" + data.weatherInfoObject.list[i].weather[0].description + "</td>");
-				$('#icon').append("<td>" + data.weatherInfoObject.list[i].weather[0].icon + "</td>");
+<script type="text/javascript" src="js/main.js"></script>
 
-// 				$('#eve').append("<td>"+"Evening Temp "+ data.weatherInfoObject.list[i].temp.eve + "</td>");
-// 				$('#morn').append("<td>" +"Morning Temp " +data.weatherInfoObject.list[i].temp.morn + "</td>");
-// 				$('#day').append("<td>" +"Daytime Temp " +data.weatherInfoObject.list[i].temp.day + "</td>");
-// 				$('#night').append("<td>" +"Nighttime Temp " +data.weatherInfoObject.list[i].temp.night + "</td>");
-// 				$('#id').append("<td>"+ "Weather Code " + data.weatherInfoObject.list[i].weather[0].id + "</td>");
-// 				$('#main').append("<td>"+ "Main " + data.weatherInfoObject.list[i].weather[0].main + "</td>");
-
-				//var dateString = moment.unix(data.weatherInfoObject.list[i].dt).format("MM/DD/YYYY");
-				//var dateString = moment.unix($('#dt').append("Date " + data.weatherInfoObject.list[i].dt + "<br>").format("MM/DD/YYYY");
-
-
-
-			
-
-
-
-				}
-				
-				
-				//  text += cars[i] + "<br>";
-				//$('#forecast').append(data.weatherInfoObject.cnt);
-				
-			}
-		});
-		
-		
-	}
-
-	function saveItems()
-	{
-		var sendItemsList = JSON.stringify(itemsArray);
-		$.ajax({
-			type : "POST",
-			url : "APIKey",
-			data : {
-				"itemsArray" : sendItemsList, "action" : "save", "token" : token
-			},
-			dataType : "json",
-
-			success : function(data) {
-				}
-		});
-	}
-</script>
-<script>
-
-  $(document).ready(function() {
-    $("#startdatepicker").datepicker({
-    	  minDate: 0,
-    	  onSelect: function(selected) {
-    		$("#enddatepicker").datepicker("option", "minDate", selected);
-    	  }
-    });
-  });
-  </script>
-    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
-  
-  <script>
-
-  $(document).ready(function() {
-    $("#enddatepicker").datepicker({ 
-    	  minDate: 0,
-    	  onSelect: function(selected) {
-    		$("#startdatepicker").datepicker("option", "maxDate", selected);
-    	  }
-    	});
-  });
-  </script>
-
-  <script type="text/javascript"src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
-  
-<script>
-  function signOut() {
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-      console.log('User signed out.');
-    });
-  }
-</script>
 </head>
 <body>
-	<div class="container">
-  <a href="#" onclick="signOut();">Sign out</a>
+<div class="container">
 	<div class="row">
 <div class="g-signin2" data-onsuccess="onSignIn"></div>
+ <a href="#" onclick="signOut();">Sign out</a>
    	  <div class="col-md-12">
    	  
 
@@ -215,31 +39,19 @@ placeholder="Destination" value="">
 <input id="enddatepicker" placeholder='End Date'/>
 </form>
 <input type="button" value="Get Packing!" onclick="findAddress()">
-
 	</div>
     </div>
-     
-
     </div>
-	
 	  <table id="forecast">
 	  <thead id = "city"/>
-	
-  <tbody>
- 
-	<tr id = "dt"/>	    
-    <tr id="max"/>
-    <tr id="min"/>
-    <tr id="desc"/>
-    <tr id="icon"/>
-<!--     <tr id="id"/> -->
-<!--     <tr id="eve"/> -->
-<!--     <tr id="morn"/> -->
-<!--     <tr id="day"/> -->
-<!--     <tr id="night"/> -->
-<!--     <tr id="main"/> -->
-</tbody>
-</table>
+  		<tbody>
+			<tr id = "dt"/>	    
+		    <tr id="max"/>
+		    <tr id="min"/>
+		    <tr id="desc"/>
+		    <tr id="icon"/>
+		</tbody>
+	</table>
 
 	<div class = "list">
 	  <ul id="itemList"></ul> 
@@ -248,11 +60,8 @@ placeholder="Destination" value="">
 	    <li>
 	      <input type='text' id='currentValue' value='' placeholder='Enter a new item (ex. medication)'>
 	    </li>
-	      <button type='button' onclick='addItem()'>Add Item</button>
-	    </ul>
-
-
-	  				
+	      <button type= 'button' onclick='addItem()'>Add Item</button>
+	    </ul>	
 	</div>
 <input type="button" value="Save" onclick="saveItems()">	
 </body>
