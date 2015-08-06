@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 <meta charset="utf-8">
 <title>Journey Genie</title>
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <meta name="google-signin-client_id" content="212913276340-d5gs03s4qak6k67qdeekoeihpds6ttge.apps.googleusercontent.com">
-  <link rel="stylesheet" href="styles/styles.css">
+<link rel="stylesheet" type="text/css" href="bootstrap.css">
+<link rel="stylesheet" type="text/css" href="styles/styles.css">
+<link href='http://fonts.googleapis.com/css?family=Nunito' rel='stylesheet' type='text/css'>
     <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
     <script type="text/javascript">
     var j = 0;
@@ -198,20 +199,28 @@ function removeItem(thing, location)
 </script>
 </head>
 <body>
-<div class="g-signin2" data-onsuccess="onSignIn"></div>
+	<div class="container">
   <a href="#" onclick="signOut();">Sign out</a>
+	<div class="row">
+<div class="g-signin2" data-onsuccess="onSignIn"></div>
+   	  <div class="col-md-12">
+   	  
 
-  <a href=#><img src="http://i.imgur.com/BrggJwL.png" title="source: imgur.com" /></a>
-	<div id='container'>
-	  <div class='cell'>
-	    <input id="location" type="search" placeholder="Destination" value="">
-          <form>
-            <input id="startdatepicker" placeholder='Start Date'/>
-            <input id="enddatepicker" placeholder='End Date'/>
-          </form>
-            <input type="button" value="Get Packing!" onclick="findAddress()">
-	  </div>
+     
+<a href=#><img src="http://i.imgur.com/BrggJwL.png"/></a>
+<input id="location" type="search" 
+placeholder="Destination" value="">
+<form>
+  <input id="startdatepicker" placeholder='Start Date'/>
+<input id="enddatepicker" placeholder='End Date'/>
+</form>
+<input type="button" value="Get Packing!" onclick="findAddress()">
+
 	</div>
+    </div>
+     
+
+    </div>
 	
 	  <table id="forecast">
 	  <thead id = "city"/>
@@ -241,7 +250,8 @@ function removeItem(thing, location)
 	    </li>
 	      <button type='button' onclick='addItem()'>Add Item</button>
 	    </ul>
-	 
+
+
 	  				
 	</div>
 <input type="button" value="Save" onclick="saveItems()">	
