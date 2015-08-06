@@ -1,4 +1,4 @@
-package servlets;
+package com.jg.db;
 
 import java.sql.DriverManager;
 import java.sql.ResultSet;

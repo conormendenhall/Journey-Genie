@@ -12,11 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.jg.api.APICall;
+import com.jg.db.DAOPostGres;
+import com.jg.db.ItemFromArray;
 import com.jg.obj.WeatherObjectConverter;
 import com.jg.trip.Trip;
-
-import servlets.ItemFromArray;
-import servlets.DAOPostGres;
 
 /**
  * Servlet implementation class APIKey
