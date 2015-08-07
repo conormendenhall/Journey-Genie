@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.*;
 
-public class APICall {
+public class OpenWeatherMapAPIClient {
 	public static String callAPI() throws IOException {
 		return callAPI("Detroit");
 	}
@@ -18,6 +18,7 @@ public class APICall {
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
 		if (conn.getResponseCode() != 200) {
+			conn.disconnect();
 			throw new IOException(conn.getResponseMessage());
 		}
 

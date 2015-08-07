@@ -8,50 +8,39 @@ import java.sql.Statement;
 
 public class DAOPostGres {
 
-	// JAYASHREE <<<<------>>>>  CAN WE MAKE THIS INTO A SINGLETON???
-	
+	// MAKE THIS INTO A SINGLETON!
+
 	private static Connection dbConnection;
 
 	public static void makeDBConnection() {
-
 		System.out.println("-------- PostgreSQL " + "JDBC Connection Testing ------------");
 
 		try {
-
 			Class.forName("org.postgresql.Driver");
 
 		} catch (ClassNotFoundException e) {
-
 			System.out.println("Where is your PostgreSQL JDBC Driver? " + "Include in your library path!");
 			e.printStackTrace();
-
 		}
 
 		System.out.println("PostgreSQL JDBC Driver Registered!");
 
-		Connection connection = null;
-
 		try {
-
-			connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/journeyGenie", "postgres",
+			dbConnection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/journeyGenie", "postgres",
 					"sesame");
-
 		} catch (SQLException e) {
-
 			System.out.println("Connection Failed! Check output console");
 			e.printStackTrace();
-
 		}
 
-		if (connection != null) {
+		if (dbConnection != null) {
 			System.out.println("You made it, take control your database now!");
 		} else {
 			System.out.println("Failed to make connection!");
 		}
-		dbConnection = connection;
 	}
 
-	public static int addUser(String userName) {
+	public static int addUser(String userName) throws SQLException {
 		try {
 			makeDBConnection();
 			int userId = findDuplicate(userName);
@@ -60,20 +49,22 @@ public class DAOPostGres {
 				String sql = "INSERT INTO users(userName) values('" + userName + "')";
 				int rowCount = s.executeUpdate(sql);
 				String sql2 = "SELECT userid FROM users WHERE username='" + userName + "'";
-				Statement s2 = dbConnection.createStatement();
 				ResultSet r = s.executeQuery(sql2);
 				while (r.next()) {
+					dbConnection.close();
 					return r.getInt(1);
 				}
+				dbConnection.close();
 				return 0;
 			} else {
 				deleteEntries(userId);
+				dbConnection.close();
 				return userId;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		dbConnection.close();
 		return 0;
 	}
 
@@ -94,6 +85,7 @@ public class DAOPostGres {
 		int rowCount = s.executeUpdate(sql);
 	}
 
+	// get rid of this method. close connection at end of each method.
 	public static void closeConnection() throws SQLException {
 		dbConnection.close();
 	}

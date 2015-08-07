@@ -1,4 +1,4 @@
-package com.jg.trip;
+package com.jg.model;
 
 public class Item {
 
@@ -7,10 +7,10 @@ public class Item {
 	private boolean included;
 	private int quantity;
 
-	public Item(String name, String weatherCategory, boolean include) {
+	public Item(String name, String itemCategory, boolean include) {
 		super();
 		this.setName(name);
-		this.itemCategory = weatherCategory;
+		this.itemCategory = itemCategory;
 		this.setIncluded(include);
 		this.quantity = 1;
 	}

@@ -11,17 +11,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
-import com.jg.api.APICall;
+import com.jg.api.OpenWeatherMapAPIClient;
 import com.jg.db.DAOPostGres;
 import com.jg.db.ItemFromArray;
-import com.jg.obj.WeatherObjectConverter;
-import com.jg.trip.Trip;
-import com.jg.trip.TripController;
+import com.jg.model.Trip;
+import com.jg.util.ItemSelector;
+import com.jg.util.WeatherObjectConverter;
 
 /**
- * Servlet implementation class APIKey
+ * Servlet implementation class FrontController
  */
-@WebServlet("/APIKey")
+@WebServlet("/FrontController")
 public class FrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -51,30 +51,30 @@ public class FrontController extends HttpServlet {
 			throws ServletException, IOException {
 		// String key = "1d81c54ec3911d8b9afa4fbae1d7ec37";
 		if (request.getParameter("action").equals("add")) {
-			String s = APICall.callAPI(request.getParameter("locationRequest"));
+			String s = OpenWeatherMapAPIClient.callAPI(request.getParameter("locationRequest"));
 			Trip thisTrip = new Trip();
-			thisTrip.setWeatherInfoObject(WeatherObjectConverter.convert(s));
+			thisTrip.setAPIData(WeatherObjectConverter.convert(s));
 			thisTrip.setEndDate(Integer.parseInt(request.getParameter("endDate")));
 			thisTrip.setStartDate(Integer.parseInt(request.getParameter("startDate")));
-			TripController.countEssentialQuantitySpecificItems(thisTrip);
-			TripController.addNonEssentialItemsToInventory(thisTrip);
+			ItemSelector.countEssentialQuantitySpecificItems(thisTrip);
+			ItemSelector.addNonEssentialItemsToInventory(thisTrip);
 			PrintWriter out = response.getWriter();
 			out.print(new Gson().toJson(thisTrip));
 			System.out.println("Start date: " + thisTrip.getStartDate());
 			System.out.println("End date: " + thisTrip.getEndDate());
-			System.out.println("Min temp: " + thisTrip.getWeatherInfoObject().list[0].temp.min);
-			System.out.println("Max temp: " + thisTrip.getWeatherInfoObject().list[0].temp.max);
-			System.out.println("Weather code: " + thisTrip.getWeatherInfoObject().list[0].weather[0].id);
+			System.out.println("Min temp: " + thisTrip.getAPIData().getList()[0].getTemp().getMin());
+			System.out.println("Max temp: " + thisTrip.getAPIData().getList()[0].getTemp().getMax());
+			System.out.println("Weather code: " + thisTrip.getAPIData().getList()[0].getWeather()[0].getId());
 		}
 
 		else if (request.getParameter("action").equals("save")) {
-			int userID = DAOPostGres.addUser(request.getParameter("token"));
 			Gson g = new Gson();
 			ItemFromArray[] a = g.fromJson(request.getParameter("itemsArray"), ItemFromArray[].class);
-			System.out.println(a[0].name);
+			System.out.println(a[0].getName());
 			for (ItemFromArray itemFromArray : a) {
 				try {
-					DAOPostGres.addItems(itemFromArray.name, itemFromArray.quantity, userID);
+					int userID = DAOPostGres.addUser(request.getParameter("token"));
+					DAOPostGres.addItems(itemFromArray.getName(), itemFromArray.getQuantity(), userID);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -88,7 +88,6 @@ public class FrontController extends HttpServlet {
 			}
 
 		}
-		// console printout
 
 	}
 

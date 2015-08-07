@@ -1,14 +1,19 @@
 package com.jg.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.jg.obj.WeatherObjectConverter;
-import com.jg.trip.Inventory;
-import com.jg.trip.ItemController;
-import com.jg.trip.Trip;
-import com.jg.trip.TripController;
+import com.jg.model.APIData;
+import com.jg.model.City;
+import com.jg.model.Coord;
+import com.jg.model.Inventory;
+import com.jg.model.List;
+import com.jg.model.Temp;
+import com.jg.model.Trip;
+import com.jg.model.Weather;
+import com.jg.util.ItemSelector;
+import com.jg.util.WeatherObjectConverter;
 
 public class JourneyGenieTests {
 
@@ -19,73 +24,92 @@ public class JourneyGenieTests {
 
 	@Test
 	public void weatherInfoObjectShouldHaveAllParametersFromJSONString() {
-		String defaultJSon = "{\"cod\":\"200\",\"message\":0.0032,\"city\":{\"id\":1851632,\"name\":\"Shuzenji\",\"coord\":{\"lon\":138.933334,\"lat\":34.966671},\"country\":\"JP\"},\"cnt\":10,\"list\":[{\"dt\":1406080800,\"temp\":{\"day\":297.77,\"min\":293.52,\"max\":297.77,\"night\":293.52,\"eve\":297.77,\"morn\":297.77},\"pressure\":925.04,\"humidity\":76,\"weather\":[{\"id\":803,\"main\":\"Clouds\",\"description\":\"broken clouds\",\"icon\":\"04d\"}]}]}";
-		assertEquals(200, WeatherObjectConverter.convert(defaultJSon).cod);
-		assertEquals(1851632, WeatherObjectConverter.convert(defaultJSon).city.id);
-		assertEquals("Shuzenji", WeatherObjectConverter.convert(defaultJSon).city.name);
-		assertEquals(138.933334, WeatherObjectConverter.convert(defaultJSon).city.coord.lon, 0.0000001);
-		assertEquals(34.966671, WeatherObjectConverter.convert(defaultJSon).city.coord.lat, 0.0000001);
-		assertEquals("JP", WeatherObjectConverter.convert(defaultJSon).city.country);
-		assertEquals(10, WeatherObjectConverter.convert(defaultJSon).cnt);
-		assertEquals(1406080800, WeatherObjectConverter.convert(defaultJSon).list[0].dt);
-		assertEquals(297.77, WeatherObjectConverter.convert(defaultJSon).list[0].temp.day, 0.0001);
-		assertEquals(293.52, WeatherObjectConverter.convert(defaultJSon).list[0].temp.min, 0.0001);
-		assertEquals(297.77, WeatherObjectConverter.convert(defaultJSon).list[0].temp.max, 0.0001);
-		assertEquals(293.52, WeatherObjectConverter.convert(defaultJSon).list[0].temp.night, 0.0001);
-		assertEquals(297.77, WeatherObjectConverter.convert(defaultJSon).list[0].temp.eve, 0.0001);
-		assertEquals(297.77, WeatherObjectConverter.convert(defaultJSon).list[0].temp.morn, 0.0001);
-		assertEquals(803, WeatherObjectConverter.convert(defaultJSon).list[0].weather[0].id);
-		assertEquals(925.04, WeatherObjectConverter.convert(defaultJSon).list[0].pressure, 0.0001);
-		assertEquals(76, WeatherObjectConverter.convert(defaultJSon).list[0].humidity);
+		String defaultJSON = "{\"cod\":\"200\",\"message\":0.0032,\"city\":{\"id\":1851632,\"name\":\"Shuzenji\",\"coord\":{\"lon\":138.933334,\"lat\":34.966671},\"country\":\"JP\"},\"cnt\":10,\"list\":[{\"dt\":1406080800,\"temp\":{\"day\":297.77,\"min\":293.52,\"max\":297.77,\"night\":293.52,\"eve\":297.77,\"morn\":297.77},\"pressure\":925.04,\"humidity\":76,\"weather\":[{\"id\":803,\"main\":\"Clouds\",\"description\":\"broken clouds\",\"icon\":\"04d\"}]}]}";
+		APIData data = WeatherObjectConverter.convert(defaultJSON);
+		City city = data.getCity();
+		Coord coord = city.getCoord();
+		List[] list = data.getList();
+		Temp temp = list[0].getTemp();
+		Weather[] weather = list[0].getWeather();
+
+		assertEquals(200, data.getCod());
+		assertEquals(1851632, city.getId());
+		assertEquals("Shuzenji", city.getName());
+		assertEquals(138.933334, coord.getLon(), 0.0000001);
+		assertEquals(34.966671, coord.getLat(), 0.0000001);
+		assertEquals("JP", city.getCountry());
+		assertEquals(10, data.getCnt());
+		assertEquals(1406080800, list[0].getDt());
+		assertEquals(297.77, temp.getDay(), 0.0001);
+		assertEquals(293.52, temp.getMin(), 0.0001);
+		assertEquals(297.77, temp.getMax(), 0.0001);
+		assertEquals(293.52, temp.getNight(), 0.0001);
+		assertEquals(297.77, temp.getEve(), 0.0001);
+		assertEquals(297.77, temp.getMorn(), 0.0001);
+		assertEquals(803, weather[0].getId());
+		assertEquals(925.04, list[0].getPressure(), 0.0001);
+		assertEquals(76, list[0].getHumidity());
 	}
 
 	@Test
 	public void includedShouldReturnTrueforEssentialItem() {
 		Inventory inventory = new Inventory();
-		ItemController.checkWeatherConditions(inventory.getToothpaste(), 0, 0, 0);
-		assertEquals(true, inventory.getToothpaste().isIncluded());
+
+		ItemSelector.checkWeatherConditions(inventory.getToothpaste(), 0, 0, 0);
+		boolean expected = inventory.getToothpaste().isIncluded();
+
+		assertEquals(true, expected);
 	}
 
 	@Test
 	public void includedShouldReturnTrueForColdItemOnColdDay() {
 		Inventory inventory = new Inventory();
-		ItemController.checkWeatherConditions(inventory.getScarf(), 0, 10, 40);
-		assertEquals(true, inventory.getScarf().isIncluded());
+		ItemSelector.checkWeatherConditions(inventory.getScarf(), 0, 10, 40);
+		boolean expected = inventory.getScarf().isIncluded();
+		assertEquals(true, expected);
 	}
 
 	@Test
 	public void includedShouldReturnTrueForHotItemOnHotDay() {
 		Inventory inventory = new Inventory();
-		ItemController.checkWeatherConditions(inventory.getShorts(), 0, 80, 90);
+		ItemSelector.checkWeatherConditions(inventory.getShorts(), 0, 80, 90);
 		assertEquals(true, inventory.getShorts().isIncluded());
 	}
 
 	@Test
 	public void shouldReturnTrueForSunnyItemNeededOnSunnyDay() {
 		Inventory inventory = new Inventory();
-		ItemController.checkWeatherConditions(inventory.getSunGlasses(), 800, 0, 0);
-		ItemController.checkWeatherConditions(inventory.getSunBlock(), 801, 0, 0);
-		ItemController.checkWeatherConditions(inventory.getSunHat(), 802, 0, 0);
-		assertEquals(true, inventory.getSunGlasses().isIncluded());
-		assertEquals(true, inventory.getSunBlock().isIncluded());
-		assertEquals(true, inventory.getSunHat().isIncluded());
+		ItemSelector.checkWeatherConditions(inventory.getSunGlasses(), 800, 0, 0);
+		ItemSelector.checkWeatherConditions(inventory.getSunBlock(), 801, 0, 0);
+		ItemSelector.checkWeatherConditions(inventory.getSunHat(), 802, 0, 0);
+
+		boolean expected = inventory.getSunGlasses().isIncluded();
+		assertEquals(true, expected);
+
+		boolean expected2 = inventory.getSunBlock().isIncluded();
+		assertEquals(true, expected2);
+
+		boolean expected3 = inventory.getSunHat().isIncluded();
+		assertEquals(true, expected3);
 	}
 
 	@Test
 	public void includedShouldReturnTrueForRainyItemOnRainyDay() {
 		Inventory inventory = new Inventory();
-		ItemController.checkWeatherConditions(inventory.getRainJacket(), 300, 0, 0);
-		ItemController.checkWeatherConditions(inventory.getUmbrella(), 300, 0, 0);
+		ItemSelector.checkWeatherConditions(inventory.getRainJacket(), 300, 0, 0);
+		ItemSelector.checkWeatherConditions(inventory.getUmbrella(), 300, 0, 0);
 		assertEquals(true, inventory.getRainJacket().isIncluded());
 		assertEquals(true, inventory.getUmbrella().isIncluded());
 	}
 
-	// @Test
-	// public void essentialItemsShouldBeInPackingList() {
-	// PackingList p = new PackingList();
-	// Trip t = new Trip();
-	// assertContains( , );
-	// }
+//	@Test
+//	public void essentialItemsShouldBeInPackingList() {
+//		Inventory i = new Inventory();
+//		Trip t = new Trip();
+//		String actual = null;
+//		String expected = null;
+//		assertEquals(actual, expected);
+//	}
 
 	@Test
 	public void testIfStagingListHasSnowBoots() {
@@ -100,7 +124,7 @@ public class JourneyGenieTests {
 		Inventory inventory = new Inventory();
 		inventory.fillStagingList();
 		Trip trip = new Trip();
-		trip.setWeatherInfoObject(WeatherObjectConverter.convert(s));
+		trip.setAPIData(WeatherObjectConverter.convert(s));
 		assertEquals("underwear", trip.getItems().get(10).getName());
 	}
 
@@ -110,7 +134,7 @@ public class JourneyGenieTests {
 		Inventory inventory = new Inventory();
 		inventory.fillStagingList();
 		Trip trip = new Trip();
-		trip.setWeatherInfoObject(WeatherObjectConverter.convert(defaultJSon));
+		trip.setAPIData(WeatherObjectConverter.convert(defaultJSon));
 		assertEquals("pants", trip.getItems().get(12).getName());
 	}
 
@@ -118,10 +142,10 @@ public class JourneyGenieTests {
 	public void quantityOfUnderwearShouldBe2For2DayTrip() {
 		String defaultJSon = "{\"cod\":\"200\",\"message\":0.0032,\"city\":{\"id\":1851632,\"name\":\"Shuzenji\",\"coord\":{\"lon\":138.933334,\"lat\":34.966671},\"country\":\"JP\"},\"cnt\":10,\"list\":[{\"dt\":1406080800,\"temp\":{\"day\":297.77,\"min\":80,\"max\":100,\"night\":293.52,\"eve\":297.77,\"morn\":297.77},\"pressure\":925.04,\"humidity\":76,\"weather\":[{\"id\":602,\"main\":\"Clouds\",\"description\":\"broken clouds\",\"icon\":\"04d\"}]}]}";
 		Trip trip = new Trip();
-		trip.setWeatherInfoObject(WeatherObjectConverter.convert(defaultJSon));
+		trip.setAPIData(WeatherObjectConverter.convert(defaultJSon));
 		trip.setStartDate(4);
 		trip.setEndDate(5);
-		TripController.countEssentialQuantitySpecificItems(trip);
+		ItemSelector.countEssentialQuantitySpecificItems(trip);
 		assertEquals(2, trip.getItems().get(10).getQuantity());
 	}
 

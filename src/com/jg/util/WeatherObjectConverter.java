@@ -1,16 +1,17 @@
-package com.jg.obj;
+package com.jg.util;
 
 import com.google.gson.Gson;
+import com.jg.model.APIData;
 
 public class WeatherObjectConverter {
 
-	public static WeatherInfoObject convert(String string) {
+	public static APIData convert(String string) {
 		if (string == null || string.trim().equals(""))
 			throw new IllegalArgumentException();
 
 		Gson g = new Gson();
-		WeatherInfoObject weatherInfoObject = g.fromJson(string, WeatherInfoObject.class);
-		return weatherInfoObject;
+		APIData data = g.fromJson(string, APIData.class);
+		return data;
 	}
 
 }
