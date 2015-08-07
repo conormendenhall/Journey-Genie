@@ -21,26 +21,11 @@
 	    console.log("cheesecake");
 	    $('#addedItems').append("<li id='" + j + "add'><div id='" + j + "addname'>" + document.getElementById('currentValue').value + "</div><input id='" + j + "addquantity' type='number' value='1'><button onclick='removeItem($(this))'>Remove</button>" + "<input type='checkbox'>" + "</li>");
 	    j++;
-//	    itemsArray.push({name: document.getElementById('currentValue').value, quantity: 1});
 	document.getElementById('currentValue').value = '';
 }
 
 function removeItem(thing)
 {
-//	var attribute = thing.parent().attr("id");
-// 	attribute += "name";
-// 	attribute = "#" + attribute;
-// 	var parentSelector = "#" + location; 
-// 	var itemFound = $('parentSelector').find('attribute').text();
-//	console.log(itemFound);
-//	var indexes = $.map(itemsArray, function(obj, index) {
-//	    if(obj.name == itemFound) {
-//	        return index;
-//	    }
-//	})
-//	console.log(indexes);
-//	itemsArray.splice(indexes, 1);
-//	console.log(itemsArray);
 	thing.parent().remove();
 }
 
@@ -75,7 +60,6 @@ function removeItem(thing)
 				$('#itemList').empty();
 				$.each(data.items, function(i, value) {
 				$('#itemList').append("<li id='" + i + "'><div id='" + i + "name'>" + this.name + "</div><input id='" + i + "quantity' class='quantity' type='number' value='" + this.quantity + "'><button onclick=\"removeItem($(this))\">Remove</button>" + "<input type='checkbox'>" + "</li>");
-				//itemsArray.push({name: this.name, quantity: this.quantity});
 				});
 				$('#addAnItem').show();
 				$('#forecast').show();
@@ -125,7 +109,6 @@ function removeItem(thing)
 		 	var name2 = $(parentSelector).find(attribute2).val();
 		 	console.log(name2);
 		 	itemsArray.push({name: name, quantity: name2});
-		 	//$('#addedItems').append("<li id='" + j + "add'><div id='" + j + "addname'>" + document.getElementById('currentValue').value + "</div><input id='" + j + "addname'> type='number' value='1'><button onclick='removeItem($(this), 'addedItems')'>Remove</button>" + "<input type='checkbox'>" + "</li>");
 		    
 		});
 		$("#addedItems li").each(function() {
@@ -147,7 +130,6 @@ function removeItem(thing)
 		 	var name2 = $(parentSelector).find(attribute2).val();
 		 	console.log(name2);
 		 	itemsArray.push({name: name, quantity: name2});
-		 	//$('#addedItems').append("<li id='" + j + "add'><div id='" + j + "addname'>" + document.getElementById('currentValue').value + "</div><input id='" + j + "addname'> type='number' value='1'><button onclick='removeItem($(this), 'addedItems')'>Remove</button>" + "<input type='checkbox'>" + "</li>");
 		    
 		});
 		var sendItemsList = JSON.stringify(itemsArray);
@@ -171,27 +153,6 @@ function removeItem(thing)
     	  }
     });
   });
-  
-
-//  $(document).ready(function() {
-//  $("li input").change(function() {
-//	  console.log($(this).parent());
-//	  console.log("waffles");
-//	  var attribute = $(this).parent().attr("id");
-//	 	attribute += "name";
-//	 	attribute = "#" + attribute;
-//	 	var location = $(this).parent().parent().attr("id");
-//	 	console.log(location);
-//	 	var parentSelector = "#" + location; 
-//	 	var itemFound = $('parentSelector').find('attribute').text();
-//		console.log(itemFound);
-//		var indexes = $.map(itemsArray, function(obj, index) {
-//		    if(obj.name == itemFound) {
-//		        return index;
-//		    }
-//		})
-//	});
-//  });
   
   $(document).ready(function() {
 	    $("#enddatepicker").datepicker({ 
