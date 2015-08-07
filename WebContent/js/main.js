@@ -1,5 +1,4 @@
  var j = 0;
-    var itemsArray = new Array();
     var token = "";
     function onSignIn(googleUser) {
     	  var profile = googleUser.getBasicProfile();
@@ -8,34 +7,41 @@
     	  console.log('Image URL: ' + profile.getImageUrl());
     	  console.log('Email: ' + profile.getEmail());
     	  token = profile.getEmail();
+    	  if(token != "")
+    		{
+    			$('#load').show();
+    			if ( $('#addAnItem').css('display') != 'none' ){
+    				$('#save').show();
+    			}
+    			
+    		}
     	}
     
       function addItem() {
 	    console.log("cheesecake");
-	    $('#addedItems').append("<li id='" + j + "'><div id='" + j + "name'>" + document.getElementById('currentValue').value + "</div><input class='quantity' type='number' value='1'><button onclick='removeItem($(this), 'addedItems')'>Remove</button>" + "<input type='checkbox'>" + "</li>");
+	    $('#addedItems').append("<li id='" + j + "add'><div id='" + j + "addname'>" + document.getElementById('currentValue').value + "</div><input id='" + j + "addquantity' type='number' value='1'><button onclick='removeItem($(this))'>Remove</button>" + "<input type='checkbox'>" + "</li>");
 	    j++;
-	    itemsArray.push({name: document.getElementById('currentValue').value, quantity: 1});
+//	    itemsArray.push({name: document.getElementById('currentValue').value, quantity: 1});
 	document.getElementById('currentValue').value = '';
 }
 
-function removeItem(thing, location)
+function removeItem(thing)
 {
-	var attribute = thing.parent().attr("id");
- 	attribute += "name";
- 	attribute = "#" + attribute;
- 	var parentSelector = "#" + location; 
- 	var itemFound = $('parentSelector').find('attribute').text();
-	console.log(itemFound);
-	var indexes = $.map(itemsArray, function(obj, index) {
-	    if(obj.name == itemFound) {
-	        return index;
-	    }
-	})
-	console.log(indexes);
-	itemsArray.splice(indexes, 1);
-	console.log(itemsArray);
+//	var attribute = thing.parent().attr("id");
+// 	attribute += "name";
+// 	attribute = "#" + attribute;
+// 	var parentSelector = "#" + location; 
+// 	var itemFound = $('parentSelector').find('attribute').text();
+//	console.log(itemFound);
+//	var indexes = $.map(itemsArray, function(obj, index) {
+//	    if(obj.name == itemFound) {
+//	        return index;
+//	    }
+//	})
+//	console.log(indexes);
+//	itemsArray.splice(indexes, 1);
+//	console.log(itemsArray);
 	thing.parent().remove();
-	
 }
 
 	function findAddress() {
@@ -68,11 +74,15 @@ function removeItem(thing, location)
 			success : function(data) {
 				$('#itemList').empty();
 				$.each(data.items, function(i, value) {
-				$('#itemList').append("<li id='" + i + "'><div id='" + i + "name'>" + this.name + "</div><input class='quantity' type='number' value='" + this.quantity + "'><button onclick=\"removeItem($(this), 'itemList')\">Remove</button>" + "<input type='checkbox'>" + "</li>");
-				itemsArray.push({name: this.name, quantity: this.quantity});
+				$('#itemList').append("<li id='" + i + "'><div id='" + i + "name'>" + this.name + "</div><input id='" + i + "quantity' class='quantity' type='number' value='" + this.quantity + "'><button onclick=\"removeItem($(this))\">Remove</button>" + "<input type='checkbox'>" + "</li>");
+				//itemsArray.push({name: this.name, quantity: this.quantity});
 				});
 				$('#addAnItem').show();
 				$('#forecast').show();
+				if(token != "")
+				{
+					$('#save').show();
+				}
 				$('#dt').empty();
 				$('#min').empty();
 				$('#max').empty();
@@ -80,8 +90,7 @@ function removeItem(thing, location)
 				$('#desc').empty();
 				$('#icon').empty();
 				$('#city').empty();
-			 	
-				console.log(itemsArray);
+
 				$('#city').append("Location: " + data.weatherInfoObject.city.name + " , " + data.weatherInfoObject.city.country + "<br>");
 				
 				for (i = data.startDate; i <= data.endDate; i++) { 
@@ -97,6 +106,51 @@ function removeItem(thing, location)
 	
 	function saveItems()
 	{
+		var itemsArray = new Array();
+		$("#itemList li").each(function() {
+		    var currentList = $(this).attr("id"); 
+		    
+		    var attribute = $(this).attr("id");
+		 	attribute += "name";
+		 	attribute = "#" + attribute;
+		 	var parentSelector = "#" + currentList; 
+		 	console.log(parentSelector);
+		 	console.log(attribute);
+		 	var name = $(parentSelector).find(attribute).text();
+		 	console.log(name);
+		 	var attribute2 = $(this).attr("id");
+		 	attribute2 += "quantity";
+		 	attribute2 = "#" + attribute2;
+		 	console.log(parentSelector);
+		 	console.log(attribute2);
+		 	var name2 = $(parentSelector).find(attribute2).val();
+		 	console.log(name2);
+		 	itemsArray.push({name: name, quantity: name2});
+		 	//$('#addedItems').append("<li id='" + j + "add'><div id='" + j + "addname'>" + document.getElementById('currentValue').value + "</div><input id='" + j + "addname'> type='number' value='1'><button onclick='removeItem($(this), 'addedItems')'>Remove</button>" + "<input type='checkbox'>" + "</li>");
+		    
+		});
+		$("#addedItems li").each(function() {
+		    var currentList = $(this).attr("id"); 
+		    
+		    var attribute = $(this).attr("id");
+		 	attribute += "name";
+		 	attribute = "#" + attribute;
+		 	var parentSelector = "#" + currentList; 
+		 	console.log(parentSelector);
+		 	console.log(attribute);
+		 	var name = $(parentSelector).find(attribute).text();
+		 	console.log(name);
+		 	var attribute2 = $(this).attr("id");
+		 	attribute2 += "quantity";
+		 	attribute2 = "#" + attribute2;
+		 	console.log(parentSelector);
+		 	console.log(attribute2);
+		 	var name2 = $(parentSelector).find(attribute2).val();
+		 	console.log(name2);
+		 	itemsArray.push({name: name, quantity: name2});
+		 	//$('#addedItems').append("<li id='" + j + "add'><div id='" + j + "addname'>" + document.getElementById('currentValue').value + "</div><input id='" + j + "addname'> type='number' value='1'><button onclick='removeItem($(this), 'addedItems')'>Remove</button>" + "<input type='checkbox'>" + "</li>");
+		    
+		});
 		var sendItemsList = JSON.stringify(itemsArray);
 		$.ajax({
 			type : "POST",
@@ -119,6 +173,27 @@ function removeItem(thing, location)
     });
   });
   
+
+//  $(document).ready(function() {
+//  $("li input").change(function() {
+//	  console.log($(this).parent());
+//	  console.log("waffles");
+//	  var attribute = $(this).parent().attr("id");
+//	 	attribute += "name";
+//	 	attribute = "#" + attribute;
+//	 	var location = $(this).parent().parent().attr("id");
+//	 	console.log(location);
+//	 	var parentSelector = "#" + location; 
+//	 	var itemFound = $('parentSelector').find('attribute').text();
+//		console.log(itemFound);
+//		var indexes = $.map(itemsArray, function(obj, index) {
+//		    if(obj.name == itemFound) {
+//		        return index;
+//		    }
+//		})
+//	});
+//  });
+  
   $(document).ready(function() {
 	    $("#enddatepicker").datepicker({ 
 	    	  minDate: 0,
@@ -127,6 +202,31 @@ function removeItem(thing, location)
 	    	  }
 	    	});
 	  });
+  
+  function loadItems()
+	{
+	  $('#save').show();
+	  
+	  $.ajax({
+			type : "POST",
+			url : "APIKey",
+			data : {
+				"action" : "load", "token" : token
+			},
+			dataType : "json",
+
+			success : function(data) {
+				$('#itemList').empty();
+				$('#addedItems').empty();
+				$.each(data, function(i, value) {	
+					$('#itemList').append("<li id='" + i + "'><div id='" + i + "name'>" + this.name + "</div><input id='" + i + "quantity' class='quantity' type='number' value='" + this.quantity + "'><button onclick=\"removeItem($(this))\">Remove</button>" + "<input type='checkbox'>" + "</li>");
+					});
+					$('#addAnItem').show();
+				}
+		});
+	}
+  
+  
   
   
   function signOut() {

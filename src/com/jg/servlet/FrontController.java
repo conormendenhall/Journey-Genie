@@ -71,10 +71,10 @@ public class FrontController extends HttpServlet {
 			int userID = DAOPostGres.addUser(request.getParameter("token"));
 			Gson g = new Gson();
 			ItemFromArray[] a = g.fromJson(request.getParameter("itemsArray"), ItemFromArray[].class);
-			System.out.println(a[0].name);
+			System.out.println(a[0].getName());
 			for (ItemFromArray itemFromArray : a) {
 				try {
-					DAOPostGres.addItems(itemFromArray.name, itemFromArray.quantity, userID);
+					DAOPostGres.addItems(itemFromArray.getName(), itemFromArray.getQuantity(), userID);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -89,7 +89,16 @@ public class FrontController extends HttpServlet {
 
 		}
 		// console printout
-
+		else if (request.getParameter("action").equals("load"))
+		{
+			try {
+				PrintWriter out = response.getWriter();
+				out.print(new Gson().toJson(DAOPostGres.loadEntries(request.getParameter("token"))));
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 }

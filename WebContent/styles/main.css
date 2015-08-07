@@ -87,10 +87,7 @@ table th.last {
 	border-right: none;
 }
 
-#addAnItem {
+#addAnItem, #forecast,  #save, #load{
 	display: none;
 }
 
-#forecast {
-	display: none;
-}

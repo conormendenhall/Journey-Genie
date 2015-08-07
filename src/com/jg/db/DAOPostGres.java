@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class DAOPostGres {
 
@@ -61,7 +62,7 @@ public class DAOPostGres {
 				int rowCount = s.executeUpdate(sql);
 				String sql2 = "SELECT userid FROM users WHERE username='" + userName + "'";
 				Statement s2 = dbConnection.createStatement();
-				ResultSet r = s.executeQuery(sql2);
+				ResultSet r = s2.executeQuery(sql2);
 				while (r.next()) {
 					return r.getInt(1);
 				}
@@ -102,5 +103,23 @@ public class DAOPostGres {
 		Statement s = dbConnection.createStatement();
 		String sql = "DELETE FROM \"itemsList\" USING \"users\" WHERE userid =" + userID;
 		int rowCount = s.executeUpdate(sql);
+	}
+	
+	public static ArrayList<ItemFromArray> loadEntries(String userName) throws SQLException
+	{
+		makeDBConnection();
+		ArrayList items = new ArrayList<ItemFromArray>();
+		int userId = findDuplicate(userName);
+		String sql2 = "SELECT item, quantity FROM \"itemsList\" WHERE \"userID\"=" + userId;
+		Statement s2 = dbConnection.createStatement();
+		ResultSet r = s2.executeQuery(sql2);
+		while (r.next()) {
+			ItemFromArray a = new ItemFromArray();
+			a.setName(r.getString(1));
+			a.setQuantity(r.getInt(2));
+			items.add(a);
+		}
+		dbConnection.close();
+		return items;
 	}
 }

@@ -38,14 +38,17 @@ placeholder="Destination" value="">
   <input id="startdatepicker" placeholder='Start Date'/>
 <input id="enddatepicker" placeholder='End Date'/>
 </form>
-<input type="button" value="Get Packing!" onclick="findAddress()">
+<input type="button" value="Get Packing!" onclick="findAddress()" id="pack">
+<div id="load">or
+<input type="button" value="Load your old list" onclick="loadItems()">
+</div>
 	</div>
     </div>
     </div>
 	  <table id="forecast">
 	  <thead id = "city"/>
   		<tbody>
-			<tr id = "dt"/>	    
+			<tr id ="dt"/>	    
 		    <tr id="max"/>
 		    <tr id="min"/>
 		    <tr id="desc"/>
@@ -63,6 +66,6 @@ placeholder="Destination" value="">
 	      <button type= 'button' onclick='addItem()'>Add Item</button>
 	    </ul>	
 	</div>
-<input type="button" value="Save" onclick="saveItems()">	
+<input type="button" id="save" value="Save" onclick="saveItems()">	
 </body>
 </html>
