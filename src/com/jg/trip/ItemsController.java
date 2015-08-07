@@ -1,5 +1,7 @@
 package com.jg.trip;
 
+import com.jg.model.Item;
+
 public class ItemsController {
 	
 	public static void checkWeatherConditions(Item item, int apiWeatherCode, double apiMinTemp, double apiMaxTemp) {

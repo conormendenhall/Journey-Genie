@@ -1,22 +1,16 @@
-package com.jg.trip;
+package com.jg.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import com.jg.obj.WeatherInfoObject;
-
 public class Trip implements Serializable {
 
 	private static final long serialVersionUID = 618353573734930660L;
-	private WeatherInfoObject weatherInfoObject;
+	private APIData apiData;
 	private ArrayList<Item> items = new ArrayList<Item>();
 	private Inventory inventory = new Inventory();
 	private int startDate;
 	private int endDate;
-
-	double apiMinTemp;
-	double apiMaxTemp;
-	int apiWeatherCode;
 
 	public Trip() {
 
@@ -45,21 +39,16 @@ public class Trip implements Serializable {
 		return inventory;
 	}
 
+	public APIData getAPIData() {
+		return apiData;
+	}
+
+	public void setAPIData(APIData apiData) {
+		this.apiData = apiData;
+	}
+
 	public void setInventory(Inventory inventory) {
 		this.inventory = inventory;
-	}
-
-	public WeatherInfoObject getWeatherInfoObject() {
-		return weatherInfoObject;
-	}
-
-	public void setWeatherInfoObject(WeatherInfoObject weatherInfoObject) {
-		this.weatherInfoObject = weatherInfoObject;
-
-		// could the following be extracted?
-		apiMinTemp = weatherInfoObject.list[0].temp.min;
-		apiMaxTemp = weatherInfoObject.list[0].temp.max;
-		apiWeatherCode = weatherInfoObject.list[0].weather[0].id;
 	}
 
 	public ArrayList<Item> getItems() {
@@ -88,29 +77,5 @@ public class Trip implements Serializable {
 
 	public void makePackingList() {
 
-	}
-
-	public double getApiMinTemp() {
-		return apiMinTemp;
-	}
-
-	public void setApiMinTemp(double apiMinTemp) {
-		this.apiMinTemp = apiMinTemp;
-	}
-
-	public double getApiMaxTemp() {
-		return apiMaxTemp;
-	}
-
-	public void setApiMaxTemp(double apiMaxTemp) {
-		this.apiMaxTemp = apiMaxTemp;
-	}
-
-	public int getApiWeatherCode() {
-		return apiWeatherCode;
-	}
-
-	public void setApiWeatherCode(int apiWeatherCode) {
-		this.apiWeatherCode = apiWeatherCode;
 	}
 }

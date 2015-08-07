@@ -1,4 +1,4 @@
-package com.jg.trip;
+package com.jg.model;
 
 import java.util.ArrayList;
 

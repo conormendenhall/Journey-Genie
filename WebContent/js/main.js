@@ -65,7 +65,7 @@ function removeItem(thing)
 		
 		$.ajax({
 			type : "POST",
-			url : "APIKey",
+			url : "FrontController",
 			data : {
 				"locationRequest" : location.replace(/ /g, ''), "startDate" : startDate, "endDate" : endDate, "token": token, "action" : "add"
 			},
@@ -89,16 +89,15 @@ function removeItem(thing)
 				$('#id').empty();
 				$('#desc').empty();
 				$('#icon').empty();
-				$('#city').empty();
-
-				$('#city').append("Location: " + data.weatherInfoObject.city.name + " , " + data.weatherInfoObject.city.country + "<br>");
+				$('#city').empty();	 	
+				$('#city').append("Location: " + data.apiData.city.name + " , " + data.apiData.city.country + "<br>");
 				
 				for (i = data.startDate; i <= data.endDate; i++) { 
-				$('#dt').append("<th>" + data.weatherInfoObject.list[i].dt + "</th>");
-				$('#min').append("<td>" + data.weatherInfoObject.list[i].temp.min + "°F" + "</td>");
-				$('#max').append("<td>" + data.weatherInfoObject.list[i].temp.max + "°F"+ "</td>");
-				$('#desc').append("<td>" + data.weatherInfoObject.list[i].weather[0].description + "</td>");
-				$('#icon').append("<td>" + data.weatherInfoObject.list[i].weather[0].icon + "</td>");
+				$('#dt').append("<th>" + data.apiData.list[i].dt + "</th>");
+				$('#min').append("<td>" + data.apiData.list[i].temp.min + "°F" + "</td>");
+				$('#max').append("<td>" + data.apiData.list[i].temp.max + "°F"+ "</td>");
+				$('#desc').append("<td>" + data.apiData.list[i].weather[0].description + "</td>");
+				$('#icon').append("<td>" + data.apiData.list[i].weather[0].icon + "</td>");
 				}	
 			}
 		});
@@ -154,7 +153,7 @@ function removeItem(thing)
 		var sendItemsList = JSON.stringify(itemsArray);
 		$.ajax({
 			type : "POST",
-			url : "APIKey",
+			url : "FrontController",
 			data : {
 				"itemsArray" : sendItemsList, "action" : "save", "token" : token
 			},
@@ -209,7 +208,7 @@ function removeItem(thing)
 	  
 	  $.ajax({
 			type : "POST",
-			url : "APIKey",
+			url : "FrontController",
 			data : {
 				"action" : "load", "token" : token
 			},
