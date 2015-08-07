@@ -54,8 +54,9 @@ public class JourneyGenieTests {
 	@Test
 	public void includedShouldReturnTrueforEssentialItem() {
 		Inventory inventory = new Inventory();
+		Trip trip = new Trip();
 
-		ItemSelector.checkWeatherConditions(inventory.getToothpaste(), 0, 0, 0);
+		ItemSelector.checkWeatherConditions(inventory.getToothpaste(), trip, 0, 0, 0);
 		boolean expected = inventory.getToothpaste().isIncluded();
 
 		assertEquals(true, expected);
@@ -64,7 +65,9 @@ public class JourneyGenieTests {
 	@Test
 	public void includedShouldReturnTrueForColdItemOnColdDay() {
 		Inventory inventory = new Inventory();
-		ItemSelector.checkWeatherConditions(inventory.getScarf(), 0, 10, 40);
+		Trip trip = new Trip();
+
+		ItemSelector.checkWeatherConditions(inventory.getScarf(), trip, 0, 10, 40);
 		boolean expected = inventory.getScarf().isIncluded();
 		assertEquals(true, expected);
 	}
@@ -72,16 +75,20 @@ public class JourneyGenieTests {
 	@Test
 	public void includedShouldReturnTrueForHotItemOnHotDay() {
 		Inventory inventory = new Inventory();
-		ItemSelector.checkWeatherConditions(inventory.getShorts(), 0, 80, 90);
+		Trip trip = new Trip();
+
+		ItemSelector.checkWeatherConditions(inventory.getShorts(), trip, 0, 80, 90);
 		assertEquals(true, inventory.getShorts().isIncluded());
 	}
 
 	@Test
 	public void shouldReturnTrueForSunnyItemNeededOnSunnyDay() {
 		Inventory inventory = new Inventory();
-		ItemSelector.checkWeatherConditions(inventory.getSunGlasses(), 800, 0, 0);
-		ItemSelector.checkWeatherConditions(inventory.getSunBlock(), 801, 0, 0);
-		ItemSelector.checkWeatherConditions(inventory.getSunHat(), 802, 0, 0);
+		Trip trip = new Trip();
+
+		ItemSelector.checkWeatherConditions(inventory.getSunGlasses(), trip, 800, 0, 0);
+		ItemSelector.checkWeatherConditions(inventory.getSunBlock(), trip, 801, 0, 0);
+		ItemSelector.checkWeatherConditions(inventory.getSunHat(), trip, 802, 0, 0);
 
 		boolean expected = inventory.getSunGlasses().isIncluded();
 		assertEquals(true, expected);
@@ -96,8 +103,10 @@ public class JourneyGenieTests {
 	@Test
 	public void includedShouldReturnTrueForRainyItemOnRainyDay() {
 		Inventory inventory = new Inventory();
-		ItemSelector.checkWeatherConditions(inventory.getRainJacket(), 300, 0, 0);
-		ItemSelector.checkWeatherConditions(inventory.getUmbrella(), 300, 0, 0);
+		Trip trip = new Trip();
+
+		ItemSelector.checkWeatherConditions(inventory.getRainJacket(), trip, 300, 0, 0);
+		ItemSelector.checkWeatherConditions(inventory.getUmbrella(), trip, 300, 0, 0);
 		assertEquals(true, inventory.getRainJacket().isIncluded());
 		assertEquals(true, inventory.getUmbrella().isIncluded());
 	}
@@ -114,7 +123,7 @@ public class JourneyGenieTests {
 	@Test
 	public void testIfStagingListHasSnowBoots() {
 		Inventory inventory = new Inventory();
-		inventory.fillStagingList();
+		inventory.fillCategoryLists();
 		assertEquals("snow boots", inventory.getStagingList().get(0).getName());
 	}
 
@@ -122,7 +131,7 @@ public class JourneyGenieTests {
 	public void itemsArrayListShouldBePopulatedWithItemsFromStagingList() throws Exception {
 		String s = "{\"cod\":\"200\",\"message\":0.0032,\"city\":{\"id\":1851632,\"name\":\"Shuzenji\",\"coord\":{\"lon\":138.933334,\"lat\":34.966671},\"country\":\"JP\"},\"cnt\":10,\"list\":[{\"dt\":1406080800,\"temp\":{\"day\":297.77,\"min\":0,\"max\":30,\"night\":293.52,\"eve\":297.77,\"morn\":297.77},\"pressure\":925.04,\"humidity\":76,\"weather\":[{\"id\":602,\"main\":\"Clouds\",\"description\":\"broken clouds\",\"icon\":\"04d\"}]}]}";
 		Inventory inventory = new Inventory();
-		inventory.fillStagingList();
+		inventory.fillCategoryLists();
 		Trip trip = new Trip();
 		trip.setAPIData(WeatherObjectConverter.convert(s));
 		assertEquals("underwear", trip.getItems().get(10).getName());
@@ -132,7 +141,7 @@ public class JourneyGenieTests {
 	public void itemArrayListIndex12ShouldBeSummerDressNotSnowBootsForHotDay() throws Exception {
 		String defaultJSon = "{\"cod\":\"200\",\"message\":0.0032,\"city\":{\"id\":1851632,\"name\":\"Shuzenji\",\"coord\":{\"lon\":138.933334,\"lat\":34.966671},\"country\":\"JP\"},\"cnt\":10,\"list\":[{\"dt\":1406080800,\"temp\":{\"day\":297.77,\"min\":80,\"max\":100,\"night\":293.52,\"eve\":297.77,\"morn\":297.77},\"pressure\":925.04,\"humidity\":76,\"weather\":[{\"id\":602,\"main\":\"Clouds\",\"description\":\"broken clouds\",\"icon\":\"04d\"}]}]}";
 		Inventory inventory = new Inventory();
-		inventory.fillStagingList();
+		inventory.fillCategoryLists();
 		Trip trip = new Trip();
 		trip.setAPIData(WeatherObjectConverter.convert(defaultJSon));
 		assertEquals("pants", trip.getItems().get(12).getName());

@@ -4,73 +4,144 @@ import java.util.ArrayList;
 
 public class Inventory {
 	
-	ArrayList<Item> stagingList = new ArrayList<>();
-	ArrayList<Item> packingList = new ArrayList<Item>();
+//	ArrayList<Item> stagingList = new ArrayList<Item>();
+//	ArrayList<Item> packingList = new ArrayList<Item>();
+	
+	static ArrayList<Item> essentialList = new ArrayList<Item>();
+	static ArrayList<Item> coldList = new ArrayList<Item>();
+	static ArrayList<Item> hotList = new ArrayList<Item>();
+	static ArrayList<Item> rainyList = new ArrayList<Item>();
+	static ArrayList<Item> sunnyList = new ArrayList<Item>();
+	static ArrayList<Item> windyList = new ArrayList<Item>();
 
 	// args:(name, itemCategory, included)
 	// cold weather items:
 	// not quantity specific
-	private Item snowBoots = new Item("snow boots", "cold", false);
-	private Item heavyCoat = new Item("heavy coat", "cold", false);
-	private Item knitHat = new Item("knit hat", "cold", false);
-	private Item scarf = new Item("scarf", "cold", false);
-	private Item gloves = new Item("gloves", "cold", false);
-	private Item longUndies = new Item("long undies", "cold", false);
-	private Item woolSocks = new Item("wool socks", "cold", false);
+	private Item snowBoots = new Item("snow boots", Item.ItemCategory.COLD);
+	private Item heavyCoat = new Item("heavy coat", Item.ItemCategory.COLD);
+	private Item knitHat = new Item("knit hat", Item.ItemCategory.COLD);
+	private Item scarf = new Item("scarf", Item.ItemCategory.COLD);
+	private Item gloves = new Item("gloves", Item.ItemCategory.COLD);
+	private Item longUndies = new Item("long undies", Item.ItemCategory.COLD);
+	private Item woolSocks = new Item("wool socks", Item.ItemCategory.COLD);
 
 	// hot weather items:
-	private Item summerDress = new Item("summer dress", "hot", false);
-	private Item swimSuit = new Item("swimsuit", "hot", false);
-	private Item shorts = new Item("shorts", "hot", false);
+	private Item summerDress = new Item("summer dress", Item.ItemCategory.HOT);
+	private Item swimSuit = new Item("swimsuit", Item.ItemCategory.HOT);
+	private Item shorts = new Item("shorts", Item.ItemCategory.HOT);
 	// rainy weather items:
-	private Item umbrella = new Item("umbrella", "rainy", false);
-	private Item rainJacket = new Item("rain jacket", "rainy", false);
+	private Item umbrella = new Item("umbrella", Item.ItemCategory.RAINY);
+	private Item rainJacket = new Item("rain jacket", Item.ItemCategory.RAINY);
 	// sunny weather items
-	private Item sunBlock = new Item("sunblock", "sunny", false);
-	private Item sunGlasses = new Item("sunglasses", "sunny", false);
-	private Item sunHat = new Item("sun hat", "sunny", false);
+	private Item sunBlock = new Item("sunblock", Item.ItemCategory.SUNNY);
+	private Item sunGlasses = new Item("sunglasses", Item.ItemCategory.SUNNY);
+	private Item sunHat = new Item("sun hat", Item.ItemCategory.SUNNY);
 	// windy weather items:
-	private Item windBreaker = new Item("wind breaker", "windy", false);
+	private Item windBreaker = new Item("wind breaker", Item.ItemCategory.WINDY);
 
 	// To do: split non-essential items into two sub-categories:
 	// temperature-based and weather code-based
 
 	// Essential Items
-	private Item lipBalm = new Item("lipbalm", "", true);
-	private Item toothbrush = new Item("toothbrush", "", true);
-	private Item toothpaste = new Item("toothpaste", "", true);
-	private Item deodorant = new Item("deodorant", "", true);
-	private Item shampoo = new Item("shampoo", "", true);
-	private Item conditioner = new Item("conditioner", "", true);
-	private Item soap = new Item("soap", "", true);
-	private Item razor = new Item("razor", "", true);
-	private Item shoes = new Item("shoes", "", true);
-	private Item socks = new Item("socks", "", true);
-	private Item underwear = new Item("underwear", "", true);
-	private Item tShirt = new Item("tshirt", "", true);
-	private Item pants = new Item("pants", "", true);
-
+	private Item lipBalm = new Item("lipbalm", Item.ItemCategory.ESSENTIAL);
+	private Item toothbrush = new Item("toothbrush", Item.ItemCategory.ESSENTIAL);
+	private Item toothpaste = new Item("toothpaste", Item.ItemCategory.ESSENTIAL);
+	private Item deodorant = new Item("deodorant", Item.ItemCategory.ESSENTIAL);
+	private Item shampoo = new Item("shampoo", Item.ItemCategory.ESSENTIAL);
+	private Item conditioner = new Item("conditioner", Item.ItemCategory.ESSENTIAL);
+	private Item soap = new Item("soap", Item.ItemCategory.ESSENTIAL);
+	private Item razor = new Item("razor", Item.ItemCategory.ESSENTIAL);
+	private Item shoes = new Item("shoes", Item.ItemCategory.ESSENTIAL);
+	private Item socks = new Item("socks", Item.ItemCategory.ESSENTIAL);
+	private Item underwear = new Item("underwear", Item.ItemCategory.ESSENTIAL);
+	private Item tShirt = new Item("tshirt", Item.ItemCategory.ESSENTIAL);
+	private Item pants = new Item("pants", Item.ItemCategory.ESSENTIAL);
+	
 	// fill staging area with non-essential items
-	public void fillStagingList() {
+	public void fillCategoryLists() {
 
-		stagingList.add(snowBoots);
-		stagingList.add(heavyCoat);
-		stagingList.add(knitHat);
-		stagingList.add(scarf);
-		stagingList.add(gloves);
-		stagingList.add(longUndies);
-		stagingList.add(woolSocks);
-		stagingList.add(summerDress);
-		stagingList.add(shorts);
-		stagingList.add(umbrella);
-		stagingList.add(rainJacket);
-		stagingList.add(sunBlock);
-		stagingList.add(sunGlasses);
-		stagingList.add(sunHat);
-		stagingList.add(swimSuit);
-		stagingList.add(windBreaker);
+		coldList.add(snowBoots);
+		coldList.add(heavyCoat);
+		coldList.add(knitHat);
+		coldList.add(scarf);
+		coldList.add(gloves);
+		coldList.add(longUndies);
+		coldList.add(woolSocks);
+		
+		hotList.add(summerDress);
+		hotList.add(swimSuit);
+		hotList.add(shorts);
+		
+		rainyList.add(umbrella);
+		rainyList.add(rainJacket);
+		
+		sunnyList.add(sunBlock);
+		sunnyList.add(sunGlasses);
+		sunnyList.add(sunHat);
+		
+		windyList.add(windBreaker);
 
 	}
+
+	public static ArrayList<Item> getEssentialList() {
+		return essentialList;
+	}
+
+
+	public void setEssentialList(ArrayList<Item> essentialList) {
+		this.essentialList = essentialList;
+	}
+
+
+	public static ArrayList<Item> getColdList() {
+		return coldList;
+	}
+
+
+	public void setColdList(ArrayList<Item> coldList) {
+		this.coldList = coldList;
+	}
+
+
+	public static ArrayList<Item> getHotList() {
+		return hotList;
+	}
+
+
+	public void setHotList(ArrayList<Item> hotList) {
+		this.hotList = hotList;
+	}
+
+
+	public static ArrayList<Item> getRainyList() {
+		return rainyList;
+	}
+
+
+	public void setRainyList(ArrayList<Item> rainyList) {
+		this.rainyList = rainyList;
+	}
+
+
+	public static ArrayList<Item> getSunnyList() {
+		return sunnyList;
+	}
+
+
+	public void setSunnyList(ArrayList<Item> sunnyList) {
+		this.sunnyList = sunnyList;
+	}
+
+
+	public static ArrayList<Item> getWindyList() {
+		return windyList;
+	}
+
+
+	public void setWindyList(ArrayList<Item> windyList) {
+		this.windyList = windyList;
+	}
+
 
 	public Item getSwimSuit() {
 		return swimSuit;
@@ -92,23 +163,6 @@ public class Inventory {
 		this.shorts = shorts;
 	}
 
-	public ArrayList<Item> getStagingList() {
-		return stagingList;
-	}
-
-	public void setStagingList(ArrayList<Item> stagingList) {
-		this.stagingList = stagingList;
-	}
-
-	public ArrayList<Item> getPackingList() {
-		return packingList;
-	}
-
-	public void setPackingList(ArrayList<Item> packingList) {
-		this.packingList = packingList;
-	}
-
-	// getters and setters for all items
 	public Item getWindBreaker() {
 		return windBreaker;
 	}

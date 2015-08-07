@@ -52,21 +52,9 @@ public class FrontController extends HttpServlet {
 		// String key = "1d81c54ec3911d8b9afa4fbae1d7ec37";
 		if (request.getParameter("action").equals("add")) {
 			String s = OpenWeatherMapAPIClient.callAPI(request.getParameter("locationRequest"));
-			Trip thisTrip = new Trip();
-			thisTrip.setAPIData(WeatherObjectConverter.convert(s));
-			thisTrip.setEndDate(Integer.parseInt(request.getParameter("endDate")));
-			thisTrip.setStartDate(Integer.parseInt(request.getParameter("startDate")));
-			ItemSelector.countEssentialQuantitySpecificItems(thisTrip);
-			ItemSelector.addNonEssentialItemsToInventory(thisTrip);
-			PrintWriter out = response.getWriter();
-			out.print(new Gson().toJson(thisTrip));
-			System.out.println("Start date: " + thisTrip.getStartDate());
-			System.out.println("End date: " + thisTrip.getEndDate());
-			System.out.println("Min temp: " + thisTrip.getAPIData().getList()[0].getTemp().getMin());
-			System.out.println("Max temp: " + thisTrip.getAPIData().getList()[0].getTemp().getMax());
-			System.out.println("Weather code: " + thisTrip.getAPIData().getList()[0].getWeather()[0].getId());
+			Trip thisTrip = generatePackingList(request, response, s);
+			displayDebugStatements(thisTrip);
 		}
-
 		else if (request.getParameter("action").equals("save")) {
 			Gson g = new Gson();
 			ItemFromArray[] a = g.fromJson(request.getParameter("itemsArray"), ItemFromArray[].class);
@@ -82,14 +70,7 @@ public class FrontController extends HttpServlet {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			for (ItemFromArray itemFromArray : a) {
-				try {
-					DAOPostGres.addItems(itemFromArray.getName(), itemFromArray.getQuantity(), userID);
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
+			addUsersItemsIntoDatabase(a, userID);
 		}
 		// console printout
 		else if (request.getParameter("action").equals("load"))
@@ -103,6 +84,38 @@ public class FrontController extends HttpServlet {
 			}
 		}
 
+	}
+
+	private void addUsersItemsIntoDatabase(ItemFromArray[] a, int userID) {
+		for (ItemFromArray itemFromArray : a) {
+			try {
+				DAOPostGres.addItems(itemFromArray.getName(), itemFromArray.getQuantity(), userID);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private void displayDebugStatements(Trip thisTrip) {
+		System.out.println("Start date: " + thisTrip.getStartDate());
+		System.out.println("End date: " + thisTrip.getEndDate());
+		System.out.println("Min temp: " + thisTrip.getAPIData().getList()[0].getTemp().getMin());
+		System.out.println("Max temp: " + thisTrip.getAPIData().getList()[0].getTemp().getMax());
+		System.out.println("Weather code: " + thisTrip.getAPIData().getList()[0].getWeather()[0].getId());
+	}
+
+	private Trip generatePackingList(HttpServletRequest request, HttpServletResponse response, String s)
+			throws IOException {
+		Trip thisTrip = new Trip();
+		thisTrip.setAPIData(WeatherObjectConverter.convert(s));
+		thisTrip.setEndDate(Integer.parseInt(request.getParameter("endDate")));
+		thisTrip.setStartDate(Integer.parseInt(request.getParameter("startDate")));
+		ItemSelector.countEssentialQuantitySpecificItems(thisTrip);
+		ItemSelector.addWeatherBasedItems(thisTrip);
+		PrintWriter out = response.getWriter();
+		out.print(new Gson().toJson(thisTrip));
+		return thisTrip;
 	}
 
 }

@@ -1,42 +1,72 @@
 package com.jg.util;
 
+import com.jg.model.Inventory;
 import com.jg.model.Item;
+import com.jg.model.List;
 import com.jg.model.Trip;
 
 public class ItemSelector {
 
-	public static void checkWeatherConditions(Item item, int apiWeatherCode, double apiMinTemp, double apiMaxTemp) {
-		// switch statement?
-		// hash map?
+	public static void checkWeatherConditions(Item.ItemCategory itemCategory, Trip trip) {
 
-		// this will account for items needed for rainy days
-		if ((apiWeatherCode >= 200 && apiWeatherCode < 600) && (item.getItemCategory().contains("rainy"))) {
-			item.setIncluded(true);
+		switch (itemCategory){
+		case ESSENTIAL:
+			trip.getItems().addAll(Inventory.getEssentialList());
+		case COLD:
+			trip.getItems().addAll(Inventory.getColdList());
+		case HOT:
+			trip.getItems().addAll(Inventory.getHotList());
+		case RAINY:
+			trip.getItems().addAll(Inventory.getRainyList());
+		case SUNNY:
+			trip.getItems().addAll(Inventory.getSunnyList());
+		case WINDY:
+			trip.getItems().addAll(Inventory.getWindyList());
+			break;
 		}
-		// this will account for items needed for sunny days
-		else if ((apiWeatherCode >= 800 && apiWeatherCode <= 802)
-				&& (item.getItemCategory().equalsIgnoreCase("sunny"))) {
-			item.setIncluded(true);
+	}
+	
+	public static void addWeatherBasedItems(Trip trip) {
+		for (int j = trip.getStartDate(); j <= trip.getEndDate(); j++) {
+			if (j > 15) {
+				break;
+			}
+			List list = trip.getAPIData().getList()[j];
+			int weatherCode = list.getWeather()[0].getId();
+			double minTemp = list.getTemp().getMin();
+			double maxTemp = list.getTemp().getMax();
+			if (weatherIsRainy(weatherCode)) {
+				checkWeatherConditions(Item.ItemCategory.RAINY, trip);
+			} else if (weatherIsSunny(weatherCode)) {
+				checkWeatherConditions(Item.ItemCategory.SUNNY, trip);
+			} else if (weatherIsCold(minTemp)) {
+				checkWeatherConditions(Item.ItemCategory.COLD, trip);
+			} else if (weatherIsHot(maxTemp)) {
+				checkWeatherConditions(Item.ItemCategory.HOT, trip);
+			} else if (weatherIsWindy(weatherCode)) {
+				checkWeatherConditions(Item.ItemCategory.WINDY, trip);
+			}
 		}
-		// this will account for items needed for snow days
-		else if ((apiWeatherCode >= 600 && apiWeatherCode < 700) && (item.getItemCategory().equalsIgnoreCase("snow"))) {
-			item.setIncluded(true);
-		}
-		// this will account for items needed for cold days
-		else if ((apiMinTemp <= 40) && (item.getItemCategory().equalsIgnoreCase("cold"))) {
-			item.setIncluded(true);
-		}
+	}
 
-		// this will account for items needed for hot days
-		else if ((apiMaxTemp >= 75) && (item.getItemCategory().equalsIgnoreCase("hot"))) {
-			item.setIncluded(true);
-		}
+	private static boolean weatherIsHot(double maxTemp) {
+		return maxTemp >= 75;
+	}
 
-		// this will account for items needed for windy days
-		else if ((apiWeatherCode == 905 || (apiWeatherCode >= 953 && apiWeatherCode <= 957))
-				&& (item.getItemCategory().equalsIgnoreCase("windy"))) {
-			item.setIncluded(true);
-		}
+	private static boolean weatherIsWindy(int weatherCode) {
+		return weatherCode == 905 || ((weatherCode >= 953) && (weatherCode <= 957));
+	}
+
+	private static boolean weatherIsRainy(int weatherCode) {
+		return weatherCode >= 200 && weatherCode <600;
+	}
+
+	private static boolean weatherIsSunny(int weatherCode) {
+		return weatherCode >= 800 && weatherCode <= 802;
+	}
+
+	private static boolean weatherIsCold(double apiMinTemp) {
+		return apiMinTemp <= 40;
 	}
 
 	public static void countEssentialQuantitySpecificItems(Trip trip) {
@@ -49,33 +79,32 @@ public class ItemSelector {
 		}
 	}
 
-	public static void addNonEssentialItemsToInventory(Trip trip) {
-
-		for (int j = trip.getStartDate(); j <= trip.getEndDate(); j++) {
-			if (j > 15) {
-				break;
-			}
-			for (int i = 0; i < trip.getInventory().getStagingList().size(); i++) {
-				ItemSelector.checkWeatherConditions(trip.getInventory().getStagingList().get(i),
-						trip.getAPIData().getList()[j].getWeather()[0].getId(),
-						trip.getAPIData().getList()[j].getTemp().getMin(),
-						trip.getAPIData().getList()[j].getTemp().getMax());
-				if (trip.getInventory().getStagingList().get(i).isIncluded() == true) {
-					if (!trip.getItems().contains(trip.getInventory().getStagingList().get(i))) {
-						trip.getItems().add(trip.getInventory().getStagingList().get(i));
-					} else if (trip.getInventory().getStagingList().get(i).getName().equals("shorts")) {
-						trip.getItems().get(trip.getItems().indexOf(trip.getInventory().getStagingList().get(i)))
-								.setQuantity(
-										trip.getItems()
-												.get(trip.getItems()
-														.indexOf(trip.getInventory().getStagingList().get(i)))
-										.getQuantity() + 1);
-					}
-					if (trip.getInventory().getStagingList().get(i).getName().equals("shorts")) {
-						trip.getItems().get(12).setQuantity(trip.getItems().get(12).getQuantity() - 1);
-					}
-				}
-			}
-		}
-	}
+//	public static void addNonEssentialItemsToInventory(Trip trip) {
+//
+//		for (int j = trip.getStartDate(); j <= trip.getEndDate(); j++) {
+//			if (j > 15) {
+//				break;
+//			}
+//			for (int i = 0; i < trip.getInventory().getStagingList().size(); i++) {
+//				List list = trip.getAPIData().getList()[j];
+//				ItemSelector.checkWeatherConditions(trip.getInventory().getStagingList().get(i),
+//						trip, list.getWeather()[0].getId(), list.getTemp().getMin(), list.getTemp().getMax());
+//				if (trip.getInventory().getStagingList().get(i).isIncluded() == true) {
+//					if (!trip.getItems().contains(trip.getInventory().getStagingList().get(i))) {
+//						trip.getItems().add(trip.getInventory().getStagingList().get(i));
+//					} else if (trip.getInventory().getStagingList().get(i).getName().equals("shorts")) {
+//						trip.getItems().get(trip.getItems().indexOf(trip.getInventory().getStagingList().get(i)))
+//								.setQuantity(
+//										trip.getItems()
+//												.get(trip.getItems()
+//														.indexOf(trip.getInventory().getStagingList().get(i)))
+//										.getQuantity() + 1);
+//					}
+//					if (trip.getInventory().getStagingList().get(i).getName().equals("shorts")) {
+//						trip.getItems().get(12).setQuantity(trip.getItems().get(12).getQuantity() - 1);
+//					}
+//				}
+//			}
+//		}
+//	}
 }

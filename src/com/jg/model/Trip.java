@@ -32,7 +32,7 @@ public class Trip implements Serializable {
 		items.add(inventory.getPants());
 
 		// fills staging list with non-essential items
-		inventory.fillStagingList();
+		inventory.fillCategoryLists();
 	}
 
 	public Inventory getInventory() {
