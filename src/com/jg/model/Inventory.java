@@ -7,12 +7,12 @@ public class Inventory {
 //	ArrayList<Item> stagingList = new ArrayList<Item>();
 //	ArrayList<Item> packingList = new ArrayList<Item>();
 	
-	static ArrayList<Item> essentialList = new ArrayList<Item>();
-	static ArrayList<Item> coldList = new ArrayList<Item>();
-	static ArrayList<Item> hotList = new ArrayList<Item>();
-	static ArrayList<Item> rainyList = new ArrayList<Item>();
-	static ArrayList<Item> sunnyList = new ArrayList<Item>();
-	static ArrayList<Item> windyList = new ArrayList<Item>();
+	private ArrayList<Item> essentialList = new ArrayList<Item>();
+	private ArrayList<Item> coldList = new ArrayList<Item>();
+	private ArrayList<Item> hotList = new ArrayList<Item>();
+	private ArrayList<Item> rainyList = new ArrayList<Item>();
+	private ArrayList<Item> sunnyList = new ArrayList<Item>();
+	private ArrayList<Item> windyList = new ArrayList<Item>();
 
 	// args:(name, itemCategory, included)
 	// cold weather items:
@@ -31,7 +31,7 @@ public class Inventory {
 	private Item shorts = new Item("shorts", Item.ItemCategory.HOT);
 	// rainy weather items:
 	private Item umbrella = new Item("umbrella", Item.ItemCategory.RAINY);
-	private Item rainJacket = new Item("rain jacket", Item.ItemCategory.RAINY);
+	private static Item rainJacket = new Item("rain jacket", Item.ItemCategory.RAINY);
 	// sunny weather items
 	private Item sunBlock = new Item("sunblock", Item.ItemCategory.SUNNY);
 	private Item sunGlasses = new Item("sunglasses", Item.ItemCategory.SUNNY);
@@ -83,7 +83,7 @@ public class Inventory {
 
 	}
 
-	public static ArrayList<Item> getEssentialList() {
+	public ArrayList<Item> getEssentialList() {
 		return essentialList;
 	}
 
@@ -93,7 +93,7 @@ public class Inventory {
 	}
 
 
-	public static ArrayList<Item> getColdList() {
+	public ArrayList<Item> getColdList() {
 		return coldList;
 	}
 
@@ -103,7 +103,7 @@ public class Inventory {
 	}
 
 
-	public static ArrayList<Item> getHotList() {
+	public ArrayList<Item> getHotList() {
 		return hotList;
 	}
 
@@ -113,7 +113,7 @@ public class Inventory {
 	}
 
 
-	public static ArrayList<Item> getRainyList() {
+	public ArrayList<Item> getRainyList() {
 		return rainyList;
 	}
 
@@ -123,7 +123,7 @@ public class Inventory {
 	}
 
 
-	public static ArrayList<Item> getSunnyList() {
+	public ArrayList<Item> getSunnyList() {
 		return sunnyList;
 	}
 
@@ -133,7 +133,7 @@ public class Inventory {
 	}
 
 
-	public static ArrayList<Item> getWindyList() {
+	public ArrayList<Item> getWindyList() {
 		return windyList;
 	}
 
@@ -379,7 +379,7 @@ public class Inventory {
 		this.toothpaste = toothpaste;
 	}
 
-	public Item getRainJacket() {
+	public static Item getRainJacket() {
 		return rainJacket;
 	}
 

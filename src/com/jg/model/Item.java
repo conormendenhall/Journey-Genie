@@ -1,7 +1,8 @@
 package com.jg.model;
 
 public class Item {
-
+	Object o = new Object();
+	
 	private String name;
 	private int quantity;
 	private ItemCategory itemCategory;
@@ -31,6 +32,12 @@ public class Item {
 
 	public void setItemCategory(ItemCategory itemCategory) {
 		this.itemCategory = itemCategory;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		Item i = (Item)obj;
+		return i.itemCategory == this.itemCategory && i.name == this.name;
 	}
 
 	public String getName() {

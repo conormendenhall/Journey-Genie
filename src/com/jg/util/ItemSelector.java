@@ -1,32 +1,42 @@
 package com.jg.util;
 
+import java.util.ArrayList;
+
 import com.jg.model.Inventory;
 import com.jg.model.Item;
+import com.jg.model.Item.ItemCategory;
 import com.jg.model.List;
 import com.jg.model.Trip;
 
 public class ItemSelector {
 
 	public static void checkWeatherConditions(Item.ItemCategory itemCategory, Trip trip) {
-
+		Inventory inventory = trip.getInventory();
+		ArrayList<Item> tripPackingList = trip.getItems();
 		switch (itemCategory){
 		case ESSENTIAL:
-			trip.getItems().addAll(Inventory.getEssentialList());
+			tripPackingList.addAll(inventory.getEssentialList());
+			break;
 		case COLD:
-			trip.getItems().addAll(Inventory.getColdList());
+			tripPackingList.addAll(inventory.getColdList());
+			break;
 		case HOT:
-			trip.getItems().addAll(Inventory.getHotList());
+			tripPackingList.addAll(inventory.getHotList());
+			break;
 		case RAINY:
-			trip.getItems().addAll(Inventory.getRainyList());
+			tripPackingList.addAll(inventory.getRainyList());
+			break;
 		case SUNNY:
-			trip.getItems().addAll(Inventory.getSunnyList());
+			tripPackingList.addAll(inventory.getSunnyList());
+			break;
 		case WINDY:
-			trip.getItems().addAll(Inventory.getWindyList());
+			tripPackingList.addAll(inventory.getWindyList());
 			break;
 		}
 	}
 	
 	public static void addWeatherBasedItems(Trip trip) {
+		ArrayList<Item.ItemCategory> addedWeatherItemConditions = new ArrayList<Item.ItemCategory>(); 
 		for (int j = trip.getStartDate(); j <= trip.getEndDate(); j++) {
 			if (j > 15) {
 				break;
@@ -35,18 +45,23 @@ public class ItemSelector {
 			int weatherCode = list.getWeather()[0].getId();
 			double minTemp = list.getTemp().getMin();
 			double maxTemp = list.getTemp().getMax();
-			if (weatherIsRainy(weatherCode)) {
-				checkWeatherConditions(Item.ItemCategory.RAINY, trip);
-			} else if (weatherIsSunny(weatherCode)) {
-				checkWeatherConditions(Item.ItemCategory.SUNNY, trip);
-			} else if (weatherIsCold(minTemp)) {
-				checkWeatherConditions(Item.ItemCategory.COLD, trip);
-			} else if (weatherIsHot(maxTemp)) {
-				checkWeatherConditions(Item.ItemCategory.HOT, trip);
-			} else if (weatherIsWindy(weatherCode)) {
-				checkWeatherConditions(Item.ItemCategory.WINDY, trip);
+			if (weatherIsRainy(weatherCode) && !addedWeatherItemConditions.contains(ItemCategory.RAINY)) {
+				addItemsToTrip(trip, addedWeatherItemConditions, Item.ItemCategory.RAINY);
+			} else if (weatherIsSunny(weatherCode) && !addedWeatherItemConditions.contains(ItemCategory.SUNNY)) {
+				addItemsToTrip(trip, addedWeatherItemConditions, Item.ItemCategory.SUNNY);
+			} else if (weatherIsCold(minTemp) && !addedWeatherItemConditions.contains(ItemCategory.COLD)) {
+				addItemsToTrip(trip, addedWeatherItemConditions, Item.ItemCategory.COLD);
+			} else if (weatherIsHot(maxTemp) && !addedWeatherItemConditions.contains(ItemCategory.HOT)) {
+				addItemsToTrip(trip, addedWeatherItemConditions, Item.ItemCategory.HOT);
+			} else if (weatherIsWindy(weatherCode)&& !addedWeatherItemConditions.contains(ItemCategory.WINDY)) {
+				addItemsToTrip(trip, addedWeatherItemConditions, Item.ItemCategory.WINDY);
 			}
 		}
+	}
+
+	private static void addItemsToTrip(Trip trip, ArrayList<Item.ItemCategory> addedWeatherItemConditions, ItemCategory weather) {
+		checkWeatherConditions(weather, trip);
+		addedWeatherItemConditions.add(weather);
 	}
 
 	private static boolean weatherIsHot(double maxTemp) {
@@ -71,10 +86,11 @@ public class ItemSelector {
 
 	public static void countEssentialQuantitySpecificItems(Trip trip) {
 		int newQuantity = 0;
+		ArrayList<Item> items = trip.getItems();
 		for (int j = trip.getStartDate(); j < trip.getEndDate(); j++) {
 			for (int i = 9; i <= 12; i++) {
-				newQuantity = trip.getItems().get(i).getQuantity();
-				trip.getItems().get(i).setQuantity(++newQuantity);
+				newQuantity = items.get(i).getQuantity();
+				items.get(i).setQuantity(++newQuantity);
 			}
 		}
 	}
