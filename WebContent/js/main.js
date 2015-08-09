@@ -74,10 +74,19 @@ function removeItem(thing)
 				$('#desc').empty();
 				$('#icon').empty();
 				$('#city').empty();	 	
-				$('#city').append("Location: " + data.apiData.city.name + " , " + data.apiData.city.country + "<br>");
+				$('#city').append("Destination: " + data.apiData.city.name + " , " + data.apiData.city.country + "<br>");
 				
 				for (i = data.startDate; i <= data.endDate; i++) { 
-				$('#dt').append("<th>" + data.apiData.list[i].dt + "</th>");
+				var date = new Date(data.apiData.list[i].dt*1000);
+				var days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+				var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+				var weekDay = days[ date.getDay() ];
+				var month = months[ date.getMonth() ];
+				var day = date.getDate();
+				var dateString = weekDay + "<br>" + month + " " + day;
+				
+				$('#dt').append("<th>" + dateString + "</th>");
 				$('#min').append("<td>" + data.apiData.list[i].temp.min + "°F" + "</td>");
 				$('#max').append("<td>" + data.apiData.list[i].temp.max + "°F"+ "</td>");
 				$('#desc').append("<td>" + data.apiData.list[i].weather[0].description + "</td>");
