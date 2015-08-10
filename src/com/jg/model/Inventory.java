@@ -31,7 +31,7 @@ public class Inventory {
 	private Item shorts = new Item("shorts", Item.ItemCategory.HOT);
 	// rainy weather items:
 	private Item umbrella = new Item("umbrella", Item.ItemCategory.RAINY);
-	private static Item rainJacket = new Item("rain jacket", Item.ItemCategory.RAINY);
+	private Item rainJacket = new Item("rain jacket", Item.ItemCategory.RAINY);
 	// sunny weather items
 	private Item sunBlock = new Item("sunblock", Item.ItemCategory.SUNNY);
 	private Item sunGlasses = new Item("sunglasses", Item.ItemCategory.SUNNY);
@@ -379,7 +379,7 @@ public class Inventory {
 		this.toothpaste = toothpaste;
 	}
 
-	public static Item getRainJacket() {
+	public Item getRainJacket() {
 		return rainJacket;
 	}
 
