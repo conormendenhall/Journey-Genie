@@ -1,19 +1,32 @@
 package com.jg.db;
 
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class DAOPostGres {
+import com.jg.model.ItemFromArray;
 
-	// MAKE THIS INTO A SINGLETON!
+public class PostGresSingleton implements DAOInterface{
+	private static PostGresSingleton instance = null;
 
+	private PostGresSingleton()
+	{
+		
+	}
+	
+	public static PostGresSingleton getInstance() {
+	      if(instance == null) {
+	         instance = new PostGresSingleton();
+	      }
+	      return instance;
+	   }
+	
 	private static Connection dbConnection;
 
-	public static void makeDBConnection() {
+	public void makeDBConnection() {
 		System.out.println("-------- PostgreSQL " + "JDBC Connection Testing ------------");
 
 		try {
@@ -41,7 +54,7 @@ public class DAOPostGres {
 		}
 	}
 
-	public static int addUser(String userName) throws SQLException {
+	public int addUser(String userName) throws SQLException {
 		try {
 			makeDBConnection();
 			int userId = findDuplicate(userName);
@@ -58,7 +71,7 @@ public class DAOPostGres {
 				dbConnection.close();
 				return 0;
 			} else {
-				deleteEntries(userId);
+				deleteAllItemsForUser(userId);
 				dbConnection.close();
 				return userId;
 			}
@@ -69,7 +82,7 @@ public class DAOPostGres {
 		return 0;
 	}
 
-	private static int findDuplicate(String userName) throws SQLException {
+	private int findDuplicate(String userName) throws SQLException {
 		String sql = "SELECT userid FROM users WHERE username='" + userName + "'";
 		Statement s = dbConnection.createStatement();
 		ResultSet r = s.executeQuery(sql);
@@ -79,21 +92,16 @@ public class DAOPostGres {
 			return 0;
 	}
 
-	public static void addItems(String item, int quantity, int userID) throws SQLException {
+	public void addItems(String item, int quantity, int userID) throws SQLException {
 		makeDBConnection();
 		Statement s = dbConnection.createStatement();
-		String sql = "INSERT INTO \"itemsList\"(item, quantity, \"userID\") VALUES ('" + item + "'," + quantity + ","
+		String sql = "INSERT INTO \"itemsLi st\"(item, quantity, \"userID\") VALUES ('" + item + "'," + quantity + ","
 				+ userID + ")";
 		int rowCount = s.executeUpdate(sql);
 		dbConnection.close();
 	}
 
-	// get rid of this method. close connection at end of each method.
-	public static void closeConnection() throws SQLException {
-		dbConnection.close();
-	}
-
-	public static void deleteEntries(int userID) throws SQLException {
+	public void deleteAllItemsForUser(int userID) throws SQLException {
 		makeDBConnection();
 		Statement s = dbConnection.createStatement();
 		String sql = "DELETE FROM \"itemsList\" USING \"users\" WHERE userid =" + userID;
@@ -101,7 +109,7 @@ public class DAOPostGres {
 		dbConnection.close();
 	}
 	
-	public static ArrayList<ItemFromArray> loadEntries(String userName) throws SQLException
+	public ArrayList<ItemFromArray> loadEntries(String userName) throws SQLException
 	{
 		makeDBConnection();
 		ArrayList items = new ArrayList<ItemFromArray>();
@@ -110,12 +118,16 @@ public class DAOPostGres {
 		Statement s2 = dbConnection.createStatement();
 		ResultSet r = s2.executeQuery(sql2);
 		while (r.next()) {
-			ItemFromArray a = new ItemFromArray();
-			a.setName(r.getString(1));
-			a.setQuantity(r.getInt(2));
-			items.add(a);
+			items.add(createItemFromArray(r));
 		}
 		dbConnection.close();
 		return items;
+	}
+
+	private ItemFromArray createItemFromArray(ResultSet r) throws SQLException {
+		ItemFromArray a = new ItemFromArray();
+		a.setName(r.getString(1));
+		a.setQuantity(r.getInt(2));
+		return a;
 	}
 }

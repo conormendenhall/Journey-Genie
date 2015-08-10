@@ -1,4 +1,4 @@
-package com.jg.db;
+package com.jg.model;
 
 public class ItemFromArray {
 	private String name;
@@ -11,7 +11,6 @@ public class ItemFromArray {
 	public void setName(String name) {
 		this.name = name;
 	}
-
 	public int getQuantity() {
 		return quantity;
 	}

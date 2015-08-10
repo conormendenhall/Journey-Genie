@@ -204,5 +204,8 @@ function removeItem(thing)
 	      console.log('User signed out.');
 	    });
 	    $('#load').hide();
+	    $('#itemList').empty();
+	    $('#addAnItem').hide();
+	    $('#save').hide();
 	    token = null;
 	  }

@@ -12,11 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.jg.api.OpenWeatherMapAPIClient;
-import com.jg.db.DAOPostGres;
-import com.jg.db.ItemFromArray;
+import com.jg.db.PostGresConnectionFactory;
+import com.jg.db.PostGresSingleton;
+import com.jg.model.ItemFromArray;
 import com.jg.model.Trip;
 import com.jg.util.ItemSelector;
-import com.jg.util.WeatherObjectConverter;
+import com.jg.util.TripObjectAssembler;
+import com.jg.util.WeatherObjectAssembler;
 
 /**
  * Servlet implementation class FrontController
@@ -49,47 +51,61 @@ public class FrontController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// String key = "1d81c54ec3911d8b9afa4fbae1d7ec37";
-		if (request.getParameter("action").equals("add")) {
-			String s = OpenWeatherMapAPIClient.callAPI(request.getParameter("locationRequest"));
-			Trip thisTrip = generatePackingList(request, response, s);
-			displayDebugStatements(thisTrip);
-		}
-		else if (request.getParameter("action").equals("save")) {
-			Gson g = new Gson();
-			ItemFromArray[] a = g.fromJson(request.getParameter("itemsArray"), ItemFromArray[].class);
-			
-			for (ItemFromArray itemFromArray : a) {
-				System.out.println(itemFromArray.getName());
-			}
-			int userID = 0;
-			try {
-				userID = DAOPostGres.addUser(request.getParameter("token"));
-				DAOPostGres.deleteEntries(userID);
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			addUsersItemsIntoDatabase(a, userID);
-		}
-		// console printout
-		else if (request.getParameter("action").equals("load"))
+		switch(request.getParameter("action"))
 		{
-			try {
-				PrintWriter out = response.getWriter();
-				out.print(new Gson().toJson(DAOPostGres.loadEntries(request.getParameter("token"))));
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			case "add": {
+				addItems(request, response);
+				break;
+			}
+			case "save": {
+				saveItems(request);
+				break;
+			}
+			case "load": {
+				loadItems(request, response);
+				break;
 			}
 		}
+	}
 
+	private void loadItems(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		try {
+			PrintWriter out = response.getWriter();
+			out.print(new Gson().toJson(PostGresSingleton.getInstance().loadEntries(request.getParameter("token"))));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private void addItems(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String s = OpenWeatherMapAPIClient.callAPI(request.getParameter("locationRequest"));
+		Trip thisTrip = TripObjectAssembler.generatePackingList(request, response, s, request.getParameter("startDate"), request.getParameter("endDate"));
+		displayDebugStatements(thisTrip);
+	}
+
+	private void saveItems(HttpServletRequest request) {
+		PostGresSingleton dbConnection = PostGresSingleton.getInstance();
+		Gson g = new Gson();
+		ItemFromArray[] a = g.fromJson(request.getParameter("itemsArray"), ItemFromArray[].class);
+		for (ItemFromArray itemFromArray : a) {
+			System.out.println(itemFromArray.getName());
+		}
+		int userID = 0;
+		try {
+			userID = dbConnection.addUser(request.getParameter("token"));
+			dbConnection.deleteAllItemsForUser(userID);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		addUsersItemsIntoDatabase(a, userID);
 	}
 
 	private void addUsersItemsIntoDatabase(ItemFromArray[] a, int userID) {
 		for (ItemFromArray itemFromArray : a) {
 			try {
-				DAOPostGres.addItems(itemFromArray.getName(), itemFromArray.getQuantity(), userID);
+				PostGresSingleton.getInstance().addItems(itemFromArray.getName(), itemFromArray.getQuantity(), userID);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -104,18 +120,4 @@ public class FrontController extends HttpServlet {
 		System.out.println("Max temp: " + thisTrip.getAPIData().getList()[0].getTemp().getMax());
 		System.out.println("Weather code: " + thisTrip.getAPIData().getList()[0].getWeather()[0].getId());
 	}
-
-	private Trip generatePackingList(HttpServletRequest request, HttpServletResponse response, String s)
-			throws IOException {
-		Trip thisTrip = new Trip();
-		thisTrip.setAPIData(WeatherObjectConverter.convert(s));
-		thisTrip.setEndDate(Integer.parseInt(request.getParameter("endDate")));
-		thisTrip.setStartDate(Integer.parseInt(request.getParameter("startDate")));
-		ItemSelector.countEssentialQuantitySpecificItems(thisTrip);
-		ItemSelector.addWeatherBasedItems(thisTrip);
-		PrintWriter out = response.getWriter();
-		out.print(new Gson().toJson(thisTrip));
-		return thisTrip;
-	}
-
 }

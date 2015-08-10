@@ -13,19 +13,19 @@ import com.jg.model.Temp;
 import com.jg.model.Trip;
 import com.jg.model.Weather;
 import com.jg.util.ItemSelector;
-import com.jg.util.WeatherObjectConverter;
+import com.jg.util.WeatherObjectAssembler;
 
 public class JourneyGenieTests {
 
 	@Test(expected = Exception.class)
 	public void weatherObjectConverterShouldThrowExceptionWhenPassedEmptyString() throws Exception {
-		WeatherObjectConverter.convert("");
+		WeatherObjectAssembler.convert("");
 	}
 
 	@Test
 	public void weatherInfoObjectShouldHaveAllParametersFromJSONString() {
 		String defaultJSON = "{\"cod\":\"200\",\"message\":0.0032,\"city\":{\"id\":1851632,\"name\":\"Shuzenji\",\"coord\":{\"lon\":138.933334,\"lat\":34.966671},\"country\":\"JP\"},\"cnt\":10,\"list\":[{\"dt\":1406080800,\"temp\":{\"day\":297.77,\"min\":293.52,\"max\":297.77,\"night\":293.52,\"eve\":297.77,\"morn\":297.77},\"pressure\":925.04,\"humidity\":76,\"weather\":[{\"id\":803,\"main\":\"Clouds\",\"description\":\"broken clouds\",\"icon\":\"04d\"}]}]}";
-		APIData data = WeatherObjectConverter.convert(defaultJSON);
+		APIData data = WeatherObjectAssembler.convert(defaultJSON);
 		City city = data.getCity();
 		Coord coord = city.getCoord();
 		List[] list = data.getList();
@@ -133,7 +133,7 @@ public class JourneyGenieTests {
 		Inventory inventory = new Inventory();
 		inventory.fillCategoryLists();
 		Trip trip = new Trip();
-		trip.setAPIData(WeatherObjectConverter.convert(s));
+		trip.setAPIData(WeatherObjectAssembler.convert(s));
 		assertEquals("underwear", trip.getItems().get(10).getName());
 	}
 
@@ -143,7 +143,7 @@ public class JourneyGenieTests {
 		Inventory inventory = new Inventory();
 		inventory.fillCategoryLists();
 		Trip trip = new Trip();
-		trip.setAPIData(WeatherObjectConverter.convert(defaultJSon));
+		trip.setAPIData(WeatherObjectAssembler.convert(defaultJSon));
 		assertEquals("pants", trip.getItems().get(12).getName());
 	}
 
@@ -151,7 +151,7 @@ public class JourneyGenieTests {
 	public void quantityOfUnderwearShouldBe2For2DayTrip() {
 		String defaultJSon = "{\"cod\":\"200\",\"message\":0.0032,\"city\":{\"id\":1851632,\"name\":\"Shuzenji\",\"coord\":{\"lon\":138.933334,\"lat\":34.966671},\"country\":\"JP\"},\"cnt\":10,\"list\":[{\"dt\":1406080800,\"temp\":{\"day\":297.77,\"min\":80,\"max\":100,\"night\":293.52,\"eve\":297.77,\"morn\":297.77},\"pressure\":925.04,\"humidity\":76,\"weather\":[{\"id\":602,\"main\":\"Clouds\",\"description\":\"broken clouds\",\"icon\":\"04d\"}]}]}";
 		Trip trip = new Trip();
-		trip.setAPIData(WeatherObjectConverter.convert(defaultJSon));
+		trip.setAPIData(WeatherObjectAssembler.convert(defaultJSon));
 		trip.setStartDate(4);
 		trip.setEndDate(5);
 		ItemSelector.countEssentialQuantitySpecificItems(trip);

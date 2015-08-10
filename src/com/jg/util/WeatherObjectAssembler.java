@@ -3,7 +3,7 @@ package com.jg.util;
 import com.google.gson.Gson;
 import com.jg.model.APIData;
 
-public class WeatherObjectConverter {
+public class WeatherObjectAssembler {
 
 	public static APIData convert(String string) {
 		if (string == null || string.trim().equals(""))
