@@ -1,8 +1,8 @@
 package com.jg.model;
 
-public class Item {
-	Object o = new Object();
-	
+import java.io.Serializable;
+
+public class Item implements Serializable{
 	private String name;
 	private int quantity;
 	private ItemCategory itemCategory;
@@ -11,6 +11,14 @@ public class Item {
 		ESSENTIAL, SUNNY, RAINY, COLD, HOT, WINDY;
 	}
 
+	public Item()
+	{
+		setName("pants");
+		itemCategory = ItemCategory.ESSENTIAL;
+		quantity = 1;
+	}
+	
+	
 	public Item(String name, ItemCategory itemCategory) {
 		super();
 		this.setName(name);
@@ -32,12 +40,6 @@ public class Item {
 
 	public void setItemCategory(ItemCategory itemCategory) {
 		this.itemCategory = itemCategory;
-	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		Item i = (Item)obj;
-		return i.itemCategory == this.itemCategory && i.name == this.name;
 	}
 
 	public String getName() {
