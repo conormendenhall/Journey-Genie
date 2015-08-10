@@ -12,8 +12,7 @@ import com.jg.model.ItemFromArray;
 public class PostGresSingleton implements DAOInterface{
 	private static PostGresSingleton instance = null;
 
-	private PostGresSingleton()
-	{
+	private PostGresSingleton() {
 		
 	}
 	
@@ -61,24 +60,21 @@ public class PostGresSingleton implements DAOInterface{
 			if (userId == 0) {
 				Statement s = dbConnection.createStatement();
 				String sql = "INSERT INTO users(userName) values('" + userName + "')";
-				int rowCount = s.executeUpdate(sql);
+				s.executeUpdate(sql);
 				String sql2 = "SELECT userid FROM users WHERE username='" + userName + "'";
 				ResultSet r = s.executeQuery(sql2);
 				while (r.next()) {
 					dbConnection.close();
 					return r.getInt(1);
 				}
-				dbConnection.close();
-				return 0;
 			} else {
 				deleteAllItemsForUser(userId);
 				dbConnection.close();
 				return userId;
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		} finally {
+			dbConnection.close();
 		}
-		dbConnection.close();
 		return 0;
 	}
 
@@ -97,22 +93,31 @@ public class PostGresSingleton implements DAOInterface{
 		Statement s = dbConnection.createStatement();
 		String sql = "INSERT INTO \"itemsLi st\"(item, quantity, \"userID\") VALUES ('" + item + "'," + quantity + ","
 				+ userID + ")";
-		int rowCount = s.executeUpdate(sql);
+		s.executeUpdate(sql);
 		dbConnection.close();
 	}
 
 	public void deleteAllItemsForUser(int userID) throws SQLException {
 		makeDBConnection();
+		try {
+			deleteSQLQuery(userID);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			dbConnection.close();
+		}
+	}
+
+	private static void deleteSQLQuery(int userID) throws SQLException {
 		Statement s = dbConnection.createStatement();
 		String sql = "DELETE FROM \"itemsList\" USING \"users\" WHERE userid =" + userID;
-		int rowCount = s.executeUpdate(sql);
-		dbConnection.close();
+		s.executeUpdate(sql);
 	}
 	
-	public ArrayList<ItemFromArray> loadEntries(String userName) throws SQLException
-	{
+	public ArrayList<ItemFromArray> loadEntries(String userName) throws SQLException {
 		makeDBConnection();
-		ArrayList items = new ArrayList<ItemFromArray>();
+		ArrayList<ItemFromArray> items = new ArrayList<ItemFromArray>();
 		int userId = findDuplicate(userName);
 		String sql2 = "SELECT item, quantity FROM \"itemsList\" WHERE \"userID\"=" + userId;
 		Statement s2 = dbConnection.createStatement();

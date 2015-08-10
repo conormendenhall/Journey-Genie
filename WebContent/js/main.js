@@ -90,7 +90,7 @@ function removeItem(thing)
 				$('#min').append("<td>" + data.apiData.list[i].temp.min + "°F" + "</td>");
 				$('#max').append("<td>" + data.apiData.list[i].temp.max + "°F"+ "</td>");
 				$('#desc').append("<td>" + data.apiData.list[i].weather[0].description + "</td>");
-				$('#icon').append("<td>" + data.apiData.list[i].weather[0].icon + "</td>");
+				$('#icon').append("<td><img src=\"http://openweathermap.org/img/w/" + data.apiData.list[i].weather[0].icon + ".png\"</td>");
 				}	
 			}
 		});
