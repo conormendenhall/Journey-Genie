@@ -61,15 +61,13 @@ public class PostGresSingleton implements DAOInterface{
 				Statement s = dbConnection.createStatement();
 				String sql = "INSERT INTO users(userName) values('" + userName + "')";
 				s.executeUpdate(sql);
-				String sql2 = "SELECT userid FROM users WHERE username='" + userName + "'";
+				String sql2 = "SELECT userid FROM users WHERE username='" + userName + "'"; // To-do: make userName the primary key
 				ResultSet r = s.executeQuery(sql2);
 				while (r.next()) {
-					dbConnection.close();
 					return r.getInt(1);
 				}
 			} else {
 				deleteAllItemsForUser(userId);
-				dbConnection.close();
 				return userId;
 			}
 		} finally {
