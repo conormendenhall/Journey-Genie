@@ -3,6 +3,10 @@ package com.jg.model;
 import java.io.Serializable;
 
 public class Item implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9145481207386604002L;
 	private String name;
 	private int quantity;
 	private ItemCategory itemCategory;
