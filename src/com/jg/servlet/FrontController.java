@@ -15,9 +15,7 @@ import com.jg.api.OpenWeatherMapAPIClient;
 import com.jg.db.PostGresSingleton;
 import com.jg.model.ItemFromArray;
 import com.jg.model.Trip;
-import com.jg.util.ItemSelector;
 import com.jg.util.TripObjectAssembler;
-import com.jg.util.WeatherObjectAssembler;
 
 /**
  * Servlet implementation class FrontController
