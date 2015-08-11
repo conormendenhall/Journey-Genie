@@ -10,7 +10,7 @@ import com.google.gson.Gson;
 import com.jg.model.Trip;
 
 public class TripObjectAssembler {
-	public static Trip generatePackingList(HttpServletRequest request, HttpServletResponse response, String s, String startDate, String endDate)
+	public static Trip generatePackingList(String s, String startDate, String endDate)
 			throws IOException {
 		Trip thisTrip = new Trip();
 		thisTrip.setAPIData(WeatherObjectAssembler.convert(s));
@@ -18,8 +18,6 @@ public class TripObjectAssembler {
 		thisTrip.setStartDate(Integer.parseInt(startDate));
 		ItemSelector.countEssentialQuantitySpecificItems(thisTrip);
 		ItemSelector.addWeatherBasedItems(thisTrip);
-		PrintWriter out = response.getWriter();
-		out.print(new Gson().toJson(thisTrip));
 		return thisTrip;
 	}
 }

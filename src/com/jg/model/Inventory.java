@@ -59,7 +59,21 @@ public class Inventory {
 	
 	// fill staging area with non-essential items
 	public void fillCategoryLists() {
-
+		essentialList.add(lipBalm);
+		essentialList.add(toothbrush);
+		essentialList.add(toothpaste);
+		essentialList.add(deodorant);
+		essentialList.add(shampoo);
+		essentialList.add(conditioner);
+		essentialList.add(soap);
+		essentialList.add(razor);
+		essentialList.add(shoes);
+		essentialList.add(socks);
+		essentialList.add(underwear);
+		essentialList.add(tShirt);
+		essentialList.add(pants);
+		
+		
 		coldList.add(snowBoots);
 		coldList.add(heavyCoat);
 		coldList.add(knitHat);

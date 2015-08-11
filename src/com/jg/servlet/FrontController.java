@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.jg.api.OpenWeatherMapAPIClient;
-import com.jg.db.PostGresConnectionFactory;
 import com.jg.db.PostGresSingleton;
 import com.jg.model.ItemFromArray;
 import com.jg.model.Trip;
@@ -80,7 +79,9 @@ public class FrontController extends HttpServlet {
 
 	private void addItems(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String s = OpenWeatherMapAPIClient.callAPI(request.getParameter("locationRequest"));
-		Trip thisTrip = TripObjectAssembler.generatePackingList(request, response, s, request.getParameter("startDate"), request.getParameter("endDate"));
+		Trip thisTrip = TripObjectAssembler.generatePackingList(s, request.getParameter("startDate"), request.getParameter("endDate"));
+		PrintWriter out = response.getWriter();
+		out.print(new Gson().toJson(thisTrip));
 		displayDebugStatements(thisTrip);
 	}
 

@@ -89,7 +89,7 @@ public class PostGresSingleton implements DAOInterface{
 	public void addItems(String item, int quantity, int userID) throws SQLException {
 		makeDBConnection();
 		Statement s = dbConnection.createStatement();
-		String sql = "INSERT INTO \"itemsLi st\"(item, quantity, \"userID\") VALUES ('" + item + "'," + quantity + ","
+		String sql = "INSERT INTO \"itemsList\"(item, quantity, \"userID\") VALUES ('" + item + "'," + quantity + ","
 				+ userID + ")";
 		s.executeUpdate(sql);
 		dbConnection.close();
