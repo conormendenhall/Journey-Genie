@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <title>Journey Genie</title>
-
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <meta name="google-signin-client_id" content="212913276340-d5gs03s4qak6k67qdeekoeihpds6ttge.apps.googleusercontent.com">
 <!-- ^Google Sign In^ -->
-
 <link rel="stylesheet" type="text/css" href="bootstrap.css">
 <link rel="stylesheet" type="text/css" href="styles/main.css">
 
@@ -20,33 +18,39 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 
 <script type="text/javascript" src="js/main.js"></script>
-
 </head>
-<body>
-<div class="container">
-	<div class="row">
-<div class="g-signin2" data-onsuccess="onSignIn"></div>
- <a href="#" onclick="signOut();">Sign out</a>
-   	  <div class="col-md-12">
-   	  
 
-     
-<a href=#><img src="http://i.imgur.com/BrggJwL.png"/></a>
+<body>
+
+<div class="container">
+<div class="row">
+
+ <div class="col-md-4"><div class="signinsignout"><div class="g-signin2" data-onsuccess="onSignIn"></div>
+<a href="#" onclick="signOut();">Sign out</a></div></div>
+<div class="col-md-4">
+<div class="logoandinput">
+<img src="http://i.imgur.com/BrggJwL.png" class="img-responsive" alt="logo2.0">
+
 <input id="location" type="search" 
-placeholder="Destination" value="">
+placeholder="Enter Destination" value="">
 <form>
-  <input id="startdatepicker" placeholder='Start Date'/>
+<input id="startdatepicker" placeholder='Start Date'/>
 <input id="enddatepicker" placeholder='End Date'/>
 </form>
 <input type="button" value="Get Packing!" onclick="findAddress()" id="pack">
 <div id="load">
-<input type="button" value="Load your old list" onclick="loadItems()">
+<input type="button" value="Load Your Old List" onclick="loadItems()">
 </div>
-	</div>
-    </div>
-    </div>
-	  <table id="forecast">
-	  <thead id = "city"/>
+</div>
+</div>
+<div class="col-md-4"></div>
+</div>
+</div>
+<div class="row">
+
+   <div class="col.md-12">
+    <table id="forecast">
+     <thead id = "city"/>
   		<tbody>
 			<tr id ="dt"/>	    
 		    <tr id="max"/>
@@ -55,17 +59,36 @@ placeholder="Destination" value="">
 		    <tr id="icon"/>
 		</tbody>
 	</table>
-
-	<div class = "list">
-	  <ul id="itemList"></ul> 
+</div>
+  </div>
+  
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+    <div class="listofitems">
+    
+       <ul id="itemList"></ul> 
 	  <ul id="addedItems"></ul>
 	  <ul id="addAnItem">
-	    <li>
-	      <input type='text' id='currentValue' value='' placeholder='Enter a new item (ex. medication)'>
+        <li style="display:inline">
+	      <input type='text' id='currentValue' value='' placeholder='Add Item To List'>
+	      <button type='button' id='additem' onclick='addItem()'>+</button>
 	    </li>
-	      <button type= 'button' onclick='addItem()'>Add Item</button>
-	    </ul>	
+	      
+      </ul>
+  
+</div>
 	</div>
-<input type="button" id="save" value="Save" onclick="saveItems()">	
+	
+    <div class="col-md-4"></div>
+</div>
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+    <div class="saveButton">
+    <input type="button" id="save" value="Save" onclick="saveItems()"></div>
+    <div class="col-md-4"></div>
+</div>
+</div>
 </body>
 </html>

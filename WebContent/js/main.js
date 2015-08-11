@@ -17,7 +17,7 @@ function onSignIn(googleUser) {
     
 function addItem() {
   console.log("cheesecake");
-  $('#addedItems').append("<li id='" + j + "add'><div id='" + j + "addname'>" + document.getElementById('currentValue').value + "</div><input id='" + j + "addquantity' type='number' value='1'><button onclick='removeItem($(this))'>Remove</button>" + "<input type='checkbox'>" + "</li>");
+  $('#addedItems').append("<li id='" + j + "add'><div id='" + j + "addname'>" + document.getElementById('currentValue').value + "</div><input id='" + j + "addquantity' type='number' value='1'><button onclick='removeItem($(this))'>Remove</button>" + "</li>");
   j++;
   document.getElementById('currentValue').value = '';
 }
@@ -56,7 +56,7 @@ function findAddress() {
 		success : function(data) {
 			$('#itemList').empty();
 			$.each(data.items, function(i, value) {
-			$('#itemList').append("<li id='" + i + "'><div id='" + i + "name'>" + this.name + "</div><input id='" + i + "quantity' class='quantity' type='number' value='" + this.quantity + "'><button onclick=\"removeItem($(this))\">Remove</button>" + "<input type='checkbox'>" + "</li>");
+			$('#itemList').append("<li id='" + i + "'><div id='" + i + "name'>" + this.name + "</div><input id='" + i + "quantity' class='quantity' type='number' value='" + this.quantity + "'><button onclick=\"removeItem($(this))\">Remove</button>" + "</li>");
 			});
 			$('#addAnItem').show();
 			$('#forecast').show();
@@ -70,7 +70,7 @@ function findAddress() {
 			$('#desc').empty();
 			$('#icon').empty();
 			$('#city').empty();	 	
-			$('#city').append("Destination: " + data.apiData.city.name + " , " + data.apiData.city.country + "<br>");
+			$('#city').append(data.apiData.city.name + " , " + data.apiData.city.country + "<br>");
 			
 			for (i = data.startDate; i <= data.endDate; i++) { 
 			var date = new Date(data.apiData.list[i].dt*1000);
@@ -87,8 +87,8 @@ function findAddress() {
 			var weatherIcon = "<img src=\"http://openweathermap.org/img/w/" + data.apiData.list[i].weather[0].icon + ".png\"";
 			
 			$('#dt').append("<th>" + dateString + "</th>");
-			$('#min').append("<td>" + minTemp + "°F" + "</td>");
-			$('#max').append("<td>" + maxTemp + "°F"+ "</td>");
+			$('#min').append("<td>Low: " + minTemp + "°F" + "</td>");
+			$('#max').append("<td>High: " + maxTemp + "°F"+ "</td>");
 			$('#desc').append("<td>" + data.apiData.list[i].weather[0].description + "</td>");
 			$('#icon').append("<td>" + weatherIcon + "</td>");
 			}	
@@ -184,7 +184,7 @@ function loadItems() {
 		$('#itemList').empty();
 		$('#addedItems').empty();
 		$.each(data, function(i, value) {	
-			$('#itemList').append("<li id='" + i + "'><div id='" + i + "name'>" + this.name + "</div><input id='" + i + "quantity' class='quantity' type='number' value='" + this.quantity + "'><button onclick=\"removeItem($(this))\">Remove</button>" + "<input type='checkbox'>" + "</li>");
+			$('#itemList').append("<li id='" + i + "'><div id='" + i + "name'>" + this.name + "</div><input id='" + i + "quantity' class='quantity' type='number' value='" + this.quantity + "'><button onclick=\"removeItem($(this))\">Remove</button>" + "</li>");
 			});
 		$('#addAnItem').show();
 	}
@@ -200,5 +200,5 @@ function signOut() {
     $('#itemList').empty();
     $('#addAnItem').hide();
     $('#save').hide();
-    token = null;
+    token = "";
 }

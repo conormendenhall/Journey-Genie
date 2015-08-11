@@ -1,26 +1,88 @@
 body {
-	background: #E8E8E8;
+	background: #e3e3e3;
 }
 
+
+
+
 .container {
-	margin: auto;
 	font-size: 18px;
 	font-family: 'Nunito', sans-serif;
 }
 
-.col-md-12 {
+
+
+ul {
+	
+	display:block;
+	margin-top: 25px;
 	text-align: center;
+	font-size: 14px;
+	font-family: 'Nunito', sans-serif;
+	color: black;
+	list-style-type: none;
+	text-transform: uppercase;
 }
 
-img {
-	width: 30%; /* you can use % */
-	height: auto;
-	display: block;
+.logoandinput {
+	text-align: center;
 	margin-left: auto;
 	margin-right: auto
 }
 
-input {
+input[type="button"] {
+	background: #01CCCC;
+	border-radius: 5px;
+	color: #ffffff;
+	font-size: 18px;
+	padding: 10px 20px 10px 20px;
+	width: 315px;
+	margin: 4px;
+	text-align: center;
+	background-color: #00CCCC;
+	border: 0;
+	border-radius: 5px;
+}
+
+input[id=startdatepicker] {
+	margin: 5px;
+	text-align: center;
+	background-color: #f8f8f8;
+	border: 0;
+	border-radius: 5px;
+	width: 150px;
+	background: 00cccc;
+}
+
+input[id=enddatepicker] {
+	margin: 5px;
+	text-align: center;
+	background-color: #f8f8f8;
+	border: 0;
+	border-radius: 5px;
+	width: 150px;
+	background: 00cccc;
+}
+
+input[id=currentValue] {
+	width: 200px;
+	color: black;
+	font-size: 16px;
+	border-radius: 5px;
+}
+
+input[type=search] {
+	margin: 5px auto;
+	text-align: center;
+	background-color: #f8f8f8;
+	border: 0;
+	border-radius: 5px;
+	width: 315px;
+}
+
+input[type=number] {
+	width: 45px;
+	color: black;
 	margin: 5px;
 	text-align: center;
 	background-color: #f8f8f8;
@@ -28,52 +90,49 @@ input {
 	border-radius: 5px;
 }
 
-input[type="button"] {
-	text-align: center;
+button {
 	background: #01CCCC;
-	border-radius: 5px;
+	border-radius: 10px;
 	color: #ffffff;
-	font-size: 18px;
-	padding: 10px 20px 10px 20px;
-	width: 315px;
+	font-size: 12px;
+	padding: 5px;
+	width: 175px;
+	text-align: center;
+	background-color: #00CCCC;
+	border: 0;
+	border-radius: 5px;
 }
 
-input[id=startdatepicker] {
-	width: 150px;
-}
-
-input[id=enddatepicker] {
-	width: 150px;
-}
-
-input[type=search] {
-	width: 315px;
+table[id="forecast"]{
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+	
 }
 
 table {
-	font-family: 'Arial';
-	margin: 25px auto;
-	border-collapse: collapse;
-	border: 1px solid #eee;
-	border-bottom: 2px solid #00cccc;
-	box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1), 0px 10px 20px
-		rgba(0, 0, 0, 0.05), 0px 20px 20px rgba(0, 0, 0, 0.05), 0px 30px 20px
-		rgba(0, 0, 0, 0.05);
+	
+	margin-top: 25px;
+	text-align: center;
+	font-size: 14px;
+	font-family: 'Nunito', sans-serif;
+	color: black;
+	list-style-type: none;
+	text-transform: uppercase;
 }
 
-table td:hover {
-	background: #f4f4f4;
-}
-
-table td:hover td {
-	color: #555;
+thead {
+	font-weight: bolder;
 }
 
 table th, table td {
-	color: #999;
+	font-weight: bolder;
+	color: black;
 	border: 1px solid #eee;
-	padding: 12px 35px;
+	padding: 6px 17px;
 	border-collapse: collapse;
+	background: white;
+	text-align: center;
 }
 
 table th {
@@ -81,13 +140,33 @@ table th {
 	color: #fff;
 	text-transform: uppercase;
 	font-size: 12px;
+	text-align: center;
+	font-weight: bold;
 }
 
 table th.last {
 	border-right: none;
 }
 
-#addAnItem, #forecast,  #save, #load{
-	display: none;
+input[id=save] {
+	text-align: center;
+	background-color: #00cccc;
+	border: 0;
+	border-radius: 5px;
 }
 
+button[id=additem] {
+	width: 55px;
+}
+
+button[id=remove] {
+	width: 55px;
+}
+
+.saveButton {
+	text-align: center;
+}
+
+#addAnItem, #forecast, #save, #load {
+	display: none;
+}
