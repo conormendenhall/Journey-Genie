@@ -1,12 +1,22 @@
 var j = 0;
 var token = "";
+
+function Token(email) {
+    var _token = email;
+
+    this.getToken = function () {
+        return _token;
+    }
+}
+
 function onSignIn(googleUser) {
   var profile = googleUser.getBasicProfile();
+  $('#signout').show();
   console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
   console.log('Name: ' + profile.getName());
   console.log('Image URL: ' + profile.getImageUrl());
   console.log('Email: ' + profile.getEmail());
-  token = profile.getEmail();
+  token = new Token(profile.getEmail());
   if(token != "") {
 	$('#load').show();
 	if ( $('#addAnItem').css('display') != 'none' ){
@@ -49,7 +59,7 @@ function findAddress() {
 		type : "POST",
 		url : "FrontController",
 		data : {
-			"locationRequest" : location.replace(/ /g, ''), "startDate" : startDate, "endDate" : endDate, "token": token, "action" : "add"
+			"locationRequest" : location.replace(/ /g, ''), "startDate" : startDate, "endDate" : endDate, "token": token.getToken(), "action" : "add"
 		},
 		dataType : "json",
 
@@ -99,53 +109,38 @@ function findAddress() {
 function saveItems() {
 	var itemsArray = new Array();
 	$("#itemList li").each(function() {
-	    var currentList = $(this).attr("id"); 
-	    
+	    var currentList = $(this).attr("id");
 	    var attribute = $(this).attr("id");
 	 	attribute += "name";
 	 	attribute = "#" + attribute;
 	 	var parentSelector = "#" + currentList; 
-	 	console.log(parentSelector);
-	 	console.log(attribute);
 	 	var name = $(parentSelector).find(attribute).text();
-	 	console.log(name);
 	 	var attribute2 = $(this).attr("id");
 	 	attribute2 += "quantity";
 	 	attribute2 = "#" + attribute2;
-	 	console.log(parentSelector);
-	 	console.log(attribute2);
 	 	var name2 = $(parentSelector).find(attribute2).val();
-	 	console.log(name2);
 	 	itemsArray.push({name: name, quantity: name2});
-	    
+	 	console.log(token.getToken());
 	});
 	$("#addedItems li").each(function() {
 	    var currentList = $(this).attr("id"); 
-	    
 	    var attribute = $(this).attr("id");
 	 	attribute += "name";
 	 	attribute = "#" + attribute;
 	 	var parentSelector = "#" + currentList; 
-	 	console.log(parentSelector);
-	 	console.log(attribute);
 	 	var name = $(parentSelector).find(attribute).text();
-	 	console.log(name);
 	 	var attribute2 = $(this).attr("id");
 	 	attribute2 += "quantity";
 	 	attribute2 = "#" + attribute2;
-	 	console.log(parentSelector);
-	 	console.log(attribute2);
 	 	var name2 = $(parentSelector).find(attribute2).val();
-	 	console.log(name2);
 	 	itemsArray.push({name: name, quantity: name2});
-	    
 	});
 	var sendItemsList = JSON.stringify(itemsArray);
 	$.ajax({
 		type : "POST",
 		url : "FrontController",
 		data : {
-			"itemsArray" : sendItemsList, "action" : "save", "token" : token
+			"itemsArray" : sendItemsList, "action" : "save", "token" : token.getToken()
 		},
 		dataType : "json",
 
@@ -172,12 +167,13 @@ $(document).ready(function() {
 });
   
 function loadItems() {
+  $('#forecast').hide();
   $('#save').show();
   $.ajax({
 	type : "POST",
 	url : "FrontController",
 	data : {
-		"action" : "load", "token" : token
+		"action" : "load", "token" : token.getToken()
 	},
 	dataType : "json",
 	success : function(data) {
@@ -196,9 +192,11 @@ function signOut() {
     auth2.signOut().then(function () {
       console.log('User signed out.');
     });
-    $('#load').hide();
-    $('#itemList').empty();
-    $('#addAnItem').hide();
-    $('#save').hide();
+//    $('#load').hide();
+//    $('#itemList').empty();
+//    $('#addedItems').empty();
+//    $('#addAnItem').hide();
+//    $('#save').hide();
+    window.location.reload();
     token = "";
 }

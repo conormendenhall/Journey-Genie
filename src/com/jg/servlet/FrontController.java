@@ -92,13 +92,15 @@ public class FrontController extends HttpServlet {
 		}
 		int userID = 0;
 		try {
+			System.out.println(request.getParameter("token"));
 			userID = dbConnection.addUser(request.getParameter("token"));
 			dbConnection.deleteAllItemsForUser(userID);
+			addUsersItemsIntoDatabase(a, userID);
 		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
+			System.out.println("waffleslawehfie");
 			e1.printStackTrace();
 		}
-		addUsersItemsIntoDatabase(a, userID);
+		
 	}
 
 	private void addUsersItemsIntoDatabase(ItemFromArray[] a, int userID) {
