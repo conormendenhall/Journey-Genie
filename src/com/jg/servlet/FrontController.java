@@ -95,23 +95,12 @@ public class FrontController extends HttpServlet {
 			System.out.println(request.getParameter("token"));
 			userID = dbConnection.addUser(request.getParameter("token"));
 			dbConnection.deleteAllItemsForUser(userID);
-			addUsersItemsIntoDatabase(a, userID);
+			dbConnection.addUsersItemsIntoDatabase(a, userID);
 		} catch (SQLException e1) {
 			System.out.println("waffleslawehfie");
 			e1.printStackTrace();
 		}
 		
-	}
-
-	private void addUsersItemsIntoDatabase(ItemFromArray[] a, int userID) {
-		for (ItemFromArray itemFromArray : a) {
-			try {
-				PostGresSingleton.getInstance().addItems(itemFromArray.getName(), itemFromArray.getQuantity(), userID);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
 	}
 
 	private void displayDebugStatements(Trip thisTrip) {

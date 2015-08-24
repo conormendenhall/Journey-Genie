@@ -91,14 +91,12 @@ public class PostGresSingleton implements DAOInterface{
 	}
 
 	public void addItems(String item, int quantity, int userID) throws SQLException {
-		makeDBConnection();
 		String sql = "INSERT INTO \"itemsList\"(item, quantity, \"userID\") VALUES (?,?,?)";
 		PreparedStatement s = dbConnection.prepareStatement(sql);
 		s.setString(1, item);
 	    s.setInt(2, quantity);
 	    s.setInt(3, userID);
 		s.executeUpdate();
-		dbConnection.close();
 	}
 
 	public void deleteAllItemsForUser(int userID) throws SQLException {
@@ -141,5 +139,18 @@ public class PostGresSingleton implements DAOInterface{
 		a.setName(r.getString(1));
 		a.setQuantity(r.getInt(2));
 		return a;
+	}
+	
+	public void addUsersItemsIntoDatabase(ItemFromArray[] a, int userID) throws SQLException {
+		makeDBConnection();
+		for (ItemFromArray itemFromArray : a) {
+			try {
+				addItems(itemFromArray.getName(), itemFromArray.getQuantity(), userID);
+			} catch (SQLException e) {
+				dbConnection.close();
+				e.printStackTrace();
+			}
+		}
+			dbConnection.close();
 	}
 }
