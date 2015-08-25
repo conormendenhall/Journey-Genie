@@ -27,17 +27,15 @@ public class PostGresSingleton implements DAOInterface{
 	private static Connection dbConnection;
 
 	public void makeDBConnection() {
-		System.out.println("-------- PostgreSQL " + "JDBC Connection Testing ------------");
-
 		try {
 			Class.forName("org.postgresql.Driver");
 
 		} catch (ClassNotFoundException e) {
-			System.out.println("Where is your PostgreSQL JDBC Driver? " + "Include in your library path!");
+			System.out.println("Missing PostgreSql jdbc driver");
 			e.printStackTrace();
 		}
 
-		System.out.println("PostgreSQL JDBC Driver Registered!");
+		System.out.println("PostgreSQL JDBC Driver Found!");
 
 		try {
 			dbConnection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/journeyGenie", "postgres",
@@ -48,7 +46,7 @@ public class PostGresSingleton implements DAOInterface{
 		}
 
 		if (dbConnection != null) {
-			System.out.println("You made it, take control your database now!");
+			System.out.println("DBconnection successful");
 		} else {
 			System.out.println("Failed to make connection!");
 		}
