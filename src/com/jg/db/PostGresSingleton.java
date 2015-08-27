@@ -2,6 +2,7 @@ package com.jg.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -26,17 +27,15 @@ public class PostGresSingleton implements DAOInterface{
 	private static Connection dbConnection;
 
 	public void makeDBConnection() {
-		System.out.println("-------- PostgreSQL " + "JDBC Connection Testing ------------");
-
 		try {
 			Class.forName("org.postgresql.Driver");
 
 		} catch (ClassNotFoundException e) {
-			System.out.println("Where is your PostgreSQL JDBC Driver? " + "Include in your library path!");
+			System.out.println("Missing PostgreSql jdbc driver");
 			e.printStackTrace();
 		}
 
-		System.out.println("PostgreSQL JDBC Driver Registered!");
+		System.out.println("PostgreSQL JDBC Driver Found!");
 
 		try {
 			dbConnection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/journeyGenie", "postgres",
@@ -47,7 +46,7 @@ public class PostGresSingleton implements DAOInterface{
 		}
 
 		if (dbConnection != null) {
-			System.out.println("You made it, take control your database now!");
+			System.out.println("DBconnection successful");
 		} else {
 			System.out.println("Failed to make connection!");
 		}
@@ -58,16 +57,18 @@ public class PostGresSingleton implements DAOInterface{
 			makeDBConnection();
 			int userId = findDuplicate(userName);
 			if (userId == 0) {
-				Statement s = dbConnection.createStatement();
-				String sql = "INSERT INTO users(userName) values('" + userName + "')";
-				s.executeUpdate(sql);
-				String sql2 = "SELECT userid FROM users WHERE username='" + userName + "'"; // To-do: make userName the primary key
-				ResultSet r = s.executeQuery(sql2);
+				String sql = "INSERT INTO users(userName) values(?)";
+				PreparedStatement s = dbConnection.prepareStatement(sql);
+				s.setString(1, userName);
+				s.executeUpdate();
+				String sql2 = "SELECT userid FROM users WHERE username= ? "; // To-do: make userName the primary key
+				PreparedStatement s2 = dbConnection.prepareStatement(sql2);
+				s2.setString(1, userName);
+				ResultSet r = s2.executeQuery();
 				while (r.next()) {
 					return r.getInt(1);
 				}
 			} else {
-				deleteAllItemsForUser(userId);
 				return userId;
 			}
 		} finally {
@@ -77,9 +78,10 @@ public class PostGresSingleton implements DAOInterface{
 	}
 
 	private int findDuplicate(String userName) throws SQLException {
-		String sql = "SELECT userid FROM users WHERE username='" + userName + "'";
-		Statement s = dbConnection.createStatement();
-		ResultSet r = s.executeQuery(sql);
+		String sql = "SELECT userid FROM users WHERE username = ?";
+		PreparedStatement s = dbConnection.prepareStatement(sql);
+		s.setString(1, userName);
+		ResultSet r = s.executeQuery();
 		if (r.next())
 			return r.getInt(1);
 		else
@@ -87,12 +89,12 @@ public class PostGresSingleton implements DAOInterface{
 	}
 
 	public void addItems(String item, int quantity, int userID) throws SQLException {
-		makeDBConnection();
-		Statement s = dbConnection.createStatement();
-		String sql = "INSERT INTO \"itemsList\"(item, quantity, \"userID\") VALUES ('" + item + "'," + quantity + ","
-				+ userID + ")";
-		s.executeUpdate(sql);
-		dbConnection.close();
+		String sql = "INSERT INTO \"itemsList\"(item, quantity, \"userID\") VALUES (?,?,?)";
+		PreparedStatement s = dbConnection.prepareStatement(sql);
+		s.setString(1, item);
+	    s.setInt(2, quantity);
+	    s.setInt(3, userID);
+		s.executeUpdate();
 	}
 
 	public void deleteAllItemsForUser(int userID) throws SQLException {
@@ -107,19 +109,22 @@ public class PostGresSingleton implements DAOInterface{
 		}
 	}
 
-	private static void deleteSQLQuery(int userID) throws SQLException {
-		Statement s = dbConnection.createStatement();
-		String sql = "DELETE FROM \"itemsList\" USING \"users\" WHERE userid =" + userID;
-		s.executeUpdate(sql);
+	private void deleteSQLQuery(int userID) throws SQLException {
+		System.out.println(userID);
+		String sql = "DELETE FROM \"itemsList\" li USING \"users\" q WHERE q.userid = li.\"userID\" AND li.\"userID\" = ?";
+		PreparedStatement s = dbConnection.prepareStatement(sql);
+		s.setInt(1, userID);
+		s.executeUpdate();
 	}
 	
 	public ArrayList<ItemFromArray> loadEntries(String userName) throws SQLException {
 		makeDBConnection();
 		ArrayList<ItemFromArray> items = new ArrayList<ItemFromArray>();
 		int userId = findDuplicate(userName);
-		String sql2 = "SELECT item, quantity FROM \"itemsList\" WHERE \"userID\"=" + userId;
-		Statement s2 = dbConnection.createStatement();
-		ResultSet r = s2.executeQuery(sql2);
+		String sql2 = "SELECT item, quantity FROM \"itemsList\" WHERE \"userID\"= ? ";
+		PreparedStatement s2 = dbConnection.prepareStatement(sql2);
+		s2.setInt(1, userId);
+		ResultSet r = s2.executeQuery();
 		while (r.next()) {
 			items.add(createItemFromArray(r));
 		}
@@ -132,5 +137,18 @@ public class PostGresSingleton implements DAOInterface{
 		a.setName(r.getString(1));
 		a.setQuantity(r.getInt(2));
 		return a;
+	}
+	
+	public void addUsersItemsIntoDatabase(ItemFromArray[] a, int userID) throws SQLException {
+		makeDBConnection();
+		for (ItemFromArray itemFromArray : a) {
+			try {
+				addItems(itemFromArray.getName(), itemFromArray.getQuantity(), userID);
+			} catch (SQLException e) {
+				dbConnection.close();
+				e.printStackTrace();
+			}
+		}
+			dbConnection.close();
 	}
 }
